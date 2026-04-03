@@ -1,0 +1,29 @@
+- alias: Koupelna_zebrik_zapnout_v_lete
+  description: Zapnutí topné spirály v žebříku ve 22:00 pokud je letní režim a nejsme pryč.
+  trigger:
+    - platform: time
+      at: "22:00:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.summer_mode
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "off"
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.radiator_koupelna_dole
+  mode: single
+
+
+- alias: Koupelna_zebrik_vypnout
+  description: Vypnutí topné spirály v žebříku ve 23:59 každý den.
+  trigger:
+    - platform: time
+      at: "23:59:00"
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.radiator_koupelna_dole
+  mode: single

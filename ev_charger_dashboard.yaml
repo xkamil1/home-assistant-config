@@ -1,0 +1,189 @@
+title: EV Charger
+views:
+  - title: EV Charger
+    icon: mdi:ev-station
+    cards:
+
+      # ── WALLBOX OVLADANI ─────────────────────────────────────────────────
+      - type: horizontal-stack
+        cards:
+          - type: button
+            name: Zapnout nabijeni
+            icon: mdi:play-circle
+            icon_height: 60px
+            tap_action:
+              action: perform-action
+              perform_action: switch.turn_on
+              target:
+                entity_id: switch.ev_charger_switch
+          - type: button
+            name: Vypnout nabijeni
+            icon: mdi:stop-circle
+            icon_height: 60px
+            tap_action:
+              action: perform-action
+              perform_action: switch.turn_off
+              target:
+                entity_id: switch.ev_charger_switch
+
+      - type: entities
+        title: AI rizeni
+        entities:
+          - entity: input_boolean.ev_charger_manual_override
+            name: Manualni override (vypne AI rizeni)
+
+      - type: entities
+        title: Nastaveni proudu
+        entities:
+          - entity: input_number.ev_charger_proud
+            name: Nabijeci proud (4-11 A)
+
+      # ── WALLBOX STAV ─────────────────────────────────────────────────────
+      - type: glance
+        title: Wallbox
+        columns: 3
+        entities:
+          - entity: sensor.ev_charger_stav
+            name: Stav
+          - entity: sensor.ev_charger_vykon
+            name: Vykon
+          - entity: sensor.ev_charger_proud_nastaven
+            name: Proud nastaven
+          - entity: sensor.ev_charger_teplota
+            name: Teplota
+
+      - type: entities
+        title: Energie wallbox
+        entities:
+          - entity: sensor.ev_charger_energie_seance
+            name: Tato seance
+
+      # ── ENERGY AI ────────────────────────────────────────────────────────
+      - type: entities
+        title: EnergyAI
+        entities:
+          - entity: sensor.energy_ai_last_decision
+            name: Duvod rozhodnuti
+          - type: attribute
+            entity: sensor.energy_ai_last_decision
+            attribute: ev_charger_enabled
+            name: Nabijeni povoleno
+          - type: attribute
+            entity: sensor.energy_ai_last_decision
+            attribute: ev_charger_current_a
+            name: Proud AI (A)
+          - type: attribute
+            entity: sensor.energy_ai_last_decision
+            attribute: pv_power_w
+            name: Solar (W)
+          - type: attribute
+            entity: sensor.energy_ai_last_decision
+            attribute: battery_soc_pct
+            name: Baterie (%)
+          - type: attribute
+            entity: sensor.energy_ai_last_decision
+            attribute: timestamp
+            name: Cas rozhodnuti
+
+      # ── SKODA ELROQ ──────────────────────────────────────────────────────
+      - type: gauge
+        title: Skoda Elroq - nabiti
+        entity: sensor.skoda_elroq_battery_percentage
+        min: 0
+        max: 100
+        needle: true
+        severity:
+          green: 50
+          yellow: 20
+          red: 0
+
+      - type: glance
+        title: Skoda Elroq
+        columns: 3
+        entities:
+          - entity: sensor.skoda_elroq_charging_state
+            name: Stav nabijeni
+          - entity: sensor.skoda_elroq_battery_percentage
+            name: Nabito
+          - entity: sensor.skoda_elroq_range
+            name: Dojezd
+          - entity: sensor.skoda_elroq_charging_power
+            name: Vykon nabijeni
+          - entity: sensor.skoda_elroq_charging_rate
+            name: Rychlost (km/h)
+          - entity: sensor.skoda_elroq_remaining_charging_time
+            name: Zbyvajici cas
+
+      - type: entities
+        title: Skoda Elroq - detaily
+        entities:
+          - entity: number.skoda_elroq_charge_limit
+            name: Limit nabiti
+          - entity: binary_sensor.skoda_elroq_charger_connected
+            name: Kabel pripojen
+          - entity: switch.skoda_elroq_charging
+            name: Nabijeni zapnuto
+          - entity: sensor.skoda_elroq_outside_temperature
+            name: Venkovni teplota
+          - entity: sensor.skoda_elroq_mileage
+            name: Najeto (km)
+
+      # ── FORD PHEV ────────────────────────────────────────────────────────
+      - type: gauge
+        title: Ford - EV nabiti
+        entity: sensor.fordpass_wf0fxxwpmhsc70607_elveh
+        min: 0
+        max: 100
+        needle: true
+        severity:
+          green: 50
+          yellow: 20
+          red: 0
+
+      - type: glance
+        title: Ford PHEV
+        columns: 3
+        entities:
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_elvehcharging
+            name: Stav nabijeni
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_elveh
+            name: EV nabito
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_elvehplug
+            name: Kabel
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_elvehchargingpower
+            name: Vykon nabijeni
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_fuel
+            name: Benzin
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_energytransferlogentry
+            name: Energie seance (kWh)
+
+      - type: entities
+        title: Ford PHEV - detaily
+        entities:
+          - entity: select.fordpass_wf0fxxwpmhsc70607_elvehtargetcharge
+            name: Cilove nabiti
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_outsidetemp
+            name: Venkovni teplota
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_odometer
+            name: Najeto (km)
+
+      # ── HISTORIE ─────────────────────────────────────────────────────────
+      - type: history-graph
+        title: Historie nabijeni 24h
+        hours_to_show: 24
+        entities:
+          - entity: sensor.ev_charger_vykon
+            name: Wallbox (kW)
+          - entity: sensor.skoda_elroq_charging_power
+            name: Elroq (kW)
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_elvehchargingpower
+            name: Ford (kW)
+
+      - type: history-graph
+        title: Stav nabiti 24h
+        hours_to_show: 24
+        entities:
+          - entity: sensor.skoda_elroq_battery_percentage
+            name: Elroq (%)
+          - entity: sensor.fordpass_wf0fxxwpmhsc70607_elveh
+            name: Ford EV (%)

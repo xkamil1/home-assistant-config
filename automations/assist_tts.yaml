@@ -1,0 +1,21 @@
+- id: assist_tts_soundbar
+  alias: Assist TTS na soundbar
+  description: Přehraje odpověď asistenta na soundbar
+  triggers:
+    - trigger: event
+      event_type: assist_pipeline_done
+  conditions: []
+  actions:
+    - if:
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.result is defined and
+               trigger.event.data.result.tts_output is defined and
+               trigger.event.data.result.tts_output.url is defined }}
+      then:
+        - action: media_player.play_media
+          target:
+            entity_id: media_player.q_series_soundbar_2
+          data:
+            media_content_id: "{{ trigger.event.data.result.tts_output.url }}"
+            media_content_type: music

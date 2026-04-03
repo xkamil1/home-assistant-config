@@ -1,0 +1,35 @@
+- alias: HeatingManager Watchdog
+  id: heating_manager_watchdog
+  trigger:
+    - platform: time_pattern
+      minutes: "/10"
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: sensor.heating_manager_status
+          state: "unavailable"
+        - condition: state
+          entity_id: sensor.heating_manager_status
+          state: "unknown"
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.topeni
+        temperature: 20
+        hvac_mode: heat
+    - service: climate.set_hvac_mode
+      data:
+        entity_id: climate.adela_pokoj_room_temperature
+        hvac_mode: "off"
+    - service: climate.set_hvac_mode
+      data:
+        entity_id: climate.nela_pokoj_room_temperature
+        hvac_mode: "off"
+    - service: climate.set_hvac_mode
+      data:
+        entity_id: climate.pracovna_room_temperature
+        hvac_mode: "off"
+    - service: notify.mobile_app_iphone_17
+      data:
+        message: "HeatingManager offline — aktivovana zaloha (TC=20C, Daikin off)"

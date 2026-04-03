@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "minor_version": 2,
+  "key": "assist_pipeline.pipelines",
+  "data": {
+    "items": [
+      {
+        "conversation_engine": "conversation.claude_conversation",
+        "conversation_language": "cs",
+        "id": "01kn9sf32mq0cn6pnrsaa55sc2",
+        "language": "cs",
+        "name": "Cesky asistent",
+        "stt_engine": "stt.faster_whisper",
+        "stt_language": "cs",
+        "tts_engine": "tts.google_cloud",
+        "tts_language": "cs-CZ",
+        "tts_voice": "cs-CZ-Chirp3-HD-Aoede",
+        "wake_word_entity": "wake_word.openwakeword",
+        "wake_word_id": "alexa",
+        "prefer_local_intents": false
+      }
+    ],
+    "preferred_item": "01kn9sf32mq0cn6pnrsaa55sc2"
+  }
+}

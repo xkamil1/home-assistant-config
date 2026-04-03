@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Radiožurnál",
+    "aliases": [
+      "žurnál",
+      "český rozhlas",
+      "rozhlas"
+    ],
+    "url": "https://rozhlas.stream/radiozurnal_mp3_128.mp3"
+  },
+  {
+    "name": "Evropa 2",
+    "aliases": [
+      "evropa",
+      "E2",
+      "evropa dva"
+    ],
+    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/EVROPA2.mp3"
+  },
+  {
+    "name": "Frekvence 1",
+    "aliases": [
+      "frekvence",
+      "F1",
+      "frekvence jedna"
+    ],
+    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/FREKVENCE1.mp3"
+  },
+  {
+    "name": "Helax",
+    "aliases": [
+      "rádio helax"
+    ],
+    "url": "https://ice.abradio.cz/helax128.mp3"
+  },
+  {
+    "name": "Fresh Radio",
+    "aliases": [
+      "fresh",
+      "rádio fresh"
+    ],
+    "url": "https://icecast.beatzone.cz/radio/8000/128.mp3"
+  },
+  {
+    "name": "Hitrádio Orion",
+    "aliases": [
+      "orion",
+      "hitrádio"
+    ],
+    "url": "https://ice.radia.cz/orion128.aac"
+  }
+]

@@ -1,0 +1,18 @@
+- id: tts_message_to_soundbar
+  alias: TTS zprava na soundbar
+  description: Precte text z input_text.tts_message na soundbar
+  triggers:
+    - trigger: state
+      entity_id: input_text.tts_message
+  conditions:
+    - condition: template
+      value_template: "{{ trigger.to_state.state | length > 0 }}"
+  actions:
+    - action: tts.speak
+      target:
+        entity_id: tts.google_cloud
+      data:
+        media_player_entity_id: media_player.q_series_soundbar_2
+        message: "{{ states('input_text.tts_message') }}"
+        options:
+          voice: cs-CZ-Chirp3-HD-Aoede

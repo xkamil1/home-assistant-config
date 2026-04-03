@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_dashboards",
+  "data": {
+    "items": [
+      {
+        "id": "dashboard_sunsync",
+        "show_in_sidebar": true,
+        "title": "sunsync",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-sunsync"
+      },
+      {
+        "id": "map",
+        "icon": "mdi:map",
+        "title": "Map",
+        "url_path": "map",
+        "mode": "storage",
+        "show_in_sidebar": true,
+        "require_admin": false
+      },
+      {
+        "id": "dashboard_topeni",
+        "show_in_sidebar": true,
+        "title": "Topení",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-topeni"
+      },
+      {
+        "id": "lovelace",
+        "icon": "mdi:view-dashboard",
+        "title": "Overview",
+        "url_path": "lovelace",
+        "mode": "storage",
+        "show_in_sidebar": true,
+        "require_admin": false
+      }
+    ]
+  }
+}

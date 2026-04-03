@@ -1,0 +1,130 @@
+{
+  "version": 3,
+  "minor_version": 1,
+  "key": "scheduler.storage",
+  "data": {
+    "schedules": [
+      {
+        "schedule_id": "92da5f",
+        "timeslots": [
+          {
+            "start": "00:00:00",
+            "stop": null,
+            "conditions": [],
+            "condition_type": null,
+            "track_conditions": false,
+            "actions": [
+              {
+                "service": "climate.set_temperature",
+                "entity_id": "climate.topeni",
+                "service_data": {
+                  "hvac_mode": "heat",
+                  "temperature": 20
+                }
+              }
+            ]
+          }
+        ],
+        "weekdays": [
+          "daily"
+        ],
+        "start_date": null,
+        "end_date": null,
+        "repeat_type": "repeat",
+        "name": null,
+        "enabled": false
+      },
+      {
+        "schedule_id": "d4579c",
+        "timeslots": [
+          {
+            "start": "14:00:00",
+            "stop": null,
+            "conditions": [],
+            "condition_type": null,
+            "track_conditions": false,
+            "actions": [
+              {
+                "service": "climate.set_temperature",
+                "entity_id": "climate.topeni",
+                "service_data": {
+                  "hvac_mode": "heat",
+                  "temperature": 21
+                }
+              }
+            ]
+          }
+        ],
+        "weekdays": [
+          "workday"
+        ],
+        "start_date": null,
+        "end_date": null,
+        "repeat_type": "repeat",
+        "name": null,
+        "enabled": false
+      },
+      {
+        "schedule_id": "a01615",
+        "timeslots": [
+          {
+            "start": "06:00:00",
+            "stop": null,
+            "conditions": [],
+            "condition_type": null,
+            "track_conditions": false,
+            "actions": [
+              {
+                "service": "climate.set_temperature",
+                "entity_id": "climate.topeni",
+                "service_data": {
+                  "hvac_mode": "heat",
+                  "temperature": 21
+                }
+              }
+            ]
+          }
+        ],
+        "weekdays": [
+          "weekend"
+        ],
+        "start_date": null,
+        "end_date": null,
+        "repeat_type": "repeat",
+        "name": null,
+        "enabled": false
+      },
+      {
+        "schedule_id": "815d10",
+        "timeslots": [
+          {
+            "start": "21:00:00",
+            "stop": null,
+            "conditions": [],
+            "condition_type": null,
+            "track_conditions": false,
+            "actions": [
+              {
+                "service": "climate.set_temperature",
+                "entity_id": "climate.topeni",
+                "service_data": {
+                  "hvac_mode": "heat",
+                  "temperature": 20
+                }
+              }
+            ]
+          }
+        ],
+        "weekdays": [
+          "daily"
+        ],
+        "start_date": null,
+        "end_date": null,
+        "repeat_type": "repeat",
+        "name": null,
+        "enabled": false
+      }
+    ],
+    "tags": []
+  }
+}

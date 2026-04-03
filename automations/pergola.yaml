@@ -1,0 +1,42 @@
+- alias: Oleandry - ovládání žárovky podle teploty
+  description: Zapnutí nebo vypnutí žárovky podle teploty
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.teplota_pergola_temperature
+      below: 2
+    - platform: numeric_state
+      entity_id: sensor.teplota_pergola_temperature
+      above: 5
+  condition: []
+  action:
+    - choose:
+        # Zapnutí žárovky
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.teplota_pergola_temperature
+              below: 2
+          sequence:
+            - service: switch.turn_on
+              target:
+                entity_id: switch.zasuvka_pergola
+            - service: notify.mobile_app_iphone_17
+              data:
+                message: >
+                  💡 Žárovka pro oleandry byla *zapnuta*
+                  (teplota: {{ states('sensor.teplota_pergola_temperature') }} °C)
+
+        # Vypnutí žárovky
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.teplota_pergola_temperature
+              above: 5
+          sequence:
+            - service: switch.turn_off
+              target:
+                entity_id: switch.zasuvka_pergola
+            - service: notify.mobile_app_iphone_17
+              data:
+                message: >
+                  🔌 Žárovka pro oleandry byla *vypnuta*
+                  (teplota: {{ states('sensor.teplota_pergola_temperature') }} °C)
+  mode: single

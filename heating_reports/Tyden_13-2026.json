@@ -1,0 +1,104 @@
+{
+  "week_label": "Tyden 13/2026",
+  "report": "# Týdenní analýza vytápění 22.03. - 29.03.\n\n**Spotřeba a náklady:** Týden zaznamenal spotřebu 64,9 kWh topení (bez krbu), což odpovídá nákladům 294 Kč. Jedná se o 2% nárůst oproti čtyřtýdennímu průměru 63,5 kWh/týden, přestože venkovní teplota byla o 0,8 °C vyšší (5,5 °C vs. 4,7 °C). Efektivita je tedy mírně horší než průměr – při vyšší teplotě venku by se mělo topení chovat lépe.\n\n**Porovnání s historií:** Vznik nadměrné spotřeby lze přisoudit především anomáliím při vytápění. Dne 28.3. teplota interiéru překročila 25,3 °C – nejvyšší hodnota za sledované období – což znamenalo nadbytek tepla a zbytečné chování termostatu. Také den 29.3. vykazuje vnitřní teplotu 24,0 °C, opět nad cílem 21,4 °C. Tyto „přetápěné\" dny přispěly k přebytečné spotřebě přibližně 1,5 kWh.\n\n**Vliv venkovní teploty:** Matematický vztah mezi venkovní teplotou a spotřebou potvrzuje teoretickou tepelnou ztrátu. Dny s nižší venkovní teplotou (22.–24.3.) měly překvapivě vyšší spotřebu relativně k teplotě, což naznačuje rozdílné chování termostatu v těchto dnech.\n\n**Sepnutí kompresoru:** Chybějí údaje o počtu běhů za den (sloupec Beh_h). Bez těchto informací nelze hodnotit zátěž na kompresor podle doporučeného limitu <6x/den.\n\n**Doporučení:** V příštím týdnu věnujte pozornost kalibraci termostatu – udržujte přísně 21–22 °C podle denního režimu. Zkontrolujte nastavení noční teploty, aby nedocház",
+  "generated_at": "2026-03-29T12:02:18.291278",
+  "week_start": "22.03.",
+  "week_end": "29.03.",
+  "total_kwh": 64.9,
+  "total_cost_czk": 294.0,
+  "avg_outdoor_temp": 5.5,
+  "avg_indoor_temp": 22.0,
+  "krb_days": 1,
+  "avg_daily_starts": 1184.1,
+  "avg_daily_runtime_h": null,
+  "daily_data": [
+    {
+      "date": "2026-03-22",
+      "kwh_total": 1.8,
+      "kwh_topeni": 1.8,
+      "outdoor": 7.4,
+      "indoor": 20.7,
+      "target": 20.8,
+      "runtime_h": null,
+      "starts": 1168,
+      "krb": false
+    },
+    {
+      "date": "2026-03-23",
+      "kwh_total": 6.8,
+      "kwh_topeni": 6.8,
+      "outdoor": 6.1,
+      "indoor": 20.7,
+      "target": 20.7,
+      "runtime_h": null,
+      "starts": 1171,
+      "krb": true
+    },
+    {
+      "date": "2026-03-24",
+      "kwh_total": 10.5,
+      "kwh_topeni": 8.9,
+      "outdoor": 7.2,
+      "indoor": 21.1,
+      "target": 20.7,
+      "runtime_h": null,
+      "starts": 1175,
+      "krb": false
+    },
+    {
+      "date": "2026-03-25",
+      "kwh_total": 9.5,
+      "kwh_topeni": 9.4,
+      "outdoor": 9.3,
+      "indoor": 21.4,
+      "target": 20.7,
+      "runtime_h": null,
+      "starts": 1180,
+      "krb": false
+    },
+    {
+      "date": "2026-03-26",
+      "kwh_total": 10.7,
+      "kwh_topeni": 10.7,
+      "outdoor": 4.2,
+      "indoor": 21.3,
+      "target": 20.9,
+      "runtime_h": null,
+      "starts": 1185,
+      "krb": false
+    },
+    {
+      "date": "2026-03-27",
+      "kwh_total": 13.8,
+      "kwh_topeni": 12.5,
+      "outdoor": 3.4,
+      "indoor": 21.5,
+      "target": 21.0,
+      "runtime_h": null,
+      "starts": 1191,
+      "krb": false
+    },
+    {
+      "date": "2026-03-28",
+      "kwh_total": 12.2,
+      "kwh_topeni": 10.4,
+      "outdoor": 3.3,
+      "indoor": 25.3,
+      "target": 21.4,
+      "runtime_h": null,
+      "starts": 1201,
+      "krb": false
+    },
+    {
+      "date": "2026-03-29",
+      "kwh_total": 4.4,
+      "kwh_topeni": 4.4,
+      "outdoor": 3.3,
+      "indoor": 24.0,
+      "target": 21.4,
+      "runtime_h": null,
+      "starts": 1202,
+      "krb": false
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_topeni",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Nová sekce"
+                },
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "markdown",
+                      "content": "{% set stav = states('sensor.boiler_surplus_status') %} {% if stav == 'Nabiji' %}\n  <ha-icon icon=\"mdi:fire\" style=\"color: green; font-size: 28px;\"></ha-icon>\n  <span style=\"font-size: 20px; font-weight: bold; color: green;\"> Spirála bojleru — NABÍJÍ</span>\n{% elif stav == 'Blokovano_teplota' %}\n  <ha-icon icon=\"mdi:thermometer-check\" style=\"color: #2196F3; font-size: 28px;\"></ha-icon>\n  <span style=\"font-size: 20px; font-weight: bold; color: #2196F3;\"> Spirála bojleru — PLNÝ</span>\n{% elif stav == 'Mimo_cas' %}\n  <ha-icon icon=\"mdi:clock-outline\" style=\"color: orange; font-size: 28px;\"></ha-icon>\n  <span style=\"font-size: 20px; font-weight: bold; color: orange;\"> Spirála bojleru — MIMO ČAS</span>\n{% elif stav == 'Chyba_senzoru' %}\n  <ha-icon icon=\"mdi:alert\" style=\"color: red; font-size: 28px;\"></ha-icon>\n  <span style=\"font-size: 20px; font-weight: bold; color: red;\"> Spirála bojleru — CHYBA SENZORU</span>\n{% else %}\n  <ha-icon icon=\"mdi:fire-off\" style=\"color: gray; font-size: 28px;\"></ha-icon>\n  <span style=\"font-size: 20px; font-weight: bold; color: gray;\"> Spirála bojleru — ČEKÁ</span>\n{% endif %}\n"
+                    },
+                    {
+                      "type": "entities",
+                      "title": "Aktuální hodnoty",
+                      "entities": [
+                        {
+                          "type": "attribute",
+                          "entity": "sensor.boiler_surplus_status",
+                          "attribute": "phase_b_power",
+                          "name": "Fáze B (W)",
+                          "icon": "mdi:transmission-tower"
+                        },
+                        {
+                          "type": "attribute",
+                          "entity": "sensor.boiler_surplus_status",
+                          "attribute": "teplota",
+                          "name": "Teplota bojleru (°C)",
+                          "icon": "mdi:thermometer-water"
+                        },
+                        {
+                          "type": "attribute",
+                          "entity": "sensor.boiler_surplus_status",
+                          "attribute": "spirala",
+                          "name": "Spirála",
+                          "icon": "mdi:fire"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "entities",
+                      "title": "Poslední akce",
+                      "entities": [
+                        {
+                          "type": "attribute",
+                          "entity": "sensor.boiler_surplus_status",
+                          "attribute": "last_action",
+                          "name": "Akce",
+                          "icon": "mdi:history"
+                        },
+                        {
+                          "type": "attribute",
+                          "entity": "sensor.boiler_surplus_status",
+                          "attribute": "last_action_time",
+                          "name": "Čas akce",
+                          "icon": "mdi:clock-outline"
+                        },
+                        {
+                          "type": "attribute",
+                          "entity": "sensor.boiler_surplus_status",
+                          "attribute": "dnes_celkem_minut",
+                          "name": "Dnes běžela (min)",
+                          "icon": "mdi:timer-outline"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "markdown",
+                      "title": "Log posledních akcí",
+                      "content": "{% set log = state_attr('sensor.boiler_surplus_status', 'log') %} {% if log and log | length > 0 %}\n  {% for entry in log %}\n- {{ entry }}\n  {% endfor %}\n{% else %} _Zatím žádné akce._ {% endif %}\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Nová sekce"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

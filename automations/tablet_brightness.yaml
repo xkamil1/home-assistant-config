@@ -1,0 +1,58 @@
+- id: tablet_brightness_day
+  alias: "Tablet - denni jas"
+  trigger:
+    - platform: time
+      at: "06:00:00"
+  action:
+    - service: number.set_value
+      target:
+        entity_id: number.lenovo_tab_m10_screen_brightness
+      data:
+        value: 180
+
+- id: tablet_brightness_evening
+  alias: "Tablet - vecerni jas"
+  trigger:
+    - platform: time
+      at: "20:00:00"
+  action:
+    - service: number.set_value
+      target:
+        entity_id: number.lenovo_tab_m10_screen_brightness
+      data:
+        value: 80
+
+- id: tablet_brightness_night
+  alias: "Tablet - nocni jas"
+  trigger:
+    - platform: time
+      at: "23:00:00"
+  action:
+    - service: number.set_value
+      target:
+        entity_id: number.lenovo_tab_m10_screen_brightness
+      data:
+        value: 20
+
+- id: tablet_brightness_morning
+  alias: "Tablet - ranni jas"
+  trigger:
+    - platform: time
+      at: "05:00:00"
+  action:
+    - service: number.set_value
+      target:
+        entity_id: number.lenovo_tab_m10_screen_brightness
+      data:
+        value: 60
+
+- id: tablet_reload_hourly
+  alias: "Tablet - hodinovy reload"
+  trigger:
+    - platform: time_pattern
+      hours: "/1"
+      minutes: "0"
+  action:
+    - service: button.press
+      target:
+        entity_id: button.lenovo_tab_m10_restart_browser

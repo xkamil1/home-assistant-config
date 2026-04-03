@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "minor_version": 3,
+  "key": "energy",
+  "data": {
+    "energy_sources": [
+      {
+        "type": "battery",
+        "stat_energy_from": "sensor.battery_day_discharge",
+        "stat_energy_to": "sensor.battery_day_charge"
+      },
+      {
+        "type": "grid",
+        "cost_adjustment_day": 0.0,
+        "stat_energy_from": "sensor.power_meter_consumption",
+        "stat_cost": null,
+        "entity_energy_price": null,
+        "number_energy_price": 4.5,
+        "stat_energy_to": null,
+        "stat_compensation": null,
+        "entity_energy_price_export": null,
+        "number_energy_price_export": null
+      },
+      {
+        "type": "solar",
+        "stat_energy_from": "sensor.solar_energy",
+        "config_entry_solar_forecast": [
+          "8d4d9dc61241f4fc3adba8a47591eb08",
+          "39be71d4c644d14410698312a394aeba"
+        ]
+      }
+    ],
+    "device_consumption": [
+      {
+        "stat_consumption": "sensor.shellyem3_34945475ecce_channel_a_energy"
+      },
+      {
+        "stat_consumption": "sensor.shellyem3_34945475ecce_channel_b_energy"
+      },
+      {
+        "stat_consumption": "sensor.shellyem3_34945475ecce_channel_c_energy"
+      },
+      {
+        "stat_consumption": "sensor.heatpumpp_total"
+      }
+    ],
+    "device_consumption_water": []
+  }
+}

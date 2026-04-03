@@ -1,0 +1,50 @@
+- alias: Notifikace o stavu Tepleka na Telegram
+  trigger:
+    platform: state
+    entity_id: switch.vanocni_strom_led_switch_5
+  action:
+    service: notify.mobile_app_iphone_17
+    data:
+      message: 'Tepelné četpadlo: {{ states(''switch.tepelnecerpadlo_topeni'') }}'
+  id: Notifikace_o_stavu_TC
+- alias: Letní režim – nastavit nízké teploty pro topení
+  trigger:
+  - platform: state
+    entity_id: input_boolean.summer_mode
+    to: 'on'
+  action:
+  - service: input_number.set_value
+    data:
+      entity_id: input_number.topeni_target_temp
+      value: 22
+  - service: input_number.set_value
+    data:
+      entity_id: input_number.topeni_away_temp
+      value: 22
+  - service: climate.set_temperature
+    data:
+      entity_id: climate.topeni
+      temperature: 11
+- alias: Zimní režim – nastavit běžné teploty pro topení
+  trigger:
+  - platform: state
+    entity_id: input_boolean.summer_mode
+    to: 'off'
+  action:
+  - service: input_number.set_value
+    data:
+      entity_id: input_number.topeni_target_temp
+      value: 21
+  - service: input_number.set_value
+    data:
+      entity_id: input_number.topeni_away_temp
+      value: 19
+  - service: climate.set_temperature
+    data:
+      entity_id: climate.topeni
+      temperature: 21
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.topeni
+      hvac_mode: heat
+

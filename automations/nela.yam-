@@ -1,0 +1,248 @@
+# Automatizace ovladani klimatizace v pokoji Nely
+- alias: Nela_pokoj_ovladani_klimatizace
+  description: Automaticke ovladani klimatizace podle home_mode, pritomnosti a teploty
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.nela_pokoj_temperature
+        - device_tracker.unifi_default_82_3f_51_2d_5e_ea
+        - input_select.home_mode
+    - platform: time_pattern
+      minutes: "/5"
+  condition: []
+  action:
+    - choose:
+        # Zapnout chlazeni
+        - conditions:
+            - condition: state
+              entity_id: input_select.home_mode
+              state: "summer"
+            - condition: state
+              entity_id: device_tracker.unifi_default_82_3f_51_2d_5e_ea
+              state: "home"
+            - condition: numeric_state
+              entity_id: sensor.nela_pokoj_temperature
+              above: 23
+            - condition: numeric_state
+              entity_id: sensor.venkovni_teplota_temperature
+              above: 20
+            - condition: template
+              value_template: >
+                {{ now().replace(tzinfo=None) > (states('input_datetime.cooling_lockout_until_nela') | as_datetime) }}  
+            - condition: template
+              value_template: >
+                {{ states('climate.nela_pokoj_room_temperature') != 'cool' }}
+            - condition: template
+              value_template: >
+                {{ now().replace(tzinfo=None) > (states('input_datetime.nela_ac_override_until') | as_datetime) }}
+            - condition: or
+              conditions:
+              - condition: template
+                value_template: "{{ now().hour >= 6 and now().hour < 22 }}"
+              - condition: template
+                value_template: >
+                  {{ now().replace(tzinfo=None) < (states('input_datetime.nela_ac_override_until') | as_datetime) }}
+          sequence:
+            - service: climate.set_hvac_mode
+              target:
+                entity_id: climate.nela_pokoj_room_temperature
+              data:
+                hvac_mode: cool
+            - service: input_datetime.set_datetime
+              target:
+                entity_id: input_datetime.cooling_lockout_until_nela
+              data:
+                time: >
+                  {{ (now() + timedelta(minutes=10)).time().strftime('%H:%M:%S') }}
+
+        # Vypnout chlazeni
+        - conditions:
+            - condition: state
+              entity_id: climate.nela_pokoj_room_temperature
+              state: "cool"
+            - condition: template
+              value_template: >
+                {{ now().replace(tzinfo=None) > (states('input_datetime.nela_ac_override_until') | as_datetime) }}
+            - condition: or
+              conditions:
+                - condition: not
+                  conditions:
+                    - condition: state
+                      entity_id: input_select.home_mode
+                      state: "summer"
+                - condition: not
+                  conditions:
+                    - condition: state
+                      entity_id: device_tracker.unifi_default_82_3f_51_2d_5e_ea
+                      state: "home"
+                - condition: numeric_state
+                  entity_id: sensor.nela_pokoj_temperature
+                  below: 21
+                - condition: template
+                  value_template: "{{ now().hour >= 22 or now().hour < 6 }}"
+                
+          sequence:
+            - service: climate.set_hvac_mode
+              target:
+                entity_id: climate.nela_pokoj_room_temperature
+              data:
+                hvac_mode: "off"
+            - service: input_datetime.set_datetime
+              target:
+                entity_id: input_datetime.cooling_lockout_until_nela
+              data:
+                datetime: >
+                  {{ (now().replace(tzinfo=None) + timedelta(minutes=10)).strftime('%Y-%m-%d %H:%M:%S') }}
+            - service: persistent_notification.create
+              data:
+                title: "DEBUG: Vypnutí AC Nela"
+                message: >
+                  Temp: {{ states('sensor.nela_pokoj_temperature') }} °C
+                  Přítomnost: {{ states('device_tracker.unifi_default_82_3f_51_2d_5e_ea') }}
+                  Home mode: {{ states('input_select.home_mode') }}
+                  Čas: {{ now().strftime('%H:%M:%S') }}
+                  Override aktivní: {{ now().replace(tzinfo=None) < (states('input_datetime.nela_ac_override_until') | as_datetime) }}
+
+
+
+        # Zapnout topeni
+        - conditions:
+            - condition: state
+              entity_id: input_select.home_mode
+              state: "winter"
+            - condition: state
+              entity_id: device_tracker.unifi_default_82_3f_51_2d_5e_ea
+              state: "home"
+            - condition: numeric_state
+              entity_id: sensor.nela_pokoj_temperature
+              below: 20
+            - condition: template
+              value_template: "{{ now().hour >= 6 and now().hour < 22 }}"
+            - condition: template
+              value_template: >
+                {{ now().replace(tzinfo=None) > (states('input_datetime.heating_lockout_until_nela') | as_datetime) }}
+            - condition: template
+              value_template: >
+                {{ states('climate.nela_pokoj_room_temperature') != 'heat' }}
+            - condition: template
+              value_template: >
+                {{ now().replace(tzinfo=None) > (states('input_datetime.nela_heating_override_until') | as_datetime) }}
+            - condition: or
+              conditions:
+              - condition: template
+                value_template: "{{ now().hour >= 6 and now().hour < 22 }}"
+              - condition: template
+                value_template: >
+                  {{ now().replace(tzinfo=None) < (states('input_datetime.nela_heating_override_until') | as_datetime) }}
+          sequence:
+            - service: climate.set_hvac_mode
+              target:
+                entity_id: climate.nela_pokoj_room_temperature
+              data:
+                hvac_mode: heat
+            - service: input_datetime.set_datetime
+              target:
+                entity_id: input_datetime.heating_lockout_until_nela
+              data:
+                time: >
+                  {{ (now() + timedelta(minutes=10)).time().strftime('%H:%M:%S') }}
+
+        # Vypnout topeni
+        - conditions:
+            - condition: state
+              entity_id: climate.nela_pokoj_room_temperature
+              state: "heat"
+            - condition: or
+              conditions:
+                - condition: not
+                  conditions:
+                    - condition: state
+                      entity_id: input_select.home_mode
+                      state: "winter"
+                - condition: not
+                  conditions:
+                    - condition: state
+                      entity_id: device_tracker.unifi_default_82_3f_51_2d_5e_ea
+                      state: "home"
+                - condition: numeric_state
+                  entity_id: sensor.nela_pokoj_temperature
+                  above: 21.5
+                - condition: template
+                  value_template: "{{ now().hour >= 22 or now().hour < 6 }}"
+                - condition: template
+                  value_template: >
+                    {{ now().replace(tzinfo=None) > (states('input_datetime.nela_heating_override_until') | as_datetime) }}
+          sequence:
+            - service: climate.set_hvac_mode
+              target:
+                entity_id: climate.nela_pokoj_room_temperature
+              data:
+                hvac_mode: "off"
+            - service: input_datetime.set_datetime
+              target:
+                entity_id: input_datetime.heating_lockout_until_nela
+              data:
+                datetime: >
+                  {{ (now().replace(tzinfo=None) + timedelta(minutes=10)).strftime('%Y-%m-%d %H:%M:%S') }}
+
+  mode: restart
+
+- alias: Nela_AC_override_trigger
+  trigger:
+    - platform: state
+      entity_id: climate.nela_pokoj_room_temperature
+      to: 'cool'
+  condition:
+    - condition: template
+      value_template: >
+        {{ states('nela_ac_last_trigger') == 'manual' }}
+  action:
+    - service: input_datetime.set_datetime
+      target:
+        entity_id: input_datetime.nela_ac_override_until
+      data:
+        datetime: >
+          {{ (now() + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S') }}
+
+- alias: Nela_heating_override_trigger
+  description: Aktivace override pro topení u Nely při ručním zapnutí
+  trigger:
+    - platform: state
+      entity_id: climate.nela_pokoj_room_temperature
+      to: 'heat'
+  condition:
+    - condition: template
+      value_template: >
+        {{ states('nela_ac_last_trigger') == 'manual' }}
+  action:
+    - service: input_datetime.set_datetime
+      target:
+        entity_id: input_datetime.nela_heating_override_until
+      data:
+        datetime: >
+          {{ (now() + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S') }}
+
+          
+# Notifikace pri zmene stavu klimatizace
+- alias: Nela_pokoj_notifikace_klimatizace
+  trigger:
+    - platform: state
+      entity_id: climate.nela_pokoj_room_temperature
+  condition:
+    - condition: template
+      value_template: >
+        {{ trigger.from_state.state != trigger.to_state.state }}  
+  action:
+    - service: notify.kamil
+      data:
+        message: >
+          🌡️ Režim klimatizace u Nely se zmenil na "{{ states('climate.nela_pokoj_room_temperature') }}"
+          🏠 Pokojova teplota: {{ states('sensor.nela_pokoj_temperature') }} °C
+          🌇 Prítomnost: {{ 'doma' if is_state('device_tracker.unifi_default_82_3f_51_2d_5e_ea', 'home') else 'mimo domov' }}
+          🌤️ Venkovní teplota: {{ states('sensor.venkovni_teplota_temperature') }} °C
+          📅 Režim domacnosti: {{ states('input_select.home_mode') }}
+          ⚙️ Spuštěno: {{ states('sensor.nela_ac_last_trigger') }}
+          ⏱ Override aktivní: {{ 'ano' if is_state('binary_sensor.nela_ac_override_active', 'on') else 'ne' }}
+  mode: single
+  max_exceeded: silent
+

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "input_boolean",
+  "data": {
+    "items": [
+      {
+        "id": "ev_charger_manual_override",
+        "name": "ev_charger_manual_override",
+        "icon": "mdi:toggle-switch"
+      }
+    ]
+  }
+}

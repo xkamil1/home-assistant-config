@@ -1,0 +1,17 @@
+- id: bojler_check_1700
+  alias: Bojler check 17:00
+  description: Alert if boiler top temp below 40C at 17:00
+  triggers:
+  - platform: time
+    at: '17:00:00'
+  conditions:
+  - condition: numeric_state
+    entity_id: sensor.teplota_bojler_temperature
+    below: 40
+  actions:
+  - data:
+      title: Bojler
+      message: Horni teplota v 17:00 je {{ states("sensor.teplota_bojler_temperature")
+        }}C - pod 40C!
+    action: notify.mobile_app_iphone_17
+  mode: single

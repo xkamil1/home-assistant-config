@@ -1,0 +1,144 @@
+- alias: Notifikace o stavu bazénu na Telegram
+  trigger:
+    platform: state
+    entity_id: switch.spinac_bazen2
+  action:
+    service: notify.mobile_app_iphone_17
+    data:
+      message: 'Stav bazénu: {{ states(''switch.spinac_bazen2'') }}'
+  id: 88b12df89d7144889d1285846c0530ed
+- alias: Zapnutí LED vecer
+  trigger:
+    platform: time
+    at: '15:30:00'
+  action:
+    service: switch.turn_on
+    entity_id: switch.vanocni_strom_led_switch_5
+  id: Zapnuti_LED_Vecer
+- alias: Vypnutí LED vecer
+  trigger:
+    platform: time
+    at: '23:00:00'
+  action:
+    service: switch.turn_off
+    entity_id: switch.vanocni_strom_led_switch_5
+  id: vypnuti_LED_vecer
+- alias: Zapnutí LED rano
+  trigger:
+    platform: time
+    at: 04:30:00
+  action:
+    service: switch.turn_on
+    entity_id: switch.vanocni_strom_led_switch_5
+  id: Zapnuti_LED_rano
+- alias: Vypnutí LED rano
+  trigger:
+    platform: time
+    at: 07:00:00
+  action:
+    service: switch.turn_off
+    entity_id: switch.vanocni_strom_led_switch_5
+  id: vypnuti_LED_rano
+- alias: Notifikace o stavu LED na Telegram
+  trigger:
+    platform: state
+    entity_id: switch.vanocni_strom_led_switch_5
+  action:
+    service: notify.mobile_app_iphone_17
+    data:
+      message: 'LED světýlka na stromečku: {{ states(''switch.vanocni_strom_led_switch_5'')
+        }}'
+  id: Notifikace_o_stavu_LED
+- alias: Notifikace o stavu Motorku na dymboxu
+  trigger:
+    platform: state
+    entity_id: switch.udirna_vibrace
+  action:
+    service: notify.mobile_app_iphone_17
+    data:
+      message: 'Motorek se zapnul: {{ states(''switch.spinac_bazen2'') }}'
+  id: Notifikace_o_stavu_Motorku_Udirna
+- alias: Battery Capacity Full Notification
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.battery_state_of_capacity
+    above: 99
+  action:
+    service: notify.mobile_app_iphone_17
+    data:
+      message: Baterie solární elektrárny dosáhla 100% nabití.
+  id: d7a01a28dd0b4f149c09104e44ba2615
+- alias: Vibrace každých 10 minut
+  description: Spouští switch.udirna_vibrace každých 15 minut, pokud je povolený přepínač
+  trigger:
+  - platform: time_pattern
+    minutes: /15
+  condition:
+  - condition: state
+    entity_id: input_boolean.udirna_vibrace_control
+    state: 'on'
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.udirna_vibrace
+- id: startup_delayed_action
+  alias: Delayed Action After Startup
+  description: Performs an action one minute after Home Assistant starts.
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - delay: 00:01:00
+  - event: run_pnd
+    event_data: {}
+- id: ev_charger_proud_sync
+  alias: EV Charger - sync proud
+  description: Nastavi nabijeci proud dle slideru
+  trigger:
+  - platform: state
+    entity_id: input_number.ev_charger_proud
+  condition: []
+  action:
+  - service: ev_charger.set_current
+    data:
+      amps: '{{ states(''input_number.ev_charger_proud'') | int }}'
+  mode: single
+
+- alias: 'Faktury - notifikace pred splatnosti'
+  trigger:
+    - platform: time
+      at: '08:00:00'
+  action:
+    - service: homeassistant.update_entity
+      target:
+        entity_id:
+          - sensor.neuhrazene_faktury
+          - sensor.faktury_pred_splatnosti
+    - delay: '00:00:10'
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.faktury_po_splatnosti
+              above: 0
+          sequence:
+            - service: notify.mobile_app_iphone_17
+              data:
+                title: "Faktury po splatnosti!"
+                message: >
+                  {{ states('sensor.faktury_po_splatnosti') }} faktur po splatnosti,
+                  celkem {{ states('sensor.faktury_k_uhrade_celkem') }} CZK
+                data:
+                  push:
+                    sound: default
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.faktury_pred_splatnosti
+              above: 0
+          sequence:
+            - service: notify.mobile_app_iphone_17
+              data:
+                title: "Faktury - splatnost do 2 dnu"
+                message: >
+                  {% set inv = state_attr('sensor.faktury_pred_splatnosti', 'invoices') %}
+                  {% if inv %}{% for i in inv %}{{ i.supplier }}: {{ i.amount }} CZK ({{ i.due_date }})
+                  {% endfor %}{% endif %}

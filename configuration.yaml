@@ -1,0 +1,586 @@
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
+    - 173.245.48.0/20
+    - 103.21.244.0/22
+    - 103.22.200.0/22
+    - 103.31.4.0/22
+    - 141.101.64.0/18
+    - 108.162.192.0/18
+    - 190.93.240.0/20
+    - 188.114.96.0/20
+    - 197.234.240.0/22
+    - 198.41.128.0/17
+    - 162.158.0.0/15
+    - 104.16.0.0/13
+    - 104.24.0.0/14
+    - 172.64.0.0/13
+    - 131.0.72.0/22
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+  cors_allowed_origins:
+    - https://ha.hanusek.net
+
+# Loads default set of integrations. Do not remove.
+default_config:
+conversation:
+influxdb:
+  host: a0d7b954-influxdb
+  database: homeassistant
+  username: !secret influxdb_username
+  password: !secret influxdb_password
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+
+# Google Assistant integration
+google_assistant:
+  project_id: ha-smarthome-2026-v1
+  service_account: !include google_service_account.json
+  report_state: true
+  exposed_domains:
+    - switch
+    - light
+    - climate
+    - input_boolean
+    - media_player
+  entity_config:
+    switch.brana:
+      name: Brána
+      room: Zahrada
+    climate.topeni:
+      name: Topení
+      room: Obývací pokoj
+    media_player.q_series_soundbar_2:
+      name: Soundbar
+      room: Obývací pokoj
+    input_boolean.ohrev_vody_switch:
+      name: Ohřev vody
+      room: Kuchyně
+    switch.tepelnecerpadlo_topeni:
+      name: Tepelné čerpadlo
+      expose: false
+    switch.tepelnecerpadlo_3w_topeni:
+      expose: false
+    switch.tepelnecerpadlo_3w_teplavoda:
+      expose: false
+    switch.tepelnecerpadlo_bojler:
+      expose: false
+    switch.ev_charger_switch:
+      name: Nabíječka auta
+      room: Garáž
+
+automation: !include_dir_merge_list automations/
+script: !include scripts.yaml
+scene: !include scenes.yaml
+template:
+  # Cooling and heating lock
+  - binary_sensor:
+      - name: "Cooling Lock Active Nela"
+        state: >
+          {{ now().replace(tzinfo=None) < (states('input_datetime.cooling_lockout_until_nela') | as_datetime) }}
+      - name: "Heating Lock Active Nela"
+        state: >
+          {{ now().replace(tzinfo=None) < (states('input_datetime.heating_lockout_until_nela') | as_datetime) }}
+      - name: "Cooling Lock Active Adela"
+        state: >
+          {{ now().replace(tzinfo=None) < (states('input_datetime.cooling_lockout_until_adela') | as_datetime) }}
+      - name: "Heating Lock Active Adela"
+        state: >
+          {{ now().replace(tzinfo=None) < (states('input_datetime.heating_lockout_until_adela') | as_datetime) }}
+  # AC and heating override indikatory
+  - binary_sensor:  
+      - name: "Nela AC Override Active"
+        state: >
+          {{ now().replace(tzinfo=None) < (states('input_datetime.nela_ac_override_until') | as_datetime) }}
+
+      - name: "Adela AC Override Active"
+        state: >
+          {{ now().replace(tzinfo=None) < (states('input_datetime.adela_ac_override_until') | as_datetime) }}
+
+      - name: "Nela Heat Override Active"
+        state: >
+          {{ now().replace(tzinfo=None) < (states('input_datetime.nela_heat_override_until') | as_datetime) }}
+
+      - name: "Adela Heat Override Active"
+        state: >
+          {{ now().replace(tzinfo=None) < (states('input_datetime.adela_heat_override_until') | as_datetime) }}
+  # Sensor pro „poslední způsob aktivace“ AC u Nely - manual vs automation            
+      - name: "HDO - Nizky tarif (NT)"
+        unique_id: hdo_nizky_tarif
+        device_class: power
+        icon: "mdi:flash"
+        state: >
+          {% set t = now().hour * 60 + now().minute %}
+          {{ t < 480 or (t >= 540 and t < 720) or
+             (t >= 780 and t < 900) or (t >= 960 and t < 1140) or
+             t >= 1200 }}
+        attributes:
+          tarif: >
+            {% set t = now().hour * 60 + now().minute %}
+            {% if t < 480 or (t >= 540 and t < 720) or (t >= 780 and t < 900) or (t >= 960 and t < 1140) or t >= 1200 %}NT{% else %}VT{% endif %}
+          kod: "PTV3"
+          distribuce: "CEZ"
+  - sensor:
+      - name: "Teplota obyvak prumer"
+        unique_id: teplota_obyvak_prumer
+        device_class: temperature
+        unit_of_measurement: "C"
+        state: >
+          {% set t2 = states('sensor.obyvak2_temperature') | float(0) %}
+          {% set t3 = states('sensor.teplota_obyvak3_temperature') | float(0) %}
+          {% set vals = [t2, t3] | select('gt', 0) | list %}
+          {% if vals | length > 0 %}
+            {{ (vals | sum / vals | length) | round(2) }}
+          {% else %}
+            unavailable
+          {% endif %}
+
+  - sensor:
+      - name: "nela_ac_last_trigger"
+        state: >
+          {% set ctx = states.climate.nela_pokoj_room_temperature.context %}
+          {% if ctx.user_id %}
+            manual
+          {% else %}
+            automation
+          {% endif %}
+  # Sensor pro „poslední způsob aktivace“ AC u Adely - manual vs automation                      
+  - sensor:  
+      - name: "adela_ac_last_trigger"
+        state: >
+          {% set ctx = states.climate.adela_pokoj_room_temperature.context %}
+          {% if ctx.user_id %}
+            manual
+          {% else %}
+            automation 
+          {% endif %} 
+  # Sensor pro „poslední způsob aktivace“ topení u Nely - manual vs automation
+      - name: "nela_heat_last_trigger"
+        state: >
+          {% set ctx = states.climate.nela_pokoj_room_temperature.context %}
+          {% if ctx.user_id %}
+            manual
+          {% else %}
+            automation
+          {% endif %}
+  # Sensor pro „poslední způsob aktivace“ topeni u Adely - manual vs automation
+      - name: "adela_heat_last_trigger"
+        state: >
+          {% set ctx = states.climate.adela_pokoj_room_temperature.context %}
+          {% if ctx.user_id %}
+            manual
+          {% else %}
+            automation
+          {% endif %}      
+  #součet spotřebované energie tepelným čerpadlem
+  - sensor:
+      - name: "Shelly 3EM Total Energy"
+        unique_id: shelly_3em_total_energy
+        unit_of_measurement: "kWh"
+        state_class: total_increasing
+        device_class: energy
+        state: >
+          {% set a = states('sensor.shellyem3_34945475ecce_channel_a_energy') | float(0) %}
+          {% set b = states('sensor.shellyem3_34945475ecce_channel_b_energy') | float(0) %}
+          {% set c = states('sensor.shellyem3_34945475ecce_channel_c_energy') | float(0) %}
+          {% set total = a + b + c %}
+          {% set last = states('sensor.shelly_3em_total_energy') | float(0) %}
+          {% set max_increase = 10 %}
+
+          {% if a == 0 or b == 0 or c == 0 %}
+            {# Pokud některý senzor vrací nulu (výpadek), použij poslední hodnotu #}
+          {{ last }}
+          {% elif total < last %}
+            {# Přetečení čítače nebo obnovení po výpadku #}
+          {{ last }}
+          {% elif total - last > max_increase and last > 0 %}
+            {# Pokud je nárůst větší než povolený limit, ale nejde o první hodnotu po výpadku #}
+          {{ last }}
+          {% else %}
+            {# Normální stav: hodnotu aktualizuj #}
+          {{ total }}
+          {% endif %}
+
+  #Okamžitá spotřeba TC
+  - sensor:
+      - name: "Shelly 3EM Okamzita Spotreba"
+        unique_id: shelly_3em_instant_power
+        unit_of_measurement: "W"
+        state_class: measurement
+        device_class: power
+        state: >
+          {{
+            states('sensor.shellyem3_34945475ecce_channel_a_power') | float(0) +
+            states('sensor.shellyem3_34945475ecce_channel_b_power') | float(0) +
+            states('sensor.shellyem3_34945475ecce_channel_c_power') | float(0)
+          }}
+  #Sběr dat o stavu switche tepelnecerpadlo_topeni
+  - sensor:
+      - name: "TČ topení aktivní"
+        unique_id: tc_topeni_aktivni
+        state: >
+          {% if is_state('switch.tepelnecerpadlo_topeni', 'on') %}
+            1
+          {% else %}
+            0
+          {% endif %}
+        device_class: power
+        unit_of_measurement: ""
+  #Sběr dat o stavu switche switch.spinac_bazen2
+  - sensor:
+      - name: "bazen_aktivni"
+        unique_id: bazen_aktivni
+        state: >
+          {{ 1 if is_state('switch.spinac_bazen2', 'on') else 0 }}
+        device_class: power
+        unit_of_measurement: ""
+#Sběr dat o stavu switch.tepelnecerpadlo_bojler
+  - sensor:
+      - name: "bojler_aktivni"
+        unique_id: bojler_aktivni
+        state: >
+          {{ 1 if is_state('switch.tepelnecerpadlo_bojler', 'on') else 0 }}
+        device_class: power
+        unit_of_measurement: ""
+#zjištění, zda je přetok nebo spotřeba
+  - sensor:
+      - name: power_flow_state_numeric
+        unique_id: sensor_power_flow_state_numeric
+        state: >
+          {% set a = states('sensor.power_meter_phase_a_active_power') | float(0) %}
+          {% set b = states('sensor.power_meter_phase_b_active_power') | float(0) %}
+          {% set c = states('sensor.power_meter_phase_c_active_power') | float(0) %}
+          {% if a > 0 and b > 0 and c > 0 %}
+            1
+          {% else %}
+            0
+          {% endif %}
+        unit_of_measurement: "Stav"
+
+        state: >
+          {% if state_attr('sensor.sunsynk_settings', 'energyMode:') == 1 %}
+            on
+          {% else %}
+            off
+          {% endif %}
+  - sensor:
+      - name: "Sunsynk Output Voltage 154"
+        state: >
+          {{state_attr('sensor.sunsynk_output', 'vip_0_volt')|float(0)|round(1)}}
+  - sensor:
+      - name: "Sunsynk Output current 164"
+        state: >
+          {{state_attr('sensor.sunsynk_output', 'vip_0_current')|float(0)|round(1)}}
+  - sensor:
+      - name: "Sunsynk Output Frequency 192"
+        state: >
+          {{state_attr('sensor.sunsynk_output', 'fac')|float(0)|round(1)}}
+  - sensor:
+      - name: "Sunsynk Output Total Power 175"
+        state: >
+          {{state_attr('sensor.sunsynk_output', 'totalpower')|float(0)|round(0)}}
+  - sensor:
+      - name: "SunSynk Inverter Status 59"
+        state: >
+          {{ state_attr("sensor.sunsynk_invertor_list", "infos_0_gatewayVO_status") }}
+  - sensor:
+      - name: "Sunsynk Grid Online 194"
+        state: >
+          {{state_attr('sensor.sunsynk_grid', 'gridonline')|float|round(0)}}
+  ####Sensors pro zobrazeni v tabulce
+  - sensor:
+      - name: "Adam pokoj teplota a vlhkost"
+        state: >
+          {{ states('sensor.teplota_adam_pokoj_temperature_2') }}°C / {{ states('sensor.teplota_adam_pokoj_humidity_2') }}%
+      - name: "Adela pokoj teplota a vlhkost"
+        state: >
+          {{ states('sensor.teplota_adela_pokoj_temperature_3') }}°C / {{ states('sensor.teplota_adela_pokoj_humidity_3') }}%
+      - name: "Nela pokoj teplota a vlhkost"
+        state: >
+          {{ states('sensor.teplota_nela_pokoj_temperature_4') }}°C / {{ states('sensor.teplota_nela_pokoj_humidity_4') }}%
+      - name: "Nela pokoj teplota a vlhkost"
+        state: >
+          {{ states('sensor.teplota_koupelna_temperature') }}°C / {{ states('sensor.teplota_koupelna_humidity') }}%
+  #Délka zapnutí tepelného čerpadla
+  #Počet zapnutí tepelného čerpadla
+  - trigger:
+      - platform: state
+        entity_id: switch.tepelnecerpadlo_topeni
+        from: "off"
+        to: "on"
+    sensor:
+      - name: heatpump_start_count
+        unique_id: heatpump_start_count
+        state: >
+          {% set current = states('sensor.heatpump_start_count') | int(0) %}
+          {{ current + 1 }}
+        unit_of_measurement: "x"
+        state_class: total_increasing
+
+
+
+  - platform: time_date
+    display_options:
+      - "time"
+
+  - platform: template
+    sensors:
+      solar_power:
+        friendly_name: "Solar Power"
+        unit_of_measurement: "W"
+        value_template: "{{ states('sensor.inverter_active_power') | float }}"
+
+  - platform: integration
+    source: sensor.inverter_active_power
+    name: solar_energy
+    unit_prefix: k
+    round: 2
+
+
+sensor:
+  - platform: history_stats
+    name: Tepelne cerpadlo cas v provozu
+    entity_id: switch.tepelnecerpadlo_topeni
+    state: "on"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+input_boolean:
+  ohrev_vody_switch:
+    name: Ohrev vody
+    initial: off
+    icon: mdi:power
+  
+  away_mode:
+    name: Pryč (away mode)
+    icon: mdi:home-export-outline
+
+  ohrev_vody_dnes_spusteno:
+    name: Ohřev vody spuštěn dnes
+    initial: off
+
+  udirna_vibrace_control:
+    name: Vibrace kontrola
+    icon: mdi:toggle-switch
+
+  summer_mode:
+    name: Letní provoz
+    icon: mdi:weather-sunny
+#režim domácnosti pro topení a chlazení
+input_select:
+  heating_report_week:
+    name: "Heating report - vyber tyden"
+    icon: mdi:calendar-week
+    options:
+      - "(zadne reporty)"
+  home_mode:
+    name: Režim domácnosti
+    options:
+      - summer
+      - winter
+      - away
+    initial: summer
+#konfigurace pro časové zámky a override topení a chlazení
+input_datetime:
+  cooling_lockout_until_nela:
+    name: Lockout chlazení
+    has_date: true
+    has_time: true
+
+  heating_lockout_until_nela:
+    name: Lockout topení
+    has_date: true
+    has_time: true
+  cooling_lockout_until_adela:
+    name: Lockout chlazení
+    has_date: true
+    has_time: true
+
+  heating_lockout_until_adela:
+    name: Lockout topení
+    has_date: true
+    has_time: true
+
+  nela_ac_override_until:
+    name: Override klimatizace Nela
+    has_date: true
+    has_time: true
+  adela_ac_override_until:
+    name: Override klimatizace Adela
+    has_date: true
+    has_time: true
+  nela_heat_override_until:
+    name: Override topeni Nela
+    has_date: true
+    has_time: true
+  adela_heat_override_until:
+    name: Override topeni Adela
+    has_date: true
+    has_time: true
+#denni spotreba TC
+input_number:
+  denni_spotreba_elektriny:
+    name: Denní spotřeba elektřiny
+    initial: 0
+    min: 0
+    max: 255
+  saved_target_temp:
+    name: Uložená požadovaná teplota
+    min: 10
+    max: 30
+    step: 0.1
+    mode: box
+  topeni_target_temp:
+    name: Cílová teplota topení
+    min: 10
+    max: 25
+    step: 0.1
+    initial: 22
+    mode: box
+  topeni_away_temp:
+    name: Odchozí teplota topení
+    min: 10
+    max: 25
+    step: 0.1
+    initial: 19
+  topeni_night_temp:
+    name: "Nocni teplota topeni"
+    min: 16
+    max: 23
+    step: 0.5
+    unit_of_measurement: "C"
+    initial: 21
+    mode: box
+input_text:
+  tts_message:
+    name: "TTS zprava"
+    icon: mdi:text-to-speech
+    max: 255
+    mode: text
+  ai_agent_request:
+    name: "AI Agent instrukce"
+    max: 255
+    icon: mdi:robot
+  energy_planner_user_request:
+    name: "Instrukce pro planovani"
+    icon: mdi:chat-processing
+    max: 255
+    mode: text
+
+input_button:
+  energy_report_generate:
+    name: "Generovat energeticky report"
+    icon: mdi:lightning-bolt
+  ev_report_generate:
+    name: "Generovat EV report"
+    icon: mdi:file-chart
+  ai_agent_confirm:
+    name: "AI Agent potvrdit"
+    icon: mdi:check-circle
+  ai_agent_reject:
+    name: "AI Agent zamitnout"
+    icon: mdi:close-circle
+  energy_planner_confirm:
+    name: "Potvrdit plan"
+    icon: mdi:check-circle
+  energy_planner_reject:
+    name: "Zamitnout plan"
+    icon: mdi:close-circle
+  heating_report_generate:
+    name: "Generovat heating report"
+    icon: mdi:chart-bar
+
+climate:
+  - platform: generic_thermostat
+    name: Topeni
+    heater: switch.tepelnecerpadlo_topeni
+    target_sensor: sensor.teplota_obyvak_prumer
+    min_temp: 15
+    max_temp: 30
+    ac_mode: false
+#tuto teplotu je na zimu nutno změnit na 21    
+    target_temp: 21
+    cold_tolerance: 0.2
+    hot_tolerance: 0.3
+    keep_alive:
+      minutes: 5
+    initial_hvac_mode: "heat"
+#tuto teplotu je na zimu nutno změnit na 19
+    away_temp: 19
+# Denní cyklus měření počtu sepnutí tepelného čerpadla
+
+# Faktury - REST senzory z invoice app (10.0.0.55)
+rest:
+  - resource: http://10.0.0.55/api/invoices/ha/unpaid
+    scan_interval: 3600
+    timeout: 30
+    sensor:
+      - name: "Neuhrazene faktury"
+        unique_id: neuhrazene_faktury
+        value_template: "{{ value_json.count }}"
+        icon: mdi:file-document-alert
+      - name: "Faktury k uhrade celkem"
+        unique_id: faktury_k_uhrade_celkem
+        value_template: "{{ value_json.total_amount }}"
+        unit_of_measurement: "CZK"
+        icon: mdi:cash
+      - name: "Faktury po splatnosti"
+        unique_id: faktury_po_splatnosti
+        value_template: "{{ value_json.invoices | selectattr('overdue', 'true') | list | length }}"
+        icon: mdi:alert
+      - name: "Faktury detail"
+        unique_id: faktury_detail
+        value_template: "{{ value_json.count }}"
+        json_attributes:
+          - invoices
+          - total_amount
+  - resource: http://10.0.0.55/api/invoices/ha/due-soon?days=2
+    scan_interval: 3600
+    timeout: 30
+    sensor:
+      - name: "Faktury pred splatnosti"
+        unique_id: faktury_pred_splatnosti
+        value_template: "{{ value_json.count }}"
+        icon: mdi:clock-alert
+        json_attributes:
+          - invoices
+utility_meter:
+  tepelne_cerpadlo_daily_usage:
+    source: sensor.tepelne_cerpadlo_cas_v_provozu
+    cycle: daily
+
+  heatpump_daily_start_count:
+    source: sensor.heatpump_start_count
+    cycle: daily
+  shelly_3em_hourly_energy:
+    source: sensor.shelly_3em_total_energy
+    cycle: hourly
+    unique_id: utility_meter_shelly_3em_hourly_energy
+  shelly_3em_daily_energy:
+    source: sensor.shelly_3em_total_energy
+    cycle: daily
+    unique_id: utility_meter_shelly_3em_daily_energy
+  shelly_3em_monthly_energy:
+    source: sensor.shelly_3em_total_energy
+    cycle: monthly
+    unique_id: utility_meter_shelly_3em_monthly_energy
+  shelly_3em_yearly_energy:
+    source: sensor.shelly_3em_total_energy
+    cycle: yearly
+    unique_id: utility_meter_shelly_3em_yearly_energy
+
+lovelace:
+  dashboards:
+    ev-charger:
+      mode: yaml
+      title: EV Charger
+      icon: mdi:ev-station
+      show_in_sidebar: true
+      filename: ev_charger_dashboard.yaml
+
+shell_command:
+  git_autocommit: "bash /config/git_autocommit.sh >> /config/git_autocommit.log 2>&1"

@@ -1,0 +1,97 @@
+# Citlive soubory
+secrets.yaml
+appdaemon/secrets.yaml
+.storage/auth*
+.storage/core.config_entries
+
+# Databaze a logy
+home-assistant_v2.db
+home-assistant_v2.db-shm
+home-assistant_v2.db-wal
+home-assistant_v2.db.ba*
+homeassitant_v2.db.ba*
+*.log
+*.log.*
+frigate.db
+frigate.yaml
+zigbee.db
+zigbee.db-shm
+zigbee.db-wal
+
+# Zalohy a docasne
+backups/
+lovelace_backup_*.json
+.storage/*.bak*
+.ha_run.lock
+.vacuum
+.timeline
+
+# Python cache
+*.pyc
+__pycache__/
+.cache/
+
+# AppDaemon credentials (inline tokens)
+appdaemon/apps/apps.yaml
+
+# AppDaemon runtime
+appdaemon/apps/pnd/
+appdaemon/apps/*.json
+appdaemon/apps/*.txt
+appdaemon/apps/*.so
+appdaemon/apps/geckodriver.log
+
+# HA interni
+.cloud/
+.HA_VERSION
+deps/
+tts/
+www/
+custom_components/
+blueprints/
+
+# System
+system_analysis.md
+
+# Sensitive storage
+.storage/fordpass/
+.storage/http.auth
+.storage/http
+.storage/cloud
+.storage/google_assistant
+.storage/homekit.*
+.storage/onboarding
+.storage/core.uuid
+.storage/core.restore_state
+.storage/tmp*
+.storage/hacs.*
+.storage/roborock/
+
+# Test files
+appdaemon/test*.txt
+
+# Google Service Account (CRITICAL - contains private key)
+google_service_account.json
+
+# Sensitive .storage files
+.storage/backup
+.storage/application_credentials
+.storage/unifi_data
+.storage/person
+.storage/mobile_app*
+.storage/core.analytics
+.storage/core.entity_registry
+.storage/core.device_registry
+.storage/core.area_registry
+.storage/core.restore_state*
+
+# Backup files
+*.bak
+*.bak.*
+*.bak_*
+
+# IP bans
+ip_bans.yaml
+
+# Analysis files
+fve_analysis*.txt

@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_resources",
+  "data": {
+    "items": [
+      {
+        "id": "49617dd54582458f987653c1b910fa83",
+        "url": "/hacsfiles/flex-table-card/flex-table-card.js?hacstag=15629205813",
+        "type": "module"
+      },
+      {
+        "id": "2a8a713f565c4872bc909928f61c7ec5",
+        "url": "/hacsfiles/apexcharts-card/apexcharts-card.js?hacstag=331701152223",
+        "type": "module"
+      },
+      {
+        "id": "fe9f0a837cb24abc867b9335f89affe9",
+        "url": "/hacsfiles/bar-card/bar-card.js?hacstag=163363577320",
+        "type": "module"
+      },
+      {
+        "id": "242f1772933a4b10814c9f792c86a78a",
+        "url": "/hacsfiles/canvas-gauge-card/canvas-gauge-card.js?hacstag=142545838091",
+        "type": "module"
+      },
+      {
+        "id": "2b971cabd58f4d4cb9bb44cdac52ab3f",
+        "url": "/hacsfiles/scheduler-card/scheduler-card.js?hacstag=2862701574016",
+        "type": "module"
+      },
+      {
+        "id": "c4cfe2be02d640a1a539314d9521d627",
+        "url": "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?hacstag=1512800620130",
+        "type": "module"
+      },
+      {
+        "id": "0e83e5a81f624d33bf3169a7356c0bed",
+        "url": "/hacsfiles/stack-in-card/stack-in-card.js?hacstag=248954055020",
+        "type": "module"
+      },
+      {
+        "id": "08584dd0912c4d22a58186a18f85ea61",
+        "url": "/hacsfiles/button-card/button-card.js?hacstag=146194325701",
+        "type": "module"
+      },
+      {
+        "id": "2e790c136e42fd64c57d9ff1ee1812ca",
+        "url": "/hacsfiles/layout-card/layout-card.js",
+        "type": "module"
+      },
+      {
+        "id": "c56f41d46bbce4d307832a79f3ea72a3",
+        "url": "/hacsfiles/card-mod/card-mod.js",
+        "type": "module"
+      },
+      {
+        "id": "3930744de9da4f2a869bbc984aacdaa2",
+        "url": "/hacsfiles/power-flow-card-plus/power-flow-card-plus.js?hacstag=618081815026",
+        "type": "module"
+      }
+    ]
+  }
+}

@@ -1,0 +1,410 @@
+{
+  "version": 1,
+  "minor_version": 2,
+  "key": "repairs.issue_registry",
+  "data": {
+    "issues": [
+      {
+        "created": "2024-11-30T16:04:42.686294+00:00",
+        "dismissed_version": null,
+        "domain": "automation",
+        "is_persistent": false,
+        "issue_id": "automation.zapnuti_led_vecer_validation_failed_triggers"
+      },
+      {
+        "created": "2025-08-08T08:09:26.879773+00:00",
+        "dismissed_version": null,
+        "domain": "hassio",
+        "is_persistent": false,
+        "issue_id": "c1936cadf56042ba965f81754777499d"
+      },
+      {
+        "created": "2025-08-08T08:31:07.426631+00:00",
+        "dismissed_version": null,
+        "domain": "hassio",
+        "is_persistent": false,
+        "issue_id": "379744282f48402aa125c0c27e53aa7b"
+      },
+      {
+        "created": "2025-09-08T19:06:20.776181+00:00",
+        "dismissed_version": null,
+        "domain": "hassio",
+        "is_persistent": false,
+        "issue_id": "22204071a2e5424495ae0bdafe56eb97"
+      },
+      {
+        "created": "2025-12-17T02:04:33.123070+00:00",
+        "dismissed_version": "2025.12.4",
+        "domain": "telegram_bot",
+        "is_persistent": false,
+        "issue_id": "deprecated_yaml"
+      },
+      {
+        "created": "2025-12-17T02:04:37.616560+00:00",
+        "dismissed_version": null,
+        "domain": "telegram",
+        "is_persistent": false,
+        "issue_id": "migrate_notify"
+      },
+      {
+        "created": "2025-12-17T02:04:39.006963+00:00",
+        "dismissed_version": null,
+        "domain": "synology_dsm",
+        "is_persistent": false,
+        "issue_id": "missing_backup_setup_C7KGN00640"
+      },
+      {
+        "created": "2025-12-24T16:36:15.680670+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "removed_163363577"
+      },
+      {
+        "created": "2025-12-24T16:39:39.548025+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_512922944_tags/0.7.6"
+      },
+      {
+        "created": "2025-12-24T16:39:46.095183+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_366911690_tags/0.9.76"
+      },
+      {
+        "created": "2025-12-24T16:39:54.627917+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_451416145_tags/v4.4.4"
+      },
+      {
+        "created": "2025-12-24T16:40:19.590647+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_419381725_tags/1.6.0"
+      },
+      {
+        "created": "2025-12-24T16:41:08.033886+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_286186485_tags/v3.3.8"
+      },
+      {
+        "created": "2025-12-24T16:42:10.621411+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_707977674_tags/v1.1.1"
+      },
+      {
+        "created": "2026-01-06T07:39:16.665517+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_932615779_tags/2026.1.2"
+      },
+      {
+        "created": "2026-01-26T11:42:24.801707+00:00",
+        "dismissed_version": null,
+        "domain": "hassio",
+        "is_persistent": false,
+        "issue_id": "e9bb21d8f3884917974b176b624a41fc"
+      },
+      {
+        "created": "2026-02-15T07:52:30.602641+00:00",
+        "dismissed_version": null,
+        "domain": "hassio",
+        "is_persistent": false,
+        "issue_id": "d0808c4cffc3471f866f07d44ba2ddee"
+      },
+      {
+        "created": "2026-03-03T10:29:29.163561+00:00",
+        "dismissed_version": null,
+        "domain": "hassio",
+        "is_persistent": false,
+        "issue_id": "8e9221344d814a1e8d33b4226e902ca2"
+      },
+      {
+        "created": "2026-03-03T19:24:33.050005+00:00",
+        "dismissed_version": null,
+        "domain": "hassio",
+        "is_persistent": false,
+        "issue_id": "1511b903edca4075879192f565970e1e"
+      },
+      {
+        "created": "2026-03-05T10:11:02.337637+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_856542767_tags/v1.30.0"
+      },
+      {
+        "created": "2026-03-07T14:50:10.310098+00:00",
+        "dismissed_version": null,
+        "domain": "hassio",
+        "is_persistent": false,
+        "issue_id": "403604b7ea114a8094595b18b6182597"
+      },
+      {
+        "created": "2026-03-11T11:55:10.220228+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.esphome_esphome_discussions"
+      },
+      {
+        "created": "2026-03-11T11:55:10.220361+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.esphome_esphome_stars"
+      },
+      {
+        "created": "2026-03-11T11:55:10.220499+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.esphome_esphome_watchers"
+      },
+      {
+        "created": "2026-03-11T11:55:10.220607+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.esphome_esphome_forks"
+      },
+      {
+        "created": "2026-03-11T11:55:10.220710+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.esphome_esphome_issues"
+      },
+      {
+        "created": "2026-03-11T11:55:10.220813+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.esphome_esphome_pull_requests"
+      },
+      {
+        "created": "2026-03-14T00:53:03.607922+00:00",
+        "dismissed_version": null,
+        "domain": "hassio",
+        "is_persistent": false,
+        "issue_id": "0967e05471e547d9b9c5a1f3fcf8edda"
+      },
+      {
+        "created": "2026-03-21T13:18:28.818878+00:00",
+        "dismissed_version": null,
+        "domain": "influxdb",
+        "is_persistent": false,
+        "issue_id": "deprecated_yaml"
+      },
+      {
+        "created": "2026-03-21T13:18:29.165150+00:00",
+        "dismissed_version": null,
+        "domain": "homeassistant",
+        "is_persistent": false,
+        "issue_id": "config_entry_only_telegram_bot"
+      },
+      {
+        "created": "2026-03-21T13:25:01.311491+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_366911690_tags/0.9.79"
+      },
+      {
+        "created": "2026-03-21T13:29:34.625382+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_932615779_tags/2026.3.2"
+      },
+      {
+        "created": "2026-03-21T13:31:04.967848+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_451416145_tags/v4.4.9"
+      },
+      {
+        "created": "2026-03-21T13:31:37.703667+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_856542767_tags/v1.31.0"
+      },
+      {
+        "created": "2026-03-21T13:32:08.754300+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_311536795_tags/v5.14.2"
+      },
+      {
+        "created": "2026-03-21T13:32:44.065764+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_691766596_tags/v0.11.5"
+      },
+      {
+        "created": "2026-03-21T22:35:28.557298+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_249381778_tags/v5.2.5"
+      },
+      {
+        "created": "2026-03-22T00:08:20.003300+00:00",
+        "dismissed_version": null,
+        "domain": "automation",
+        "is_persistent": true,
+        "issue_id": "automation.oleandry_ovladani_zarovky_podle_teploty_service_not_found_notify.homeassistant_k_5873762629",
+        "breaks_in_ha_version": null,
+        "data": null,
+        "is_fixable": true,
+        "issue_domain": null,
+        "learn_more_url": null,
+        "severity": "error",
+        "translation_key": "service_not_found",
+        "translation_placeholders": {
+          "service": "notify.homeassistant_k_5873762629",
+          "entity_id": "automation.oleandry_ovladani_zarovky_podle_teploty",
+          "name": "Oleandry - ovládání žárovky podle teploty",
+          "edit": "/config/automation/edit/None"
+        }
+      },
+      {
+        "created": "2026-03-22T09:01:51.510632+00:00",
+        "dismissed_version": null,
+        "domain": "automation",
+        "is_persistent": true,
+        "issue_id": "automation.ev_charger_sync_proud_service_not_found_ev_charger.set_current",
+        "breaks_in_ha_version": null,
+        "data": null,
+        "is_fixable": true,
+        "issue_domain": null,
+        "learn_more_url": null,
+        "severity": "error",
+        "translation_key": "service_not_found",
+        "translation_placeholders": {
+          "service": "ev_charger.set_current",
+          "entity_id": "automation.ev_charger_sync_proud",
+          "name": "EV Charger - sync proud",
+          "edit": "/config/automation/edit/ev_charger_proud_sync"
+        }
+      },
+      {
+        "created": "2026-03-22T11:42:19.721118+00:00",
+        "dismissed_version": null,
+        "domain": "automation",
+        "is_persistent": true,
+        "issue_id": "automation.vypnuti_ohrevu_vody_pri_dosazeni_teploty_service_not_found_notify.homeassistant_k_5873762629",
+        "breaks_in_ha_version": null,
+        "data": null,
+        "is_fixable": true,
+        "issue_domain": null,
+        "learn_more_url": null,
+        "severity": "error",
+        "translation_key": "service_not_found",
+        "translation_placeholders": {
+          "service": "notify.homeassistant_k_5873762629",
+          "entity_id": "automation.vypnuti_ohrevu_vody_pri_dosazeni_teploty",
+          "name": "Vypnutí ohřevu vody při dosažení teploty",
+          "edit": "/config/automation/edit/de1467aecbe442f0b050bd674cde2d38"
+        }
+      },
+      {
+        "created": "2026-03-24T10:01:06.643829+00:00",
+        "dismissed_version": null,
+        "domain": "automation",
+        "is_persistent": true,
+        "issue_id": "automation.battery_capacity_full_notification_service_not_found_notify.homeassistant_k_5873762629",
+        "breaks_in_ha_version": null,
+        "data": null,
+        "is_fixable": true,
+        "issue_domain": null,
+        "learn_more_url": null,
+        "severity": "error",
+        "translation_key": "service_not_found",
+        "translation_placeholders": {
+          "service": "notify.homeassistant_k_5873762629",
+          "entity_id": "automation.battery_capacity_full_notification",
+          "name": "Battery Capacity Full Notification",
+          "edit": "/config/automation/edit/d7a01a28dd0b4f149c09104e44ba2615"
+        }
+      },
+      {
+        "created": "2026-03-25T10:31:54.003888+00:00",
+        "dismissed_version": null,
+        "domain": "automation",
+        "is_persistent": true,
+        "issue_id": "automation.ford_zmena_stavu_zamku_service_not_found_notify.homeassistant_k_5873762629",
+        "breaks_in_ha_version": null,
+        "data": null,
+        "is_fixable": true,
+        "issue_domain": null,
+        "learn_more_url": null,
+        "severity": "error",
+        "translation_key": "service_not_found",
+        "translation_placeholders": {
+          "service": "notify.homeassistant_k_5873762629",
+          "entity_id": "automation.ford_zmena_stavu_zamku",
+          "name": "Ford - změna stavu zámku",
+          "edit": "/config/automation/edit/None"
+        }
+      },
+      {
+        "created": "2026-03-30T15:55:10.124376+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.home_assistant_core_discussions"
+      },
+      {
+        "created": "2026-03-30T15:55:10.124980+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.home_assistant_core_stars"
+      },
+      {
+        "created": "2026-03-30T15:55:10.125346+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.home_assistant_core_watchers"
+      },
+      {
+        "created": "2026-03-30T15:55:10.125671+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.home_assistant_core_forks"
+      },
+      {
+        "created": "2026-03-30T15:55:10.125966+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.home_assistant_core_issues"
+      },
+      {
+        "created": "2026-03-30T15:55:10.126285+00:00",
+        "dismissed_version": null,
+        "domain": "sensor",
+        "is_persistent": false,
+        "issue_id": "units_changed_sensor.home_assistant_core_pull_requests"
+      }
+    ]
+  }
+}
