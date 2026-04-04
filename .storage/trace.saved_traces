@@ -7,12 +7,12 @@
       {
         "extended_dict": {
           "last_step": "action/1",
-          "run_id": "0fa02c24ab4a3351644390f435973d81",
+          "run_id": "a232ef2c1325b0f78a085161ab7befb8",
           "state": "stopped",
           "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-03T19:29:05.547040+00:00",
-            "finish": "2026-04-03T19:30:05.550046+00:00"
+            "start": "2026-04-04T08:12:21.120274+00:00",
+            "finish": "2026-04-04T08:13:21.124051+00:00"
           },
           "domain": "automation",
           "item_id": "startup_delayed_action",
@@ -21,23 +21,23 @@
             "trigger/0": [
               {
                 "path": "trigger/0",
-                "timestamp": "2026-04-03T19:29:05.547069+00:00",
+                "timestamp": "2026-04-04T08:12:21.120304+00:00",
                 "changed_variables": {
                   "this": {
                     "entity_id": "automation.delayed_action_after_startup",
                     "state": "on",
                     "attributes": {
                       "id": "startup_delayed_action",
-                      "last_triggered": "2026-04-03T19:24:18.076803+00:00",
+                      "last_triggered": "2026-04-03T19:32:23.764071+00:00",
                       "mode": "single",
                       "current": 0,
                       "friendly_name": "Delayed Action After Startup"
                     },
-                    "last_changed": "2026-04-03T19:28:48.391653+00:00",
-                    "last_reported": "2026-04-03T19:28:48.391653+00:00",
-                    "last_updated": "2026-04-03T19:28:48.391653+00:00",
+                    "last_changed": "2026-04-04T08:11:57.185227+00:00",
+                    "last_reported": "2026-04-04T08:11:57.185227+00:00",
+                    "last_updated": "2026-04-04T08:11:57.185227+00:00",
                     "context": {
-                      "id": "01KNAD3JR7N6S4NP4M1PZA9CVN",
+                      "id": "01KNBRRYC1BP4WYZMS6S3SDB7M",
                       "parent_id": null,
                       "user_id": null
                     }
@@ -56,10 +56,10 @@
             "action/0": [
               {
                 "path": "action/0",
-                "timestamp": "2026-04-03T19:29:05.547279+00:00",
+                "timestamp": "2026-04-04T08:12:21.120516+00:00",
                 "changed_variables": {
                   "context": {
-                    "id": "01KNAD43GBMY6D2D9FY7ZK6PSR",
+                    "id": "01KNBRSNR0P9QH0GN2CX9R5W3D",
                     "parent_id": null,
                     "user_id": null
                   }
@@ -73,7 +73,7 @@
             "action/1": [
               {
                 "path": "action/1",
-                "timestamp": "2026-04-03T19:30:05.549421+00:00",
+                "timestamp": "2026-04-04T08:13:21.122823+00:00",
                 "result": {
                   "event": "run_pnd",
                   "event_data": {}
@@ -103,19 +103,19 @@
           },
           "blueprint_inputs": null,
           "context": {
-            "id": "01KNAD43GBMY6D2D9FY7ZK6PSR",
+            "id": "01KNBRSNR0P9QH0GN2CX9R5W3D",
             "parent_id": null,
             "user_id": null
           }
         },
         "short_dict": {
           "last_step": "action/1",
-          "run_id": "0fa02c24ab4a3351644390f435973d81",
+          "run_id": "a232ef2c1325b0f78a085161ab7befb8",
           "state": "stopped",
           "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-03T19:29:05.547040+00:00",
-            "finish": "2026-04-03T19:30:05.550046+00:00"
+            "start": "2026-04-04T08:12:21.120274+00:00",
+            "finish": "2026-04-04T08:13:21.124051+00:00"
           },
           "domain": "automation",
           "item_id": "startup_delayed_action",
@@ -123,16 +123,2699 @@
         }
       }
     ],
+    "automation.d7a01a28dd0b4f149c09104e44ba2615": [
+      {
+        "extended_dict": {
+          "last_step": "action/0",
+          "run_id": "b2e18e0cd9afa37c2266dd7384f4d488",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:12:23.156271+00:00",
+            "finish": "2026-04-04T08:12:23.459534+00:00"
+          },
+          "domain": "automation",
+          "item_id": "d7a01a28dd0b4f149c09104e44ba2615",
+          "trigger": "numeric state of sensor.battery_state_of_capacity",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:12:23.156301+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.battery_capacity_full_notification",
+                    "state": "on",
+                    "attributes": {
+                      "id": "d7a01a28dd0b4f149c09104e44ba2615",
+                      "last_triggered": "2026-04-04T08:00:09.312026+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Battery Capacity Full Notification"
+                    },
+                    "last_changed": "2026-04-04T08:11:57.184953+00:00",
+                    "last_reported": "2026-04-04T08:11:57.184953+00:00",
+                    "last_updated": "2026-04-04T08:11:57.184953+00:00",
+                    "context": {
+                      "id": "01KNBRRYC05YCF8G4EEC62R4K8",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "numeric_state",
+                    "entity_id": "sensor.battery_state_of_capacity",
+                    "below": null,
+                    "above": 99.0,
+                    "from_state": {
+                      "entity_id": "sensor.battery_state_of_capacity",
+                      "state": "unknown",
+                      "attributes": {
+                        "state_class": "measurement",
+                        "unit_of_measurement": "%",
+                        "icon": "mdi:home-battery",
+                        "friendly_name": "Batteries State of capacity"
+                      },
+                      "last_changed": "2026-04-04T08:12:09.017650+00:00",
+                      "last_reported": "2026-04-04T08:12:09.017650+00:00",
+                      "last_updated": "2026-04-04T08:12:09.017650+00:00",
+                      "context": {
+                        "id": "01KNBRS9XSW2PPHDNDMC43DASQ",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "to_state": {
+                      "entity_id": "sensor.battery_state_of_capacity",
+                      "state": "100.0",
+                      "attributes": {
+                        "state_class": "measurement",
+                        "unit_of_measurement": "%",
+                        "icon": "mdi:home-battery",
+                        "friendly_name": "Batteries State of capacity"
+                      },
+                      "last_changed": "2026-04-04T08:12:23.155658+00:00",
+                      "last_reported": "2026-04-04T08:12:23.155658+00:00",
+                      "last_updated": "2026-04-04T08:12:23.155658+00:00",
+                      "context": {
+                        "id": "01KNBRSQQKZPBTJ6VVA9VMGGAZ",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "for": null,
+                    "description": "numeric state of sensor.battery_state_of_capacity"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:12:23.156532+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBRSQQMEPK1AFPKJ7ZGVXSV",
+                    "parent_id": "01KNBRSQQKZPBTJ6VVA9VMGGAZ",
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "notify",
+                    "service": "mobile_app_iphone_17",
+                    "service_data": {
+                      "message": "Baterie sol\u00e1rn\u00ed elektr\u00e1rny dos\u00e1hla 100% nabit\u00ed."
+                    },
+                    "target": {}
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Battery Capacity Full Notification",
+            "trigger": {
+              "platform": "numeric_state",
+              "entity_id": "sensor.battery_state_of_capacity",
+              "above": 99
+            },
+            "action": {
+              "data": {
+                "message": "Baterie sol\u00e1rn\u00ed elektr\u00e1rny dos\u00e1hla 100% nabit\u00ed."
+              },
+              "action": "notify.mobile_app_iphone_17"
+            },
+            "id": "d7a01a28dd0b4f149c09104e44ba2615"
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBRSQQMEPK1AFPKJ7ZGVXSV",
+            "parent_id": "01KNBRSQQKZPBTJ6VVA9VMGGAZ",
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/0",
+          "run_id": "b2e18e0cd9afa37c2266dd7384f4d488",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:12:23.156271+00:00",
+            "finish": "2026-04-04T08:12:23.459534+00:00"
+          },
+          "domain": "automation",
+          "item_id": "d7a01a28dd0b4f149c09104e44ba2615",
+          "trigger": "numeric state of sensor.battery_state_of_capacity"
+        }
+      }
+    ],
+    "automation.None": [
+      {
+        "extended_dict": {
+          "last_step": "action/0/choose/1/sequence/1",
+          "run_id": "c573d2b3f5a459298a7423107d33dd1f",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T08:12:24.762166+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "numeric state of sensor.teplota_pergola_temperature",
+          "trace": {
+            "trigger/1": [
+              {
+                "path": "trigger/1",
+                "timestamp": "2026-04-04T08:12:24.762186+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.oleandry_ovladani_zarovky_podle_teploty",
+                    "state": "on",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T05:30:45.106899+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Oleandry - ovl\u00e1d\u00e1n\u00ed \u017e\u00e1rovky podle teploty"
+                    },
+                    "last_changed": "2026-04-04T08:11:57.187036+00:00",
+                    "last_reported": "2026-04-04T08:11:57.187036+00:00",
+                    "last_updated": "2026-04-04T08:11:57.187036+00:00",
+                    "context": {
+                      "id": "01KNBRRYC33J51ZGYF1Y0YP66G",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "1",
+                    "idx": "1",
+                    "alias": null,
+                    "platform": "numeric_state",
+                    "entity_id": "sensor.teplota_pergola_temperature",
+                    "below": null,
+                    "above": 5.0,
+                    "from_state": {
+                      "entity_id": "sensor.teplota_pergola_temperature",
+                      "state": "unavailable",
+                      "attributes": {
+                        "restored": true,
+                        "state_class": "measurement",
+                        "device_class": "temperature",
+                        "friendly_name": "Teplota_Pergola Temperature",
+                        "supported_features": 0,
+                        "unit_of_measurement": "\u00b0C"
+                      },
+                      "last_changed": "2026-04-04T08:12:16.980063+00:00",
+                      "last_reported": "2026-04-04T08:12:16.980063+00:00",
+                      "last_updated": "2026-04-04T08:12:16.980063+00:00",
+                      "context": {
+                        "id": "01KNBRSHPMTKR752Y7R32RV4YY",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "to_state": {
+                      "entity_id": "sensor.teplota_pergola_temperature",
+                      "state": "11.17",
+                      "attributes": {
+                        "state_class": "measurement",
+                        "unit_of_measurement": "\u00b0C",
+                        "device_class": "temperature",
+                        "friendly_name": "Teplota_Pergola Temperature"
+                      },
+                      "last_changed": "2026-04-04T08:12:24.752709+00:00",
+                      "last_reported": "2026-04-04T08:12:24.752709+00:00",
+                      "last_updated": "2026-04-04T08:12:24.752709+00:00",
+                      "context": {
+                        "id": "01KNBRSS9G32JYHP29R3GDEGRG",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "for": null,
+                    "description": "numeric state of sensor.teplota_pergola_temperature"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:12:24.762363+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBRSS9T8Y02M1E7649H0Q5X",
+                    "parent_id": "01KNBRSS9G32JYHP29R3GDEGRG",
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "choice": 1
+                }
+              }
+            ],
+            "action/0/choose/0": [
+              {
+                "path": "action/0/choose/0",
+                "timestamp": "2026-04-04T08:12:24.763071+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "action/0/choose/0/conditions/0": [
+              {
+                "path": "action/0/choose/0/conditions/0",
+                "timestamp": "2026-04-04T08:12:24.763098+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "action/0/choose/0/conditions/0/entity_id/0": [
+              {
+                "path": "action/0/choose/0/conditions/0/entity_id/0",
+                "timestamp": "2026-04-04T08:12:24.763112+00:00",
+                "result": {
+                  "result": false,
+                  "state": 11.17,
+                  "wanted_state_below": 2.0
+                }
+              }
+            ],
+            "action/0/choose/1": [
+              {
+                "path": "action/0/choose/1",
+                "timestamp": "2026-04-04T08:12:24.763147+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "action/0/choose/1/conditions/0": [
+              {
+                "path": "action/0/choose/1/conditions/0",
+                "timestamp": "2026-04-04T08:12:24.763159+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "action/0/choose/1/conditions/0/entity_id/0": [
+              {
+                "path": "action/0/choose/1/conditions/0/entity_id/0",
+                "timestamp": "2026-04-04T08:12:24.763168+00:00",
+                "result": {
+                  "result": true,
+                  "state": 11.17
+                }
+              }
+            ],
+            "action/0/choose/1/sequence/0": [
+              {
+                "path": "action/0/choose/1/sequence/0",
+                "timestamp": "2026-04-04T08:12:24.763243+00:00",
+                "result": {
+                  "params": {
+                    "domain": "switch",
+                    "service": "turn_off",
+                    "service_data": {},
+                    "target": {
+                      "entity_id": [
+                        "switch.zasuvka_pergola"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "action/0/choose/1/sequence/1": [
+              {
+                "path": "action/0/choose/1/sequence/1",
+                "timestamp": "2026-04-04T08:12:35.131866+00:00",
+                "result": {
+                  "params": {
+                    "domain": "notify",
+                    "service": "mobile_app_iphone_17",
+                    "service_data": {
+                      "message": "\ud83d\udd0c \u017d\u00e1rovka pro oleandry byla *vypnuta* (teplota: 11.17 \u00b0C)"
+                    },
+                    "target": {}
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Oleandry - ovl\u00e1d\u00e1n\u00ed \u017e\u00e1rovky podle teploty",
+            "description": "Zapnut\u00ed nebo vypnut\u00ed \u017e\u00e1rovky podle teploty",
+            "trigger": [
+              {
+                "platform": "numeric_state",
+                "entity_id": "sensor.teplota_pergola_temperature",
+                "below": 2
+              },
+              {
+                "platform": "numeric_state",
+                "entity_id": "sensor.teplota_pergola_temperature",
+                "above": 5
+              }
+            ],
+            "condition": [],
+            "action": [
+              {
+                "choose": [
+                  {
+                    "conditions": [
+                      {
+                        "condition": "numeric_state",
+                        "entity_id": "sensor.teplota_pergola_temperature",
+                        "below": 2
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "target": {
+                          "entity_id": "switch.zasuvka_pergola"
+                        },
+                        "action": "switch.turn_on"
+                      },
+                      {
+                        "data": {
+                          "message": "\ud83d\udca1 \u017d\u00e1rovka pro oleandry byla *zapnuta* (teplota: {{ states('sensor.teplota_pergola_temperature') }} \u00b0C)\n"
+                        },
+                        "action": "notify.mobile_app_iphone_17"
+                      }
+                    ]
+                  },
+                  {
+                    "conditions": [
+                      {
+                        "condition": "numeric_state",
+                        "entity_id": "sensor.teplota_pergola_temperature",
+                        "above": 5
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "target": {
+                          "entity_id": "switch.zasuvka_pergola"
+                        },
+                        "action": "switch.turn_off"
+                      },
+                      {
+                        "data": {
+                          "message": "\ud83d\udd0c \u017d\u00e1rovka pro oleandry byla *vypnuta* (teplota: {{ states('sensor.teplota_pergola_temperature') }} \u00b0C)\n"
+                        },
+                        "action": "notify.mobile_app_iphone_17"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "mode": "single"
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBRSS9T8Y02M1E7649H0Q5X",
+            "parent_id": "01KNBRSS9G32JYHP29R3GDEGRG",
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/0/choose/1/sequence/1",
+          "run_id": "c573d2b3f5a459298a7423107d33dd1f",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T08:12:24.762166+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "numeric state of sensor.teplota_pergola_temperature"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/0",
+          "run_id": "4bf1cb5399bd7f3f5e12448e315a2d9d",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T08:15:00.490341+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:15:00.490370+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.vibrace_kazdych_10_minut",
+                    "state": "on",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T08:00:00.232247+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Vibrace ka\u017ed\u00fdch 10 minut"
+                    },
+                    "last_changed": "2026-04-04T08:11:57.185101+00:00",
+                    "last_reported": "2026-04-04T08:11:57.185101+00:00",
+                    "last_updated": "2026-04-04T08:11:57.185101+00:00",
+                    "context": {
+                      "id": "01KNBRRYC11BC0KCQV4PRF86GW",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T10:15:00.490171+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T08:15:00.490395+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "condition/0/entity_id/0": [
+              {
+                "path": "condition/0/entity_id/0",
+                "timestamp": "2026-04-04T08:15:00.490409+00:00",
+                "result": {
+                  "result": true,
+                  "state": "on",
+                  "wanted_state": "on"
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:15:00.491298+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBRYHCADFW42ZS8W5W0CE3E",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "switch",
+                    "service": "turn_on",
+                    "service_data": {},
+                    "target": {
+                      "entity_id": [
+                        "switch.udirna_vibrace"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Vibrace ka\u017ed\u00fdch 10 minut",
+            "description": "Spou\u0161t\u00ed switch.udirna_vibrace ka\u017ed\u00fdch 15 minut, pokud je povolen\u00fd p\u0159ep\u00edna\u010d",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/15"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "state",
+                "entity_id": "input_boolean.udirna_vibrace_control",
+                "state": "on"
+              }
+            ],
+            "action": [
+              {
+                "target": {
+                  "entity_id": "switch.udirna_vibrace"
+                },
+                "action": "switch.turn_on"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBRYHCADFW42ZS8W5W0CE3E",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/0",
+          "run_id": "4bf1cb5399bd7f3f5e12448e315a2d9d",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T08:15:00.490341+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/0",
+          "run_id": "34a7e4e108e900809ea1e44d9cc04c19",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T08:30:00.490956+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:30:00.490989+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.vibrace_kazdych_10_minut",
+                    "state": "on",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T08:15:00.490554+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Vibrace ka\u017ed\u00fdch 10 minut"
+                    },
+                    "last_changed": "2026-04-04T08:11:57.185101+00:00",
+                    "last_reported": "2026-04-04T08:15:00.492645+00:00",
+                    "last_updated": "2026-04-04T08:15:00.492645+00:00",
+                    "context": {
+                      "id": "01KNBRYHCADFW42ZS8W5W0CE3E",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T10:30:00.490820+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T08:30:00.491016+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "condition/0/entity_id/0": [
+              {
+                "path": "condition/0/entity_id/0",
+                "timestamp": "2026-04-04T08:30:00.491028+00:00",
+                "result": {
+                  "result": true,
+                  "state": "on",
+                  "wanted_state": "on"
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:30:00.491479+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBST09A8RHG50S1AG1THGT6",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "switch",
+                    "service": "turn_on",
+                    "service_data": {},
+                    "target": {
+                      "entity_id": [
+                        "switch.udirna_vibrace"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Vibrace ka\u017ed\u00fdch 10 minut",
+            "description": "Spou\u0161t\u00ed switch.udirna_vibrace ka\u017ed\u00fdch 15 minut, pokud je povolen\u00fd p\u0159ep\u00edna\u010d",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/15"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "state",
+                "entity_id": "input_boolean.udirna_vibrace_control",
+                "state": "on"
+              }
+            ],
+            "action": [
+              {
+                "target": {
+                  "entity_id": "switch.udirna_vibrace"
+                },
+                "action": "switch.turn_on"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBST09A8RHG50S1AG1THGT6",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/0",
+          "run_id": "34a7e4e108e900809ea1e44d9cc04c19",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T08:30:00.490956+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern"
+        }
+      }
+    ],
+    "script.say_on_soundbar": [
+      {
+        "extended_dict": {
+          "last_step": "sequence/0",
+          "run_id": "6910beeee4dad9cd518893080413e7b9",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:19:39.993001+00:00",
+            "finish": "2026-04-04T08:19:40.015345+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar",
+          "trace": {
+            "sequence/0": [
+              {
+                "path": "sequence/0",
+                "timestamp": "2026-04-04T08:19:39.993236+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "script.say_on_soundbar",
+                    "state": "off",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T08:17:57.841279+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Rekni na soundbar"
+                    },
+                    "last_changed": "2026-04-04T08:17:57.862267+00:00",
+                    "last_reported": "2026-04-04T08:17:57.862267+00:00",
+                    "last_updated": "2026-04-04T08:17:57.862267+00:00",
+                    "context": {
+                      "id": "01KNBS3JAKXP6PPJF1HTE5K0NS",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "message": "V pracovn\u011b je aktu\u00e1ln\u011b \u010dty\u0159iadvacet stup\u0148\u016f.",
+                  "context": {
+                    "id": "01KNBS6MP2X12X2KCKDHHAEKGT",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "tts",
+                    "service": "speak",
+                    "service_data": {
+                      "media_player_entity_id": "media_player.q_series_soundbar_2",
+                      "message": "V pracovn\u011b je aktu\u00e1ln\u011b \u010dty\u0159iadvacet stup\u0148\u016f.",
+                      "options": {
+                        "voice": "cs-CZ-Chirp3-HD-Aoede"
+                      },
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Rekni na soundbar",
+            "description": "Precte text nahlas na soundbar",
+            "fields": {
+              "message": {
+                "description": "Text k precteni",
+                "required": true
+              }
+            },
+            "sequence": [
+              {
+                "action": "tts.speak",
+                "target": {
+                  "entity_id": "tts.google_cloud"
+                },
+                "data": {
+                  "media_player_entity_id": "media_player.q_series_soundbar_2",
+                  "message": "{{ message }}",
+                  "options": {
+                    "voice": "cs-CZ-Chirp3-HD-Aoede"
+                  }
+                }
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBS6MP2X12X2KCKDHHAEKGT",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "sequence/0",
+          "run_id": "6910beeee4dad9cd518893080413e7b9",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:19:39.993001+00:00",
+            "finish": "2026-04-04T08:19:40.015345+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "sequence/0",
+          "run_id": "84678d9401a4e3ffcfd6a6eb769bbd93",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:20:50.951447+00:00",
+            "finish": "2026-04-04T08:20:51.312405+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar",
+          "trace": {
+            "sequence/0": [
+              {
+                "path": "sequence/0",
+                "timestamp": "2026-04-04T08:20:50.951662+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "script.say_on_soundbar",
+                    "state": "off",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T08:19:39.993066+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Rekni na soundbar"
+                    },
+                    "last_changed": "2026-04-04T08:19:40.014605+00:00",
+                    "last_reported": "2026-04-04T08:19:40.014605+00:00",
+                    "last_updated": "2026-04-04T08:19:40.014605+00:00",
+                    "context": {
+                      "id": "01KNBS6MP2X12X2KCKDHHAEKGT",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "message": "Pou\u0161t\u00edm radio\u017eurn\u00e1l.",
+                  "context": {
+                    "id": "01KNBS8SK5FPVW3BTYCDKA8XY8",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "tts",
+                    "service": "speak",
+                    "service_data": {
+                      "media_player_entity_id": "media_player.q_series_soundbar_2",
+                      "message": "Pou\u0161t\u00edm radio\u017eurn\u00e1l.",
+                      "options": {
+                        "voice": "cs-CZ-Chirp3-HD-Aoede"
+                      },
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Rekni na soundbar",
+            "description": "Precte text nahlas na soundbar",
+            "fields": {
+              "message": {
+                "description": "Text k precteni",
+                "required": true
+              }
+            },
+            "sequence": [
+              {
+                "action": "tts.speak",
+                "target": {
+                  "entity_id": "tts.google_cloud"
+                },
+                "data": {
+                  "media_player_entity_id": "media_player.q_series_soundbar_2",
+                  "message": "{{ message }}",
+                  "options": {
+                    "voice": "cs-CZ-Chirp3-HD-Aoede"
+                  }
+                }
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBS8SK5FPVW3BTYCDKA8XY8",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "sequence/0",
+          "run_id": "84678d9401a4e3ffcfd6a6eb769bbd93",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:20:50.951447+00:00",
+            "finish": "2026-04-04T08:20:51.312405+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "sequence/2/choose/0/sequence/0",
+          "run_id": "f3dc32227a9d821c668aed8de3857b0a",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:27:51.864328+00:00",
+            "finish": "2026-04-04T08:28:00.250228+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar",
+          "trace": {
+            "sequence/0": [
+              {
+                "path": "sequence/0",
+                "timestamp": "2026-04-04T08:27:51.865826+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "script.say_on_soundbar",
+                    "state": "off",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T08:20:50.951502+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Rekni na soundbar"
+                    },
+                    "last_changed": "2026-04-04T08:26:57.591733+00:00",
+                    "last_reported": "2026-04-04T08:26:57.591733+00:00",
+                    "last_updated": "2026-04-04T08:26:57.591733+00:00",
+                    "context": {
+                      "id": "01KNBSMDNQY3EM4Z4NBCQ5CH26",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "message": "Radio\u017eurn\u00e1l je zapnut\u00fd.",
+                  "prev_cast_state": "playing",
+                  "prev_content": "https://rozhlas.stream/radiozurnal_mp3_128.mp3",
+                  "prev_content_type": "music",
+                  "prev_source": "",
+                  "context": {
+                    "id": "01KNBSNJZTTBV4RR58P88PKWN8",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "tts",
+                    "service": "speak",
+                    "service_data": {
+                      "media_player_entity_id": "media_player.q_series_soundbar_2",
+                      "message": "Radio\u017eurn\u00e1l je zapnut\u00fd.",
+                      "options": {
+                        "voice": "cs-CZ-Chirp3-HD-Aoede"
+                      },
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "sequence/1": [
+              {
+                "path": "sequence/1",
+                "timestamp": "2026-04-04T08:27:52.231951+00:00",
+                "result": {
+                  "delay": 8.0,
+                  "done": true
+                }
+              }
+            ],
+            "sequence/2": [
+              {
+                "path": "sequence/2",
+                "timestamp": "2026-04-04T08:28:00.233301+00:00",
+                "result": {
+                  "choice": 0
+                }
+              }
+            ],
+            "sequence/2/choose/0": [
+              {
+                "path": "sequence/2/choose/0",
+                "timestamp": "2026-04-04T08:28:00.233459+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "sequence/2/choose/0/conditions/0": [
+              {
+                "path": "sequence/2/choose/0/conditions/0",
+                "timestamp": "2026-04-04T08:28:00.233495+00:00",
+                "result": {
+                  "result": true,
+                  "entities": []
+                }
+              }
+            ],
+            "sequence/2/choose/0/sequence/0": [
+              {
+                "path": "sequence/2/choose/0/sequence/0",
+                "timestamp": "2026-04-04T08:28:00.233886+00:00",
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "play_media",
+                    "service_data": {
+                      "media_content_id": "https://rozhlas.stream/radiozurnal_mp3_128.mp3",
+                      "media_content_type": "music",
+                      "entity_id": [
+                        "media_player.q_series_soundbar_2"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.q_series_soundbar_2"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Rekni na soundbar",
+            "description": "Precte text nahlas na soundbar a obnovi puvodni stav",
+            "fields": {
+              "message": {
+                "description": "Text k precteni",
+                "required": true
+              }
+            },
+            "variables": {
+              "prev_cast_state": "{{ states('media_player.q_series_soundbar_2') }}",
+              "prev_content": "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_id') }}",
+              "prev_content_type": "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_type') or 'music' }}",
+              "prev_source": "{{ state_attr('media_player.q_series_soundbar', 'source') }}"
+            },
+            "sequence": [
+              {
+                "action": "tts.speak",
+                "target": {
+                  "entity_id": "tts.google_cloud"
+                },
+                "data": {
+                  "media_player_entity_id": "media_player.q_series_soundbar_2",
+                  "message": "{{ message }}",
+                  "options": {
+                    "voice": "cs-CZ-Chirp3-HD-Aoede"
+                  }
+                }
+              },
+              {
+                "delay": {
+                  "seconds": 8
+                }
+              },
+              {
+                "choose": [
+                  {
+                    "conditions": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ prev_cast_state == 'playing' and prev_content is not none\n   and 'tts_proxy' not in (prev_content | default('')) }}\n"
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "action": "media_player.play_media",
+                        "target": {
+                          "entity_id": "media_player.q_series_soundbar_2"
+                        },
+                        "data": {
+                          "media_content_id": "{{ prev_content }}",
+                          "media_content_type": "{{ prev_content_type }}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "conditions": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ prev_source is not none and prev_source != ''\n   and prev_cast_state != 'playing' }}\n"
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "action": "media_player.select_source",
+                        "target": {
+                          "entity_id": "media_player.q_series_soundbar"
+                        },
+                        "data": {
+                          "source": "{{ prev_source }}"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBSNJZTTBV4RR58P88PKWN8",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "sequence/2/choose/0/sequence/0",
+          "run_id": "f3dc32227a9d821c668aed8de3857b0a",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:27:51.864328+00:00",
+            "finish": "2026-04-04T08:28:00.250228+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "sequence/2/choose/0/sequence/0",
+          "run_id": "7be0f4aade1ada9d68d336c8bdc53552",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:28:26.622430+00:00",
+            "finish": "2026-04-04T08:28:35.013249+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar",
+          "trace": {
+            "sequence/0": [
+              {
+                "path": "sequence/0",
+                "timestamp": "2026-04-04T08:28:26.622946+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "script.say_on_soundbar",
+                    "state": "off",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T08:27:51.865562+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Rekni na soundbar"
+                    },
+                    "last_changed": "2026-04-04T08:28:00.249202+00:00",
+                    "last_reported": "2026-04-04T08:28:00.249202+00:00",
+                    "last_updated": "2026-04-04T08:28:00.249202+00:00",
+                    "context": {
+                      "id": "01KNBSPAVS44P9S4NVFYT183G9",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "message": "V ob\u00fdv\u00e1ku je pr\u016fm\u011brn\u011b t\u0159iadvacet a p\u016fl stup\u0148\u016f.",
+                  "prev_cast_state": "playing",
+                  "prev_content": "https://rozhlas.stream/radiozurnal_mp3_128.mp3",
+                  "prev_content_type": "music",
+                  "prev_source": "",
+                  "context": {
+                    "id": "01KNBSPQ4KKZ4CDX3FJAK88D67",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "tts",
+                    "service": "speak",
+                    "service_data": {
+                      "media_player_entity_id": "media_player.q_series_soundbar_2",
+                      "message": "V ob\u00fdv\u00e1ku je pr\u016fm\u011brn\u011b t\u0159iadvacet a p\u016fl stup\u0148\u016f.",
+                      "options": {
+                        "voice": "cs-CZ-Chirp3-HD-Aoede"
+                      },
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "sequence/1": [
+              {
+                "path": "sequence/1",
+                "timestamp": "2026-04-04T08:28:26.995908+00:00",
+                "result": {
+                  "delay": 8.0,
+                  "done": true
+                }
+              }
+            ],
+            "sequence/2": [
+              {
+                "path": "sequence/2",
+                "timestamp": "2026-04-04T08:28:34.997429+00:00",
+                "result": {
+                  "choice": 0
+                }
+              }
+            ],
+            "sequence/2/choose/0": [
+              {
+                "path": "sequence/2/choose/0",
+                "timestamp": "2026-04-04T08:28:34.997483+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "sequence/2/choose/0/conditions/0": [
+              {
+                "path": "sequence/2/choose/0/conditions/0",
+                "timestamp": "2026-04-04T08:28:34.997507+00:00",
+                "result": {
+                  "result": true,
+                  "entities": []
+                }
+              }
+            ],
+            "sequence/2/choose/0/sequence/0": [
+              {
+                "path": "sequence/2/choose/0/sequence/0",
+                "timestamp": "2026-04-04T08:28:34.997842+00:00",
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "play_media",
+                    "service_data": {
+                      "media_content_id": "https://rozhlas.stream/radiozurnal_mp3_128.mp3",
+                      "media_content_type": "music",
+                      "entity_id": [
+                        "media_player.q_series_soundbar_2"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.q_series_soundbar_2"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Rekni na soundbar",
+            "description": "Precte text nahlas na soundbar a obnovi puvodni stav",
+            "fields": {
+              "message": {
+                "description": "Text k precteni",
+                "required": true
+              }
+            },
+            "variables": {
+              "prev_cast_state": "{{ states('media_player.q_series_soundbar_2') }}",
+              "prev_content": "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_id') }}",
+              "prev_content_type": "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_type') or 'music' }}",
+              "prev_source": "{{ state_attr('media_player.q_series_soundbar', 'source') }}"
+            },
+            "sequence": [
+              {
+                "action": "tts.speak",
+                "target": {
+                  "entity_id": "tts.google_cloud"
+                },
+                "data": {
+                  "media_player_entity_id": "media_player.q_series_soundbar_2",
+                  "message": "{{ message }}",
+                  "options": {
+                    "voice": "cs-CZ-Chirp3-HD-Aoede"
+                  }
+                }
+              },
+              {
+                "delay": {
+                  "seconds": 8
+                }
+              },
+              {
+                "choose": [
+                  {
+                    "conditions": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ prev_cast_state == 'playing' and prev_content is not none\n   and 'tts_proxy' not in (prev_content | default('')) }}\n"
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "action": "media_player.play_media",
+                        "target": {
+                          "entity_id": "media_player.q_series_soundbar_2"
+                        },
+                        "data": {
+                          "media_content_id": "{{ prev_content }}",
+                          "media_content_type": "{{ prev_content_type }}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "conditions": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ prev_source is not none and prev_source != ''\n   and prev_cast_state != 'playing' }}\n"
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "action": "media_player.select_source",
+                        "target": {
+                          "entity_id": "media_player.q_series_soundbar"
+                        },
+                        "data": {
+                          "source": "{{ prev_source }}"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBSPQ4KKZ4CDX3FJAK88D67",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "sequence/2/choose/0/sequence/0",
+          "run_id": "7be0f4aade1ada9d68d336c8bdc53552",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:28:26.622430+00:00",
+            "finish": "2026-04-04T08:28:35.013249+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "sequence/2/choose/1/conditions/0",
+          "run_id": "03f4bb3de545f979a7c28181646375a3",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:29:13.088277+00:00",
+            "finish": "2026-04-04T08:29:21.408089+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar",
+          "trace": {
+            "sequence/0": [
+              {
+                "path": "sequence/0",
+                "timestamp": "2026-04-04T08:29:13.088802+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "script.say_on_soundbar",
+                    "state": "off",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T08:28:26.622761+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Rekni na soundbar"
+                    },
+                    "last_changed": "2026-04-04T08:28:35.012728+00:00",
+                    "last_reported": "2026-04-04T08:28:35.012728+00:00",
+                    "last_updated": "2026-04-04T08:28:35.012728+00:00",
+                    "context": {
+                      "id": "01KNBSQCT4SPF9YK1KW23EKDPG",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "message": "R\u00e1dio je vypnuto.",
+                  "prev_cast_state": "paused",
+                  "prev_content": "https://rozhlas.stream/radiozurnal_mp3_128.mp3",
+                  "prev_content_type": "music",
+                  "prev_source": "",
+                  "context": {
+                    "id": "01KNBSR6HJVZ36NWJN22D30K19",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "tts",
+                    "service": "speak",
+                    "service_data": {
+                      "media_player_entity_id": "media_player.q_series_soundbar_2",
+                      "message": "R\u00e1dio je vypnuto.",
+                      "options": {
+                        "voice": "cs-CZ-Chirp3-HD-Aoede"
+                      },
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "tts.google_cloud"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "sequence/1": [
+              {
+                "path": "sequence/1",
+                "timestamp": "2026-04-04T08:29:13.405110+00:00",
+                "result": {
+                  "delay": 8.0,
+                  "done": true
+                }
+              }
+            ],
+            "sequence/2": [
+              {
+                "path": "sequence/2",
+                "timestamp": "2026-04-04T08:29:21.406476+00:00"
+              }
+            ],
+            "sequence/2/choose/0": [
+              {
+                "path": "sequence/2/choose/0",
+                "timestamp": "2026-04-04T08:29:21.406528+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "sequence/2/choose/0/conditions/0": [
+              {
+                "path": "sequence/2/choose/0/conditions/0",
+                "timestamp": "2026-04-04T08:29:21.406552+00:00",
+                "result": {
+                  "result": false,
+                  "entities": []
+                }
+              }
+            ],
+            "sequence/2/choose/1": [
+              {
+                "path": "sequence/2/choose/1",
+                "timestamp": "2026-04-04T08:29:21.406669+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "sequence/2/choose/1/conditions/0": [
+              {
+                "path": "sequence/2/choose/1/conditions/0",
+                "timestamp": "2026-04-04T08:29:21.406688+00:00",
+                "result": {
+                  "result": false,
+                  "entities": []
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Rekni na soundbar",
+            "description": "Precte text nahlas na soundbar a obnovi puvodni stav",
+            "fields": {
+              "message": {
+                "description": "Text k precteni",
+                "required": true
+              }
+            },
+            "variables": {
+              "prev_cast_state": "{{ states('media_player.q_series_soundbar_2') }}",
+              "prev_content": "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_id') }}",
+              "prev_content_type": "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_type') or 'music' }}",
+              "prev_source": "{{ state_attr('media_player.q_series_soundbar', 'source') }}"
+            },
+            "sequence": [
+              {
+                "action": "tts.speak",
+                "target": {
+                  "entity_id": "tts.google_cloud"
+                },
+                "data": {
+                  "media_player_entity_id": "media_player.q_series_soundbar_2",
+                  "message": "{{ message }}",
+                  "options": {
+                    "voice": "cs-CZ-Chirp3-HD-Aoede"
+                  }
+                }
+              },
+              {
+                "delay": {
+                  "seconds": 8
+                }
+              },
+              {
+                "choose": [
+                  {
+                    "conditions": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ prev_cast_state == 'playing' and prev_content is not none\n   and 'tts_proxy' not in (prev_content | default('')) }}\n"
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "action": "media_player.play_media",
+                        "target": {
+                          "entity_id": "media_player.q_series_soundbar_2"
+                        },
+                        "data": {
+                          "media_content_id": "{{ prev_content }}",
+                          "media_content_type": "{{ prev_content_type }}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "conditions": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ prev_source is not none and prev_source != ''\n   and prev_cast_state != 'playing' }}\n"
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "action": "media_player.select_source",
+                        "target": {
+                          "entity_id": "media_player.q_series_soundbar"
+                        },
+                        "data": {
+                          "source": "{{ prev_source }}"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBSR6HJVZ36NWJN22D30K19",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "sequence/2/choose/1/conditions/0",
+          "run_id": "03f4bb3de545f979a7c28181646375a3",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:29:13.088277+00:00",
+            "finish": "2026-04-04T08:29:21.408089+00:00"
+          },
+          "domain": "script",
+          "item_id": "say_on_soundbar"
+        }
+      }
+    ],
+    "automation.voicepe_mute_during_response": [
+      {
+        "extended_dict": {
+          "last_step": "action/2",
+          "run_id": "20c49489a6c1834e91443d06688f89c6",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:18:11.182947+00:00",
+            "finish": "2026-04-04T08:18:26.187326+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:18:11.182985+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.voicepe_ztlum_pri_odpovedi",
+                    "state": "on",
+                    "attributes": {
+                      "id": "voicepe_mute_during_response",
+                      "last_triggered": null,
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "VoicePE ztlum pri odpovedi"
+                    },
+                    "last_changed": "2026-04-04T08:17:16.721577+00:00",
+                    "last_reported": "2026-04-04T08:17:16.721703+00:00",
+                    "last_updated": "2026-04-04T08:17:16.721577+00:00",
+                    "context": {
+                      "id": "01KNBS2PDHYVDZJ44T05AM1SVP",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "state",
+                    "entity_id": "assist_satellite.viocepe_assist_satellite",
+                    "from_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "processing",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:17:54.783246+00:00",
+                      "last_reported": "2026-04-04T08:17:54.783246+00:00",
+                      "last_updated": "2026-04-04T08:17:54.783246+00:00",
+                      "context": {
+                        "id": "01KNBS3VJZJZM5B2SERB8FDDT5",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "to_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "responding",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:18:11.182064+00:00",
+                      "last_reported": "2026-04-04T08:18:11.182064+00:00",
+                      "last_updated": "2026-04-04T08:18:11.182064+00:00",
+                      "context": {
+                        "id": "01KNBS4BKE5GS829P08PCEYJXF",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "for": null,
+                    "attribute": null,
+                    "description": "state of assist_satellite.viocepe_assist_satellite"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:18:11.183191+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBS4BKERTH7RTXD0ZSS99HD",
+                    "parent_id": "01KNBS4BKE5GS829P08PCEYJXF",
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "action/1": [
+              {
+                "path": "action/1",
+                "timestamp": "2026-04-04T08:18:11.183574+00:00",
+                "result": {
+                  "delay": 15.0,
+                  "done": true
+                }
+              }
+            ],
+            "action/2": [
+              {
+                "path": "action/2",
+                "timestamp": "2026-04-04T08:18:26.184941+00:00",
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0.16,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "id": "voicepe_mute_during_response",
+            "alias": "VoicePE ztlum pri odpovedi",
+            "description": "Ztlum VoicePE na 0 pri odpovedi, po 10s vrat zpet",
+            "triggers": [
+              {
+                "trigger": "state",
+                "entity_id": "assist_satellite.viocepe_assist_satellite",
+                "to": "responding"
+              }
+            ],
+            "actions": [
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0
+                }
+              },
+              {
+                "delay": {
+                  "seconds": 15
+                }
+              },
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0.16
+                }
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBS4BKERTH7RTXD0ZSS99HD",
+            "parent_id": "01KNBS4BKE5GS829P08PCEYJXF",
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/2",
+          "run_id": "20c49489a6c1834e91443d06688f89c6",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:18:11.182947+00:00",
+            "finish": "2026-04-04T08:18:26.187326+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/2",
+          "run_id": "71e056db0a1beadca1e78ef757727b85",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:19:48.575845+00:00",
+            "finish": "2026-04-04T08:20:03.578225+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:19:48.575871+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.voicepe_ztlum_pri_odpovedi",
+                    "state": "on",
+                    "attributes": {
+                      "id": "voicepe_mute_during_response",
+                      "last_triggered": "2026-04-04T08:18:11.183060+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "VoicePE ztlum pri odpovedi"
+                    },
+                    "last_changed": "2026-04-04T08:19:13.559511+00:00",
+                    "last_reported": "2026-04-04T08:19:13.559511+00:00",
+                    "last_updated": "2026-04-04T08:19:13.559511+00:00",
+                    "context": {
+                      "id": "01KNBS68GQQ1XP4YWTZE4ZN4T5",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "state",
+                    "entity_id": "assist_satellite.viocepe_assist_satellite",
+                    "from_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "processing",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:19:36.385980+00:00",
+                      "last_reported": "2026-04-04T08:19:36.385980+00:00",
+                      "last_updated": "2026-04-04T08:19:36.385980+00:00",
+                      "context": {
+                        "id": "01KNBS6YT1MZZ03QM69R9G7R63",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "to_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "responding",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:19:48.574964+00:00",
+                      "last_reported": "2026-04-04T08:19:48.574964+00:00",
+                      "last_updated": "2026-04-04T08:19:48.574964+00:00",
+                      "context": {
+                        "id": "01KNBS7APY1V9R3793F5R0EN36",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "for": null,
+                    "attribute": null,
+                    "description": "state of assist_satellite.viocepe_assist_satellite"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:19:48.576099+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBS7APZGDE9XATNNZSJA1C5",
+                    "parent_id": "01KNBS7APY1V9R3793F5R0EN36",
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0.01,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "action/1": [
+              {
+                "path": "action/1",
+                "timestamp": "2026-04-04T08:19:48.576463+00:00",
+                "result": {
+                  "delay": 15.0,
+                  "done": true
+                }
+              }
+            ],
+            "action/2": [
+              {
+                "path": "action/2",
+                "timestamp": "2026-04-04T08:20:03.576984+00:00",
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0.16,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "id": "voicepe_mute_during_response",
+            "alias": "VoicePE ztlum pri odpovedi",
+            "description": "Ztlum VoicePE na 0 pri odpovedi, po 10s vrat zpet",
+            "triggers": [
+              {
+                "trigger": "state",
+                "entity_id": "assist_satellite.viocepe_assist_satellite",
+                "to": "responding"
+              }
+            ],
+            "actions": [
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0.01
+                }
+              },
+              {
+                "delay": {
+                  "seconds": 15
+                }
+              },
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0.16
+                }
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBS7APZGDE9XATNNZSJA1C5",
+            "parent_id": "01KNBS7APY1V9R3793F5R0EN36",
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/2",
+          "run_id": "71e056db0a1beadca1e78ef757727b85",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:19:48.575845+00:00",
+            "finish": "2026-04-04T08:20:03.578225+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/2",
+          "run_id": "2fdc564b7b8e7e19f1eba6deec000f42",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:20:58.493690+00:00",
+            "finish": "2026-04-04T08:21:13.497403+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:20:58.493715+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.voicepe_ztlum_pri_odpovedi",
+                    "state": "on",
+                    "attributes": {
+                      "id": "voicepe_mute_during_response",
+                      "last_triggered": "2026-04-04T08:19:48.575960+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "VoicePE ztlum pri odpovedi"
+                    },
+                    "last_changed": "2026-04-04T08:20:39.043697+00:00",
+                    "last_reported": "2026-04-04T08:20:39.043697+00:00",
+                    "last_updated": "2026-04-04T08:20:39.043697+00:00",
+                    "context": {
+                      "id": "01KNBS8W030GSN8433QRCG9377",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "state",
+                    "entity_id": "assist_satellite.viocepe_assist_satellite",
+                    "from_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "processing",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:20:45.916253+00:00",
+                      "last_reported": "2026-04-04T08:20:45.916253+00:00",
+                      "last_updated": "2026-04-04T08:20:45.916253+00:00",
+                      "context": {
+                        "id": "01KNBS92PWDSYQ727AECQ4HT0G",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "to_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "responding",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:20:58.492484+00:00",
+                      "last_reported": "2026-04-04T08:20:58.492484+00:00",
+                      "last_updated": "2026-04-04T08:20:58.492484+00:00",
+                      "context": {
+                        "id": "01KNBS9EZWRG9T3S3G76S151VF",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "for": null,
+                    "attribute": null,
+                    "description": "state of assist_satellite.viocepe_assist_satellite"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:20:58.493941+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBS9EZX8JJQN9WH5H0AZJQT",
+                    "parent_id": "01KNBS9EZWRG9T3S3G76S151VF",
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "action/1": [
+              {
+                "path": "action/1",
+                "timestamp": "2026-04-04T08:20:58.494304+00:00",
+                "result": {
+                  "delay": 15.0,
+                  "done": true
+                }
+              }
+            ],
+            "action/2": [
+              {
+                "path": "action/2",
+                "timestamp": "2026-04-04T08:21:13.496189+00:00",
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0.16,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "id": "voicepe_mute_during_response",
+            "alias": "VoicePE ztlum pri odpovedi",
+            "description": "Ztlum VoicePE na 0 pri odpovedi, po 10s vrat zpet",
+            "triggers": [
+              {
+                "trigger": "state",
+                "entity_id": "assist_satellite.viocepe_assist_satellite",
+                "to": "responding"
+              }
+            ],
+            "actions": [
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0
+                }
+              },
+              {
+                "delay": {
+                  "seconds": 15
+                }
+              },
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0.16
+                }
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBS9EZX8JJQN9WH5H0AZJQT",
+            "parent_id": "01KNBS9EZWRG9T3S3G76S151VF",
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/2",
+          "run_id": "2fdc564b7b8e7e19f1eba6deec000f42",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:20:58.493690+00:00",
+            "finish": "2026-04-04T08:21:13.497403+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/2",
+          "run_id": "ebacf0b6f0c59ce7ebdb3953848c0303",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:28:44.253740+00:00",
+            "finish": "2026-04-04T08:28:59.257773+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:28:44.253771+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.voicepe_ztlum_pri_odpovedi",
+                    "state": "on",
+                    "attributes": {
+                      "id": "voicepe_mute_during_response",
+                      "last_triggered": "2026-04-04T08:20:58.493793+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "VoicePE ztlum pri odpovedi"
+                    },
+                    "last_changed": "2026-04-04T08:20:39.043697+00:00",
+                    "last_reported": "2026-04-04T08:21:13.496861+00:00",
+                    "last_updated": "2026-04-04T08:21:13.496861+00:00",
+                    "context": {
+                      "id": "01KNBS9XMRQAVZ7J679NGV3ZC4",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "state",
+                    "entity_id": "assist_satellite.viocepe_assist_satellite",
+                    "from_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "processing",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:28:22.968072+00:00",
+                      "last_reported": "2026-04-04T08:28:22.968072+00:00",
+                      "last_updated": "2026-04-04T08:28:22.968072+00:00",
+                      "context": {
+                        "id": "01KNBSQ11RCKK9F6B3R54AC2M2",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "to_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "responding",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:28:44.252371+00:00",
+                      "last_reported": "2026-04-04T08:28:44.252371+00:00",
+                      "last_updated": "2026-04-04T08:28:44.252371+00:00",
+                      "context": {
+                        "id": "01KNBSQNTW1JNZ8R1S4Y4ZTJZR",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "for": null,
+                    "attribute": null,
+                    "description": "state of assist_satellite.viocepe_assist_satellite"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:28:44.254100+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBSQNTXAPFQCSAVK1NJ0ERB",
+                    "parent_id": "01KNBSQNTW1JNZ8R1S4Y4ZTJZR",
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "action/1": [
+              {
+                "path": "action/1",
+                "timestamp": "2026-04-04T08:28:44.255217+00:00",
+                "result": {
+                  "delay": 15.0,
+                  "done": true
+                }
+              }
+            ],
+            "action/2": [
+              {
+                "path": "action/2",
+                "timestamp": "2026-04-04T08:28:59.256286+00:00",
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0.16,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "id": "voicepe_mute_during_response",
+            "alias": "VoicePE ztlum pri odpovedi",
+            "description": "Ztlum VoicePE na 0 pri odpovedi, po 10s vrat zpet",
+            "triggers": [
+              {
+                "trigger": "state",
+                "entity_id": "assist_satellite.viocepe_assist_satellite",
+                "to": "responding"
+              }
+            ],
+            "actions": [
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0
+                }
+              },
+              {
+                "delay": {
+                  "seconds": 15
+                }
+              },
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0.16
+                }
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBSQNTXAPFQCSAVK1NJ0ERB",
+            "parent_id": "01KNBSQNTW1JNZ8R1S4Y4ZTJZR",
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/2",
+          "run_id": "ebacf0b6f0c59ce7ebdb3953848c0303",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:28:44.253740+00:00",
+            "finish": "2026-04-04T08:28:59.257773+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/2",
+          "run_id": "aaf76c57e2db85e3144bdef9f3c165fc",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:29:31.186624+00:00",
+            "finish": "2026-04-04T08:29:46.190442+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:29:31.186661+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.voicepe_ztlum_pri_odpovedi",
+                    "state": "on",
+                    "attributes": {
+                      "id": "voicepe_mute_during_response",
+                      "last_triggered": "2026-04-04T08:28:44.253917+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "VoicePE ztlum pri odpovedi"
+                    },
+                    "last_changed": "2026-04-04T08:20:39.043697+00:00",
+                    "last_reported": "2026-04-04T08:28:59.257063+00:00",
+                    "last_updated": "2026-04-04T08:28:59.257063+00:00",
+                    "context": {
+                      "id": "01KNBSR4FS0F2PD6X1YEFVJJ3G",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "state",
+                    "entity_id": "assist_satellite.viocepe_assist_satellite",
+                    "from_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "processing",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:29:09.948582+00:00",
+                      "last_reported": "2026-04-04T08:29:09.948582+00:00",
+                      "last_updated": "2026-04-04T08:29:09.948582+00:00",
+                      "context": {
+                        "id": "01KNBSREXWGZGDQJFJHDD3382S",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "to_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "responding",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T08:29:31.185417+00:00",
+                      "last_reported": "2026-04-04T08:29:31.185417+00:00",
+                      "last_updated": "2026-04-04T08:29:31.185417+00:00",
+                      "context": {
+                        "id": "01KNBSS3NHTQH3JX5Q5N5HVERR",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "for": null,
+                    "attribute": null,
+                    "description": "state of assist_satellite.viocepe_assist_satellite"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:29:31.186953+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBSS3NJBH55KGR35S5T052Q",
+                    "parent_id": "01KNBSS3NHTQH3JX5Q5N5HVERR",
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "action/1": [
+              {
+                "path": "action/1",
+                "timestamp": "2026-04-04T08:29:31.187434+00:00",
+                "result": {
+                  "delay": 15.0,
+                  "done": true
+                }
+              }
+            ],
+            "action/2": [
+              {
+                "path": "action/2",
+                "timestamp": "2026-04-04T08:29:46.189280+00:00",
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0.16,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "id": "voicepe_mute_during_response",
+            "alias": "VoicePE ztlum pri odpovedi",
+            "description": "Ztlum VoicePE na 0 pri odpovedi, po 10s vrat zpet",
+            "triggers": [
+              {
+                "trigger": "state",
+                "entity_id": "assist_satellite.viocepe_assist_satellite",
+                "to": "responding"
+              }
+            ],
+            "actions": [
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0
+                }
+              },
+              {
+                "delay": {
+                  "seconds": 15
+                }
+              },
+              {
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
+                },
+                "data": {
+                  "volume_level": 0.16
+                }
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBSS3NJBH55KGR35S5T052Q",
+            "parent_id": "01KNBSS3NHTQH3JX5Q5N5HVERR",
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/2",
+          "run_id": "aaf76c57e2db85e3144bdef9f3c165fc",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:29:31.186624+00:00",
+            "finish": "2026-04-04T08:29:46.190442+00:00"
+          },
+          "domain": "automation",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite"
+        }
+      }
+    ],
     "automation.heating_manager_watchdog": [
       {
         "extended_dict": {
           "last_step": "condition/0/conditions/1/entity_id/0",
-          "run_id": "8d7115ad2b7100a4e0e8650f5b8fb5e8",
+          "run_id": "5a8650ec18bb1d3b2d65f0a4cedcf16b",
           "state": "stopped",
           "script_execution": "failed_conditions",
           "timestamp": {
-            "start": "2026-04-03T19:30:00.109145+00:00",
-            "finish": "2026-04-03T19:30:00.109332+00:00"
+            "start": "2026-04-04T08:20:00.380144+00:00",
+            "finish": "2026-04-04T08:20:00.380270+00:00"
           },
           "domain": "automation",
           "item_id": "heating_manager_watchdog",
@@ -141,7 +2824,7 @@
             "trigger/0": [
               {
                 "path": "trigger/0",
-                "timestamp": "2026-04-03T19:30:00.109196+00:00",
+                "timestamp": "2026-04-04T08:20:00.380171+00:00",
                 "changed_variables": {
                   "this": {
                     "entity_id": "automation.heatingmanager_watchdog",
@@ -153,11 +2836,11 @@
                       "current": 0,
                       "friendly_name": "HeatingManager Watchdog"
                     },
-                    "last_changed": "2026-04-03T19:28:48.392290+00:00",
-                    "last_reported": "2026-04-03T19:28:48.392290+00:00",
-                    "last_updated": "2026-04-03T19:28:48.392290+00:00",
+                    "last_changed": "2026-04-04T08:11:57.186567+00:00",
+                    "last_reported": "2026-04-04T08:11:57.186567+00:00",
+                    "last_updated": "2026-04-04T08:11:57.186567+00:00",
                     "context": {
-                      "id": "01KNAD3JR8YJYGDADD1ERHYR4B",
+                      "id": "01KNBRRYC2ST40YT4S48HX5STG",
                       "parent_id": null,
                       "user_id": null
                     }
@@ -167,7 +2850,7 @@
                     "idx": "0",
                     "alias": null,
                     "platform": "time_pattern",
-                    "now": "2026-04-03T21:30:00.108942+02:00",
+                    "now": "2026-04-04T10:20:00.380013+02:00",
                     "description": "time pattern"
                   }
                 }
@@ -176,7 +2859,7 @@
             "condition/0": [
               {
                 "path": "condition/0",
-                "timestamp": "2026-04-03T19:30:00.109227+00:00",
+                "timestamp": "2026-04-04T08:20:00.380189+00:00",
                 "result": {
                   "result": false
                 }
@@ -185,7 +2868,7 @@
             "condition/0/conditions/0": [
               {
                 "path": "condition/0/conditions/0",
-                "timestamp": "2026-04-03T19:30:00.109243+00:00",
+                "timestamp": "2026-04-04T08:20:00.380200+00:00",
                 "result": {
                   "result": false
                 }
@@ -194,7 +2877,7 @@
             "condition/0/conditions/0/entity_id/0": [
               {
                 "path": "condition/0/conditions/0/entity_id/0",
-                "timestamp": "2026-04-03T19:30:00.109256+00:00",
+                "timestamp": "2026-04-04T08:20:00.380208+00:00",
                 "result": {
                   "result": false,
                   "state": "Doma (idle)",
@@ -205,7 +2888,7 @@
             "condition/0/conditions/1": [
               {
                 "path": "condition/0/conditions/1",
-                "timestamp": "2026-04-03T19:30:00.109294+00:00",
+                "timestamp": "2026-04-04T08:20:00.380247+00:00",
                 "result": {
                   "result": false
                 }
@@ -214,7 +2897,7 @@
             "condition/0/conditions/1/entity_id/0": [
               {
                 "path": "condition/0/conditions/1/entity_id/0",
-                "timestamp": "2026-04-03T19:30:00.109302+00:00",
+                "timestamp": "2026-04-04T08:20:00.380253+00:00",
                 "result": {
                   "result": false,
                   "state": "Doma (idle)",
@@ -289,60 +2972,59 @@
           },
           "blueprint_inputs": null,
           "context": {
-            "id": "01KNAD5RSDDN5N4E4032HZRQCS",
+            "id": "01KNBS7P7WZ64KZX5JZQDAMT9J",
             "parent_id": null,
             "user_id": null
           }
         },
         "short_dict": {
           "last_step": "condition/0/conditions/1/entity_id/0",
-          "run_id": "8d7115ad2b7100a4e0e8650f5b8fb5e8",
+          "run_id": "5a8650ec18bb1d3b2d65f0a4cedcf16b",
           "state": "stopped",
           "script_execution": "failed_conditions",
           "timestamp": {
-            "start": "2026-04-03T19:30:00.109145+00:00",
-            "finish": "2026-04-03T19:30:00.109332+00:00"
+            "start": "2026-04-04T08:20:00.380144+00:00",
+            "finish": "2026-04-04T08:20:00.380270+00:00"
           },
           "domain": "automation",
           "item_id": "heating_manager_watchdog",
           "trigger": "time pattern"
         }
-      }
-    ],
-    "automation.None": [
+      },
       {
         "extended_dict": {
-          "last_step": "action/0",
-          "run_id": "5a7c48de87f726fa644c448d5fd38b75",
-          "state": "running",
-          "script_execution": null,
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "9817d6399f9e9d8ff95aaaa1f4540b16",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
           "timestamp": {
-            "start": "2026-04-03T19:30:00.357251+00:00",
-            "finish": null
+            "start": "2026-04-04T08:30:00.379493+00:00",
+            "finish": "2026-04-04T08:30:00.379689+00:00"
           },
           "domain": "automation",
-          "item_id": "None",
+          "item_id": "heating_manager_watchdog",
           "trigger": "time pattern",
           "trace": {
             "trigger/0": [
               {
                 "path": "trigger/0",
-                "timestamp": "2026-04-03T19:30:00.357277+00:00",
+                "timestamp": "2026-04-04T08:30:00.379541+00:00",
                 "changed_variables": {
                   "this": {
-                    "entity_id": "automation.vibrace_kazdych_10_minut",
+                    "entity_id": "automation.heatingmanager_watchdog",
                     "state": "on",
                     "attributes": {
-                      "last_triggered": "2026-04-03T19:00:00.425865+00:00",
+                      "id": "heating_manager_watchdog",
+                      "last_triggered": null,
                       "mode": "single",
                       "current": 0,
-                      "friendly_name": "Vibrace ka\u017ed\u00fdch 10 minut"
+                      "friendly_name": "HeatingManager Watchdog"
                     },
-                    "last_changed": "2026-04-03T19:28:48.390754+00:00",
-                    "last_reported": "2026-04-03T19:28:48.390754+00:00",
-                    "last_updated": "2026-04-03T19:28:48.390754+00:00",
+                    "last_changed": "2026-04-04T08:11:57.186567+00:00",
+                    "last_reported": "2026-04-04T08:11:57.186567+00:00",
+                    "last_updated": "2026-04-04T08:11:57.186567+00:00",
                     "context": {
-                      "id": "01KNAD3JR6NE0KAG7BMPMC8AE6",
+                      "id": "01KNBRRYC2ST40YT4S48HX5STG",
                       "parent_id": null,
                       "user_id": null
                     }
@@ -352,7 +3034,7 @@
                     "idx": "0",
                     "alias": null,
                     "platform": "time_pattern",
-                    "now": "2026-04-03T21:30:00.357122+02:00",
+                    "now": "2026-04-04T10:30:00.379361+02:00",
                     "description": "time pattern"
                   }
                 }
@@ -361,132 +3043,172 @@
             "condition/0": [
               {
                 "path": "condition/0",
-                "timestamp": "2026-04-03T19:30:00.357299+00:00",
+                "timestamp": "2026-04-04T08:30:00.379582+00:00",
                 "result": {
-                  "result": true
+                  "result": false
                 }
               }
             ],
-            "condition/0/entity_id/0": [
+            "condition/0/conditions/0": [
               {
-                "path": "condition/0/entity_id/0",
-                "timestamp": "2026-04-03T19:30:00.357311+00:00",
+                "path": "condition/0/conditions/0",
+                "timestamp": "2026-04-04T08:30:00.379594+00:00",
                 "result": {
-                  "result": true,
-                  "state": "on",
-                  "wanted_state": "on"
+                  "result": false
                 }
               }
             ],
-            "action/0": [
+            "condition/0/conditions/0/entity_id/0": [
               {
-                "path": "action/0",
-                "timestamp": "2026-04-03T19:30:00.357709+00:00",
-                "changed_variables": {
-                  "context": {
-                    "id": "01KNAD5S15ATSFWSQG0EGQ9NXW",
-                    "parent_id": null,
-                    "user_id": null
-                  }
-                },
+                "path": "condition/0/conditions/0/entity_id/0",
+                "timestamp": "2026-04-04T08:30:00.379620+00:00",
                 "result": {
-                  "params": {
-                    "domain": "switch",
-                    "service": "turn_on",
-                    "service_data": {},
-                    "target": {
-                      "entity_id": [
-                        "switch.udirna_vibrace"
-                      ]
-                    }
-                  },
-                  "running_script": false
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unavailable"
+                }
+              }
+            ],
+            "condition/0/conditions/1": [
+              {
+                "path": "condition/0/conditions/1",
+                "timestamp": "2026-04-04T08:30:00.379658+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/1/entity_id/0": [
+              {
+                "path": "condition/0/conditions/1/entity_id/0",
+                "timestamp": "2026-04-04T08:30:00.379664+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unknown"
                 }
               }
             ]
           },
           "config": {
-            "alias": "Vibrace ka\u017ed\u00fdch 10 minut",
-            "description": "Spou\u0161t\u00ed switch.udirna_vibrace ka\u017ed\u00fdch 15 minut, pokud je povolen\u00fd p\u0159ep\u00edna\u010d",
+            "alias": "HeatingManager Watchdog",
+            "id": "heating_manager_watchdog",
             "trigger": [
               {
                 "platform": "time_pattern",
-                "minutes": "/15"
+                "minutes": "/10"
               }
             ],
             "condition": [
               {
-                "condition": "state",
-                "entity_id": "input_boolean.udirna_vibrace_control",
-                "state": "on"
+                "condition": "or",
+                "conditions": [
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unavailable"
+                  },
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unknown"
+                  }
+                ]
               }
             ],
             "action": [
               {
-                "target": {
-                  "entity_id": "switch.udirna_vibrace"
+                "data": {
+                  "entity_id": "climate.topeni",
+                  "temperature": 20,
+                  "hvac_mode": "heat"
                 },
-                "action": "switch.turn_on"
+                "action": "climate.set_temperature"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.adela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.nela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.pracovna_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
+                },
+                "action": "notify.mobile_app_iphone_17"
               }
             ]
           },
           "blueprint_inputs": null,
           "context": {
-            "id": "01KNAD5S15ATSFWSQG0EGQ9NXW",
+            "id": "01KNBST05VJWY03ABWT1ADQ5J7",
             "parent_id": null,
             "user_id": null
           }
         },
         "short_dict": {
-          "last_step": "action/0",
-          "run_id": "5a7c48de87f726fa644c448d5fd38b75",
-          "state": "running",
-          "script_execution": null,
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "9817d6399f9e9d8ff95aaaa1f4540b16",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
           "timestamp": {
-            "start": "2026-04-03T19:30:00.357251+00:00",
-            "finish": null
+            "start": "2026-04-04T08:30:00.379493+00:00",
+            "finish": "2026-04-04T08:30:00.379689+00:00"
           },
           "domain": "automation",
-          "item_id": "None",
+          "item_id": "heating_manager_watchdog",
           "trigger": "time pattern"
         }
-      }
-    ],
-    "automation.tts_message_to_soundbar": [
+      },
       {
         "extended_dict": {
-          "last_step": "action/0",
-          "run_id": "dcc84aa92bcf3e0e3fcbd7d288899df2",
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "53c74553ed59bbb31528661f2a7015ae",
           "state": "stopped",
-          "script_execution": "finished",
+          "script_execution": "failed_conditions",
           "timestamp": {
-            "start": "2026-04-03T19:30:01.971989+00:00",
-            "finish": "2026-04-03T19:30:01.998373+00:00"
+            "start": "2026-04-04T08:40:00.379512+00:00",
+            "finish": "2026-04-04T08:40:00.379683+00:00"
           },
           "domain": "automation",
-          "item_id": "tts_message_to_soundbar",
-          "trigger": "state of input_text.tts_message",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern",
           "trace": {
             "trigger/0": [
               {
                 "path": "trigger/0",
-                "timestamp": "2026-04-03T19:30:01.972030+00:00",
+                "timestamp": "2026-04-04T08:40:00.379556+00:00",
                 "changed_variables": {
                   "this": {
-                    "entity_id": "automation.tts_zprava_na_soundbar",
+                    "entity_id": "automation.heatingmanager_watchdog",
                     "state": "on",
                     "attributes": {
-                      "id": "tts_message_to_soundbar",
+                      "id": "heating_manager_watchdog",
                       "last_triggered": null,
                       "mode": "single",
                       "current": 0,
-                      "friendly_name": "TTS zprava na soundbar"
+                      "friendly_name": "HeatingManager Watchdog"
                     },
-                    "last_changed": "2026-04-03T19:28:48.393058+00:00",
-                    "last_reported": "2026-04-03T19:28:48.393058+00:00",
-                    "last_updated": "2026-04-03T19:28:48.393058+00:00",
+                    "last_changed": "2026-04-04T08:11:57.186567+00:00",
+                    "last_reported": "2026-04-04T08:11:57.186567+00:00",
+                    "last_updated": "2026-04-04T08:11:57.186567+00:00",
                     "context": {
-                      "id": "01KNAD3JR9FDXR6KZXWYA9A9DE",
+                      "id": "01KNBRRYC2ST40YT4S48HX5STG",
                       "parent_id": null,
                       "user_id": null
                     }
@@ -495,53 +3217,9 @@
                     "id": "0",
                     "idx": "0",
                     "alias": null,
-                    "platform": "state",
-                    "entity_id": "input_text.tts_message",
-                    "from_state": {
-                      "entity_id": "input_text.tts_message",
-                      "state": "unknown",
-                      "attributes": {
-                        "editable": false,
-                        "min": 0,
-                        "max": 255,
-                        "pattern": null,
-                        "mode": "text",
-                        "icon": "mdi:text-to-speech",
-                        "friendly_name": "TTS zprava"
-                      },
-                      "last_changed": "2026-04-03T19:28:46.533736+00:00",
-                      "last_reported": "2026-04-03T19:28:46.533736+00:00",
-                      "last_updated": "2026-04-03T19:28:46.533736+00:00",
-                      "context": {
-                        "id": "01KNAD3GY57AZMEYJWST2104H4",
-                        "parent_id": null,
-                        "user_id": null
-                      }
-                    },
-                    "to_state": {
-                      "entity_id": "input_text.tts_message",
-                      "state": "Ahoj, tohle je test hlasov\u00e9ho v\u00fdstupu.",
-                      "attributes": {
-                        "editable": false,
-                        "min": 0,
-                        "max": 255,
-                        "pattern": null,
-                        "mode": "text",
-                        "icon": "mdi:text-to-speech",
-                        "friendly_name": "TTS zprava"
-                      },
-                      "last_changed": "2026-04-03T19:30:01.971634+00:00",
-                      "last_reported": "2026-04-03T19:30:01.971634+00:00",
-                      "last_updated": "2026-04-03T19:30:01.971634+00:00",
-                      "context": {
-                        "id": "01KNAD5TKK9PPJ115H92FZGCAN",
-                        "parent_id": null,
-                        "user_id": "e72989f8c3b148c688fcc940d4729bb8"
-                      }
-                    },
-                    "for": null,
-                    "attribute": null,
-                    "description": "state of input_text.tts_message"
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T10:40:00.379352+02:00",
+                    "description": "time pattern"
                   }
                 }
               }
@@ -549,41 +3227,225 @@
             "condition/0": [
               {
                 "path": "condition/0",
-                "timestamp": "2026-04-03T19:30:01.972059+00:00",
+                "timestamp": "2026-04-04T08:40:00.379578+00:00",
                 "result": {
-                  "result": true,
-                  "entities": []
+                  "result": false
                 }
               }
             ],
-            "action/0": [
+            "condition/0/conditions/0": [
               {
-                "path": "action/0",
-                "timestamp": "2026-04-03T19:30:01.973063+00:00",
+                "path": "condition/0/conditions/0",
+                "timestamp": "2026-04-04T08:40:00.379590+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0/entity_id/0": [
+              {
+                "path": "condition/0/conditions/0/entity_id/0",
+                "timestamp": "2026-04-04T08:40:00.379598+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unavailable"
+                }
+              }
+            ],
+            "condition/0/conditions/1": [
+              {
+                "path": "condition/0/conditions/1",
+                "timestamp": "2026-04-04T08:40:00.379656+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/1/entity_id/0": [
+              {
+                "path": "condition/0/conditions/1/entity_id/0",
+                "timestamp": "2026-04-04T08:40:00.379662+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unknown"
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "HeatingManager Watchdog",
+            "id": "heating_manager_watchdog",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/10"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "or",
+                "conditions": [
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unavailable"
+                  },
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unknown"
+                  }
+                ]
+              }
+            ],
+            "action": [
+              {
+                "data": {
+                  "entity_id": "climate.topeni",
+                  "temperature": 20,
+                  "hvac_mode": "heat"
+                },
+                "action": "climate.set_temperature"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.adela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.nela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.pracovna_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
+                },
+                "action": "notify.mobile_app_iphone_17"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBTCA3VBRZGSN0MJ7TCVXKK",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "53c74553ed59bbb31528661f2a7015ae",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T08:40:00.379512+00:00",
+            "finish": "2026-04-04T08:40:00.379683+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern"
+        }
+      }
+    ],
+    "script.radio_radiozurnal": [
+      {
+        "extended_dict": {
+          "last_step": "sequence/2",
+          "run_id": "1690f04d612a1589b87f9979be34767d",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:20:47.353848+00:00",
+            "finish": "2026-04-04T08:20:49.379427+00:00"
+          },
+          "domain": "script",
+          "item_id": "radio_radiozurnal",
+          "trace": {
+            "sequence/0": [
+              {
+                "path": "sequence/0",
+                "timestamp": "2026-04-04T08:20:47.354083+00:00",
                 "changed_variables": {
+                  "this": {
+                    "entity_id": "script.radio_radiozurnal",
+                    "state": "off",
+                    "attributes": {
+                      "last_triggered": "2026-04-03T18:36:11.952516+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Pustit Radiozurnal"
+                    },
+                    "last_changed": "2026-04-04T08:11:49.411782+00:00",
+                    "last_reported": "2026-04-04T08:11:49.411782+00:00",
+                    "last_updated": "2026-04-04T08:11:49.411782+00:00",
+                    "context": {
+                      "id": "01KNBRRPS37ASGYT5W4J7Q7XV7",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
                   "context": {
-                    "id": "01KNAD5TKKG6ZS0E1N09Z3XVA9",
-                    "parent_id": "01KNAD5TKK9PPJ115H92FZGCAN",
+                    "id": "01KNBS8SK5FPVW3BTYCDKA8XY8",
+                    "parent_id": null,
                     "user_id": null
                   }
                 },
                 "result": {
                   "params": {
-                    "domain": "tts",
-                    "service": "speak",
-                    "service_data": {
-                      "media_player_entity_id": "media_player.q_series_soundbar_2",
-                      "message": "Ahoj, tohle je test hlasov\u00e9ho v\u00fdstupu.",
-                      "options": {
-                        "voice": "cs-CZ-Chirp3-HD-Aoede"
-                      },
+                    "domain": "media_player",
+                    "service": "turn_on",
+                    "service_data": {},
+                    "target": {
                       "entity_id": [
-                        "tts.google_cloud"
+                        "media_player.q_series_soundbar_2"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "sequence/1": [
+              {
+                "path": "sequence/1",
+                "timestamp": "2026-04-04T08:20:47.357005+00:00",
+                "result": {
+                  "delay": 2.0,
+                  "done": true
+                }
+              }
+            ],
+            "sequence/2": [
+              {
+                "path": "sequence/2",
+                "timestamp": "2026-04-04T08:20:49.358360+00:00",
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "play_media",
+                    "service_data": {
+                      "media_content_id": "https://rozhlas.stream/radiozurnal_mp3_128.mp3",
+                      "media_content_type": "music",
+                      "entity_id": [
+                        "media_player.q_series_soundbar_2"
                       ]
                     },
                     "target": {
                       "entity_id": [
-                        "tts.google_cloud"
+                        "media_player.q_series_soundbar_2"
                       ]
                     }
                   },
@@ -593,120 +3455,136 @@
             ]
           },
           "config": {
-            "id": "tts_message_to_soundbar",
-            "alias": "TTS zprava na soundbar",
-            "description": "Precte text z input_text.tts_message na soundbar",
-            "triggers": [
+            "alias": "Pustit Radiozurnal",
+            "sequence": [
               {
-                "trigger": "state",
-                "entity_id": "input_text.tts_message"
-              }
-            ],
-            "conditions": [
-              {
-                "condition": "template",
-                "value_template": "{{ trigger.to_state.state | length > 0 }}"
-              }
-            ],
-            "actions": [
-              {
-                "action": "tts.speak",
                 "target": {
-                  "entity_id": "tts.google_cloud"
+                  "entity_id": "media_player.q_series_soundbar_2"
+                },
+                "action": "media_player.turn_on"
+              },
+              {
+                "delay": {
+                  "seconds": 2
+                }
+              },
+              {
+                "target": {
+                  "entity_id": "media_player.q_series_soundbar_2"
                 },
                 "data": {
-                  "media_player_entity_id": "media_player.q_series_soundbar_2",
-                  "message": "{{ states('input_text.tts_message') }}",
-                  "options": {
-                    "voice": "cs-CZ-Chirp3-HD-Aoede"
-                  }
-                }
+                  "media_content_id": "https://rozhlas.stream/radiozurnal_mp3_128.mp3",
+                  "media_content_type": "music"
+                },
+                "action": "media_player.play_media"
               }
             ]
           },
           "blueprint_inputs": null,
           "context": {
-            "id": "01KNAD5TKKG6ZS0E1N09Z3XVA9",
-            "parent_id": "01KNAD5TKK9PPJ115H92FZGCAN",
+            "id": "01KNBS8SK5FPVW3BTYCDKA8XY8",
+            "parent_id": null,
             "user_id": null
           }
         },
         "short_dict": {
-          "last_step": "action/0",
-          "run_id": "dcc84aa92bcf3e0e3fcbd7d288899df2",
+          "last_step": "sequence/2",
+          "run_id": "1690f04d612a1589b87f9979be34767d",
           "state": "stopped",
           "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-03T19:30:01.971989+00:00",
-            "finish": "2026-04-03T19:30:01.998373+00:00"
-          },
-          "domain": "automation",
-          "item_id": "tts_message_to_soundbar",
-          "trigger": "state of input_text.tts_message"
-        }
-      }
-    ],
-    "script.say_on_soundbar": [
-      {
-        "extended_dict": {
-          "last_step": "sequence/0",
-          "run_id": "33e46a1e418fd008f310e75b9b489427",
-          "state": "stopped",
-          "script_execution": "finished",
-          "timestamp": {
-            "start": "2026-04-03T19:30:48.116466+00:00",
-            "finish": "2026-04-03T19:30:48.138001+00:00"
+            "start": "2026-04-04T08:20:47.353848+00:00",
+            "finish": "2026-04-04T08:20:49.379427+00:00"
           },
           "domain": "script",
-          "item_id": "say_on_soundbar",
+          "item_id": "radio_radiozurnal"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "sequence/2",
+          "run_id": "714861379230e40bf5079df0a417513f",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:27:46.967548+00:00",
+            "finish": "2026-04-04T08:27:50.326326+00:00"
+          },
+          "domain": "script",
+          "item_id": "radio_radiozurnal",
           "trace": {
             "sequence/0": [
               {
                 "path": "sequence/0",
-                "timestamp": "2026-04-03T19:30:48.116710+00:00",
+                "timestamp": "2026-04-04T08:27:46.967790+00:00",
                 "changed_variables": {
                   "this": {
-                    "entity_id": "script.say_on_soundbar",
+                    "entity_id": "script.radio_radiozurnal",
                     "state": "off",
                     "attributes": {
-                      "last_triggered": "2026-04-03T19:26:42.946439+00:00",
+                      "last_triggered": "2026-04-04T08:20:47.353914+00:00",
                       "mode": "single",
                       "current": 0,
-                      "friendly_name": "Rekni na soundbar"
+                      "friendly_name": "Pustit Radiozurnal"
                     },
-                    "last_changed": "2026-04-03T19:28:42.859839+00:00",
-                    "last_reported": "2026-04-03T19:28:42.859839+00:00",
-                    "last_updated": "2026-04-03T19:28:42.859839+00:00",
+                    "last_changed": "2026-04-04T08:20:49.378298+00:00",
+                    "last_reported": "2026-04-04T08:20:49.378298+00:00",
+                    "last_updated": "2026-04-04T08:20:49.378298+00:00",
                     "context": {
-                      "id": "01KNAD3DBBRN37CH2QMRGBF41R",
+                      "id": "01KNBS8SK5FPVW3BTYCDKA8XY8",
                       "parent_id": null,
                       "user_id": null
                     }
                   },
-                  "message": "V ob\u00fdv\u00e1ku je pr\u016fm\u011brn\u011b 21,6 stup\u0148\u016f Celsia.",
                   "context": {
-                    "id": "01KNAD6YSX0FAF58KZV4JB6Q4A",
+                    "id": "01KNBSNJZTTBV4RR58P88PKWN8",
                     "parent_id": null,
-                    "user_id": "e72989f8c3b148c688fcc940d4729bb8"
+                    "user_id": null
                   }
                 },
                 "result": {
                   "params": {
-                    "domain": "tts",
-                    "service": "speak",
-                    "service_data": {
-                      "media_player_entity_id": "media_player.q_series_soundbar_2",
-                      "message": "V ob\u00fdv\u00e1ku je pr\u016fm\u011brn\u011b 21,6 stup\u0148\u016f Celsia.",
-                      "options": {
-                        "voice": "cs-CZ-Chirp3-HD-Aoede"
-                      },
+                    "domain": "media_player",
+                    "service": "turn_on",
+                    "service_data": {},
+                    "target": {
                       "entity_id": [
-                        "tts.google_cloud"
+                        "media_player.q_series_soundbar_2"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ],
+            "sequence/1": [
+              {
+                "path": "sequence/1",
+                "timestamp": "2026-04-04T08:27:48.283320+00:00",
+                "result": {
+                  "delay": 2.0,
+                  "done": true
+                }
+              }
+            ],
+            "sequence/2": [
+              {
+                "path": "sequence/2",
+                "timestamp": "2026-04-04T08:27:50.284948+00:00",
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "play_media",
+                    "service_data": {
+                      "media_content_id": "https://rozhlas.stream/radiozurnal_mp3_128.mp3",
+                      "media_content_type": "music",
+                      "entity_id": [
+                        "media_player.q_series_soundbar_2"
                       ]
                     },
                     "target": {
                       "entity_id": [
-                        "tts.google_cloud"
+                        "media_player.q_series_soundbar_2"
                       ]
                     }
                   },
@@ -716,48 +3594,49 @@
             ]
           },
           "config": {
-            "alias": "Rekni na soundbar",
-            "description": "Precte text nahlas na soundbar",
-            "fields": {
-              "message": {
-                "description": "Text k precteni",
-                "required": true
-              }
-            },
+            "alias": "Pustit Radiozurnal",
             "sequence": [
               {
-                "action": "tts.speak",
                 "target": {
-                  "entity_id": "tts.google_cloud"
+                  "entity_id": "media_player.q_series_soundbar_2"
+                },
+                "action": "media_player.turn_on"
+              },
+              {
+                "delay": {
+                  "seconds": 2
+                }
+              },
+              {
+                "target": {
+                  "entity_id": "media_player.q_series_soundbar_2"
                 },
                 "data": {
-                  "media_player_entity_id": "media_player.q_series_soundbar_2",
-                  "message": "{{ message }}",
-                  "options": {
-                    "voice": "cs-CZ-Chirp3-HD-Aoede"
-                  }
-                }
+                  "media_content_id": "https://rozhlas.stream/radiozurnal_mp3_128.mp3",
+                  "media_content_type": "music"
+                },
+                "action": "media_player.play_media"
               }
             ]
           },
           "blueprint_inputs": null,
           "context": {
-            "id": "01KNAD6YSX0FAF58KZV4JB6Q4A",
+            "id": "01KNBSNJZTTBV4RR58P88PKWN8",
             "parent_id": null,
-            "user_id": "e72989f8c3b148c688fcc940d4729bb8"
+            "user_id": null
           }
         },
         "short_dict": {
-          "last_step": "sequence/0",
-          "run_id": "33e46a1e418fd008f310e75b9b489427",
+          "last_step": "sequence/2",
+          "run_id": "714861379230e40bf5079df0a417513f",
           "state": "stopped",
           "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-03T19:30:48.116466+00:00",
-            "finish": "2026-04-03T19:30:48.138001+00:00"
+            "start": "2026-04-04T08:27:46.967548+00:00",
+            "finish": "2026-04-04T08:27:50.326326+00:00"
           },
           "domain": "script",
-          "item_id": "say_on_soundbar"
+          "item_id": "radio_radiozurnal"
         }
       }
     ]

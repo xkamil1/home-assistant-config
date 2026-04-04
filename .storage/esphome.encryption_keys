@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "esphome.encryption_keys",
+  "data": {
+    "keys": {
+      "20:f8:3b:0a:16:55": "W91jdgl2SiYRnBbUH28mI0CLr96Fb1tWt7XeR3SBcBU="
+    }
+  }
+}

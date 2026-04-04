@@ -21,6 +21,8 @@ http:
   login_attempts_threshold: 5
   cors_allowed_origins:
     - https://ha.hanusek.net
+    - http://10.0.0.55
+    - http://10.0.0.55:80
 
 # Loads default set of integrations. Do not remove.
 default_config:
