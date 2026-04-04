@@ -95,3 +95,4 @@ ip_bans.yaml
 
 # Analysis files
 fve_analysis*.txt
+idos_debug.html
