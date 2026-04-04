@@ -458,6 +458,12 @@ input_number:
     initial: 21
     mode: box
 input_text:
+  last_radio_station:
+    name: "Posledni radio stanice"
+    icon: mdi:radio
+    max: 255
+    mode: text
+    initial: "https://rozhlas.stream/radiozurnal_mp3_128.mp3"
   tts_message:
     name: "TTS zprava"
     icon: mdi:text-to-speech

@@ -1,0 +1,68 @@
+- id: radio_off_nobody_home
+  alias: Radio vypnout - nikdo doma
+  description: Vypne radio kdyz odejdou Kamil i Romana
+  triggers:
+    - trigger: state
+      entity_id:
+        - person.kamil
+        - person.romana
+      to: not_home
+  conditions:
+    - condition: state
+      entity_id: person.kamil
+      state: not_home
+    - condition: state
+      entity_id: person.romana
+      state: not_home
+    - condition: state
+      entity_id: media_player.q_series_soundbar_2
+      state: playing
+  actions:
+    - action: media_player.media_stop
+      target:
+        entity_id: media_player.q_series_soundbar_2
+
+- id: radio_on_someone_home
+  alias: Radio zapnout - nekdo prisel domu
+  description: Zapne posledni stanici kdyz prijde Kamil nebo Romana
+  triggers:
+    - trigger: state
+      entity_id:
+        - person.kamil
+        - person.romana
+      to: home
+  conditions:
+    - condition: state
+      entity_id: person.kamil
+      state: not_home
+      match: any
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: person.kamil
+          state: home
+        - condition: state
+          entity_id: person.romana
+          state: home
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.q_series_soundbar_2
+          state: playing
+  actions:
+    - action: media_player.turn_on
+      target:
+        entity_id: media_player.q_series_soundbar_2
+    - delay:
+        seconds: 2
+    - action: media_player.volume_set
+      target:
+        entity_id: media_player.q_series_soundbar_2
+      data:
+        volume_level: 0.08
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.q_series_soundbar_2
+      data:
+        media_content_id: "{{ states('input_text.last_radio_station') }}"
+        media_content_type: music

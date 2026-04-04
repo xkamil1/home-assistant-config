@@ -29,6 +29,11 @@
   radio_radiozurnal:
     alias: Pustit Radiozurnal
     sequence:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.last_radio_station
+        data:
+          value: "https://rozhlas.stream/radiozurnal_mp3_128.mp3"
       - service: media_player.turn_on
         target:
           entity_id: media_player.q_series_soundbar_2
@@ -43,6 +48,11 @@
   radio_evropa2:
     alias: Pustit Evropu 2
     sequence:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.last_radio_station
+        data:
+          value: "https://playerservices.streamtheworld.com/api/livestream-redirect/EVROPA2.mp3"
       - service: media_player.turn_on
         target:
           entity_id: media_player.q_series_soundbar_2
@@ -57,6 +67,11 @@
   radio_frekvence1:
     alias: Pustit Frekvenci 1
     sequence:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.last_radio_station
+        data:
+          value: "https://playerservices.streamtheworld.com/api/livestream-redirect/FREKVENCE1.mp3"
       - service: media_player.turn_on
         target:
           entity_id: media_player.q_series_soundbar_2
@@ -71,6 +86,11 @@
   radio_helax:
     alias: Pustit Helax
     sequence:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.last_radio_station
+        data:
+          value: "https://ice.abradio.cz/helax128.mp3"
       - service: media_player.turn_on
         target:
           entity_id: media_player.q_series_soundbar_2
@@ -85,6 +105,11 @@
   radio_fresh:
     alias: Pustit Fresh Radio
     sequence:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.last_radio_station
+        data:
+          value: "https://icecast.beatzone.cz/radio/8000/128.mp3"
       - service: media_player.turn_on
         target:
           entity_id: media_player.q_series_soundbar_2
@@ -99,6 +124,11 @@
   radio_orion:
     alias: Pustit Hitradio Orion
     sequence:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.last_radio_station
+        data:
+          value: "https://ice.radia.cz/orion128.aac"
       - service: media_player.turn_on
         target:
           entity_id: media_player.q_series_soundbar_2
