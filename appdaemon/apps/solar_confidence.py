@@ -741,19 +741,13 @@ class SolarConfidence(hass.Hass):
         else:
             weather_conf_tom = metno_tom_conf
 
-        # Forecast Solar factor (0–100 scale) with correction
+        # Forecast Solar DISABLED - unreliable (avg error 11.6 kWh over 14 days)
+        # Confidence based purely on calibrated weather conditions
         fs_kwh_raw = self._float("sensor.energy_production_tomorrow")
         fs_kwh = fs_kwh_raw * self._fs_correction
-        if fs_kwh >= 30:
-            solar_factor = min(100, 80 + (fs_kwh - 30) * 2)
-        elif fs_kwh >= 20:
-            solar_factor = 60 + (fs_kwh - 20) * 2
-        elif fs_kwh >= 10:
-            solar_factor = 30 + (fs_kwh - 10) * 3
-        else:
-            solar_factor = max(10, fs_kwh * 3)
+        solar_factor = 0  # kept for logging only
 
-        confidence_tom_raw = round(weather_conf_tom * 0.6 + solar_factor * 0.4)
+        confidence_tom_raw = round(weather_conf_tom)
         confidence_tom_raw = max(0, min(100, confidence_tom_raw))
         confidence_tom = max(0, min(100, round(
             confidence_tom_raw * self._confidence_correction)))
