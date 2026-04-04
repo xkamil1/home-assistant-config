@@ -1,0 +1,20 @@
+- id: voicepe_mute_during_response
+  alias: VoicePE ztlum pri odpovedi
+  description: Ztlum VoicePE na 0 pri odpovedi, po 10s vrat zpet
+  triggers:
+    - trigger: state
+      entity_id: assist_satellite.viocepe_assist_satellite
+      to: responding
+  actions:
+    - action: media_player.volume_set
+      target:
+        entity_id: media_player.viocepe_media_player
+      data:
+        volume_level: 0
+    - delay:
+        seconds: 15
+    - action: media_player.volume_set
+      target:
+        entity_id: media_player.viocepe_media_player
+      data:
+        volume_level: 0.16
