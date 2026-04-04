@@ -184,8 +184,9 @@ class ConsumptionMonitor(hass.Hass):
         bojler_w = BOJLER_SPIRALA_W if bojler_active >= 1 else 0
 
         # Pračka + Sušička
-        pracka_w = self._f("sensor.pracka_power")
-        susicka_w = self._f("sensor.susicka_power")
+        pracka_w = self._f("sensor.tz3000_hdopuwv6_ts011f_power")  # Zigbee zasuvka
+        susicka_w = self._f("sensor.zasuvka_pracovna_u_dveri_power")  # Zigbee zasuvka
+        mycka_w = self._f("sensor.zasuvka_mycka_power")  # Zigbee zasuvka
 
         # Daikin (estimated from kWh delta)
         daikin = self._daikin_estimated_w()
@@ -208,7 +209,7 @@ class ConsumptionMonitor(hass.Hass):
 
         # ── Totals ────────────────────────────────────────────────────────
 
-        tracked_total = (tc_total + bojler_w + pracka_w + susicka_w +
+        tracked_total = (tc_total + bojler_w + pracka_w + susicka_w + mycka_w +
                          daikin_total + ev_charger_w +
                          ups_w + tv_w + pracovna_z_w + pergola_w)
         untracked_w = max(0, home_total_w - tracked_total)
@@ -218,7 +219,7 @@ class ConsumptionMonitor(hass.Hass):
         ev_per_phase = round(ev_charger_w / 3) if ev_charger_w > 0 else 0
         phase_a_tracked = tc_a + ev_per_phase
         phase_b_tracked = tc_b + bojler_w + ev_per_phase
-        phase_c_tracked = tc_c + pracka_w + susicka_w + daikin_total + ev_per_phase
+        phase_c_tracked = tc_c + pracka_w + susicka_w + mycka_w + daikin_total + ev_per_phase
         phase_unknown = ups_w + tv_w + pracovna_z_w + pergola_w
 
         # Phase imbalance (grid import per phase — use absolute import values)
@@ -280,6 +281,7 @@ class ConsumptionMonitor(hass.Hass):
                            "bojler_spirala_w": bojler_w,
                            "pracka_w": round(pracka_w),
                            "susicka_w": round(susicka_w),
+                           "mycka_w": round(mycka_w),
                            "daikin_total_w": round(daikin_total),
                            "daikin_adela_w": daikin_adela,
                            "daikin_nela_w": daikin_nela,
@@ -350,7 +352,7 @@ class ConsumptionMonitor(hass.Hass):
         fields = (
             "home_total_w={htw},fve_w={fve},battery_w={bat},grid_w={grid},"
             "tc_total_w={tct},tc_a_w={tca},tc_b_w={tcb},tc_c_w={tcc},"
-            "pracka_w={pr},susicka_w={su},"
+            "pracka_w={pr},susicka_w={su},mycka_w={my},"
             "daikin_adela_w={da},daikin_nela_w={dn},daikin_pracovna_w={dp},"
             "daikin_loznice_w={dl},daikin_total_w={dt},"
             "bojler_spirala_w={boj},ev_charger_w={evc},"
@@ -363,7 +365,7 @@ class ConsumptionMonitor(hass.Hass):
             htw=round(home_total_w), fve=round(fve_w), bat=round(battery_w),
             grid=round(grid_w),
             tct=round(tc_total), tca=round(tc_a), tcb=round(tc_b), tcc=round(tc_c),
-            pr=round(pracka_w), su=round(susicka_w),
+            pr=round(pracka_w), su=round(susicka_w), my=round(mycka_w),
             da=daikin_adela, dn=daikin_nela, dp=daikin_pracovna, dl=daikin_loznice,
             dt=round(daikin_total),
             boj=bojler_w, evc=ev_charger_w,
