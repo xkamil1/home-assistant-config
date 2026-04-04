@@ -112,11 +112,16 @@
           media_content_type: music
   say_on_soundbar:
     alias: Rekni na soundbar
-    description: Precte text nahlas na soundbar
+    description: Precte text nahlas na soundbar a obnovi puvodni stav
     fields:
       message:
         description: Text k precteni
         required: true
+    variables:
+      prev_cast_state: "{{ states('media_player.q_series_soundbar_2') }}"
+      prev_content: "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_id') }}"
+      prev_content_type: "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_type') or 'music' }}"
+      prev_source: "{{ state_attr('media_player.q_series_soundbar', 'source') }}"
     sequence:
       - action: tts.speak
         target:
@@ -126,3 +131,29 @@
           message: "{{ message }}"
           options:
             voice: cs-CZ-Chirp3-HD-Aoede
+      - delay:
+          seconds: 8
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: >
+                  {{ prev_cast_state == 'playing' and prev_content is not none
+                     and 'tts_proxy' not in (prev_content | default('')) }}
+            sequence:
+              - action: media_player.play_media
+                target:
+                  entity_id: media_player.q_series_soundbar_2
+                data:
+                  media_content_id: "{{ prev_content }}"
+                  media_content_type: "{{ prev_content_type }}"
+          - conditions:
+              - condition: template
+                value_template: >
+                  {{ prev_source is not none and prev_source != ''
+                     and prev_cast_state != 'playing' }}
+            sequence:
+              - action: media_player.select_source
+                target:
+                  entity_id: media_player.q_series_soundbar
+                data:
+                  source: "{{ prev_source }}"
