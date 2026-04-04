@@ -240,6 +240,23 @@ Session: Voice assistant, solar_confidence fix, Ford/Elroq detekce, VT surplus
 - IDOS jizdni rady: scraping nefunguje (SPA), web search da jen obecne info
 - Google Nest: nepodporuje cestinu pro hlasove ovladani
 
+
+### Monitoring Stack (NOVY 4.4.2026)
+- Server: 10.0.0.55 (kamil@, SSH key ~/.ssh/docker-srv)
+- Disk: /dev/sdb1 -> /data/loki (100GB ext4)
+- Docker Compose: /opt/monitoring/
+- Loki 2.9.8: port 3100, retence 30d
+- Grafana 10.4.3: port 3000 (admin/admin), datasource http://loki:3100
+- Promtail 2.9.8: local syslog z docker-srv
+- syslog-ng 4.1.1: port 514 UDP/TCP pro sitova zarizeni
+
+### ha_log_forwarder.py (NOVY 4.4.2026)
+- Cte HA core logy pres supervisor API (http://supervisor/core/logs)
+- Posila do Loki kazdych 60s
+- Deduplikace pres hash
+- Loki job=homeassistant, host=ha-server
+- POZOR: Promtail HA addon nefunguje na HAOS 17+ (journal access broken)
+
 ## Zname problemy / Gotchas
 
 1. HA zahazuje atributy s hodnotou 0.0 nebo False
