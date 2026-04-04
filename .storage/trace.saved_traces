@@ -121,6 +121,124 @@
           "item_id": "startup_delayed_action",
           "trigger": "Home Assistant starting"
         }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/1",
+          "run_id": "b702bd4148ae16a4db633733f036be97",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:43:19.608936+00:00",
+            "finish": "2026-04-04T08:44:19.612327+00:00"
+          },
+          "domain": "automation",
+          "item_id": "startup_delayed_action",
+          "trigger": "Home Assistant starting",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:43:19.608968+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.delayed_action_after_startup",
+                    "state": "on",
+                    "attributes": {
+                      "id": "startup_delayed_action",
+                      "last_triggered": "2026-04-04T08:12:21.120390+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Delayed Action After Startup"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.758552+00:00",
+                    "last_reported": "2026-04-04T08:42:56.758552+00:00",
+                    "last_updated": "2026-04-04T08:42:56.758552+00:00",
+                    "context": {
+                      "id": "01KNBTHPBPR0YHX81AMATQBXZ0",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "homeassistant",
+                    "event": "start",
+                    "description": "Home Assistant starting"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:43:19.609234+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBTJCNR9DE49K002E13KGXT",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "delay": 60.0,
+                  "done": true
+                }
+              }
+            ],
+            "action/1": [
+              {
+                "path": "action/1",
+                "timestamp": "2026-04-04T08:44:19.610958+00:00",
+                "result": {
+                  "event": "run_pnd",
+                  "event_data": {}
+                }
+              }
+            ]
+          },
+          "config": {
+            "id": "startup_delayed_action",
+            "alias": "Delayed Action After Startup",
+            "description": "Performs an action one minute after Home Assistant starts.",
+            "trigger": [
+              {
+                "platform": "homeassistant",
+                "event": "start"
+              }
+            ],
+            "action": [
+              {
+                "delay": "00:01:00"
+              },
+              {
+                "event": "run_pnd",
+                "event_data": {}
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBTJCNR9DE49K002E13KGXT",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/1",
+          "run_id": "b702bd4148ae16a4db633733f036be97",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T08:43:19.608936+00:00",
+            "finish": "2026-04-04T08:44:19.612327+00:00"
+          },
+          "domain": "automation",
+          "item_id": "startup_delayed_action",
+          "trigger": "Home Assistant starting"
+        }
       }
     ],
     "automation.d7a01a28dd0b4f149c09104e44ba2615": [
@@ -272,94 +390,91 @@
           "item_id": "d7a01a28dd0b4f149c09104e44ba2615",
           "trigger": "numeric state of sensor.battery_state_of_capacity"
         }
-      }
-    ],
-    "automation.None": [
+      },
       {
         "extended_dict": {
-          "last_step": "action/0/choose/1/sequence/1",
-          "run_id": "c573d2b3f5a459298a7423107d33dd1f",
-          "state": "running",
-          "script_execution": null,
+          "last_step": "action/0",
+          "run_id": "02bf3c6f2de9264ddf992cf2573840b0",
+          "state": "stopped",
+          "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-04T08:12:24.762166+00:00",
-            "finish": null
+            "start": "2026-04-04T08:43:23.098602+00:00",
+            "finish": "2026-04-04T08:43:23.397403+00:00"
           },
           "domain": "automation",
-          "item_id": "None",
-          "trigger": "numeric state of sensor.teplota_pergola_temperature",
+          "item_id": "d7a01a28dd0b4f149c09104e44ba2615",
+          "trigger": "numeric state of sensor.battery_state_of_capacity",
           "trace": {
-            "trigger/1": [
+            "trigger/0": [
               {
-                "path": "trigger/1",
-                "timestamp": "2026-04-04T08:12:24.762186+00:00",
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:43:23.098643+00:00",
                 "changed_variables": {
                   "this": {
-                    "entity_id": "automation.oleandry_ovladani_zarovky_podle_teploty",
+                    "entity_id": "automation.battery_capacity_full_notification",
                     "state": "on",
                     "attributes": {
-                      "last_triggered": "2026-04-04T05:30:45.106899+00:00",
+                      "id": "d7a01a28dd0b4f149c09104e44ba2615",
+                      "last_triggered": "2026-04-04T08:12:23.156390+00:00",
                       "mode": "single",
                       "current": 0,
-                      "friendly_name": "Oleandry - ovl\u00e1d\u00e1n\u00ed \u017e\u00e1rovky podle teploty"
+                      "friendly_name": "Battery Capacity Full Notification"
                     },
-                    "last_changed": "2026-04-04T08:11:57.187036+00:00",
-                    "last_reported": "2026-04-04T08:11:57.187036+00:00",
-                    "last_updated": "2026-04-04T08:11:57.187036+00:00",
+                    "last_changed": "2026-04-04T08:42:56.758358+00:00",
+                    "last_reported": "2026-04-04T08:42:56.758358+00:00",
+                    "last_updated": "2026-04-04T08:42:56.758358+00:00",
                     "context": {
-                      "id": "01KNBRRYC33J51ZGYF1Y0YP66G",
+                      "id": "01KNBTHPBP3P1QVHHCKJQ4T2EQ",
                       "parent_id": null,
                       "user_id": null
                     }
                   },
                   "trigger": {
-                    "id": "1",
-                    "idx": "1",
+                    "id": "0",
+                    "idx": "0",
                     "alias": null,
                     "platform": "numeric_state",
-                    "entity_id": "sensor.teplota_pergola_temperature",
+                    "entity_id": "sensor.battery_state_of_capacity",
                     "below": null,
-                    "above": 5.0,
+                    "above": 99.0,
                     "from_state": {
-                      "entity_id": "sensor.teplota_pergola_temperature",
-                      "state": "unavailable",
+                      "entity_id": "sensor.battery_state_of_capacity",
+                      "state": "unknown",
                       "attributes": {
-                        "restored": true,
                         "state_class": "measurement",
-                        "device_class": "temperature",
-                        "friendly_name": "Teplota_Pergola Temperature",
-                        "supported_features": 0,
-                        "unit_of_measurement": "\u00b0C"
+                        "unit_of_measurement": "%",
+                        "icon": "mdi:home-battery",
+                        "friendly_name": "Batteries State of capacity"
                       },
-                      "last_changed": "2026-04-04T08:12:16.980063+00:00",
-                      "last_reported": "2026-04-04T08:12:16.980063+00:00",
-                      "last_updated": "2026-04-04T08:12:16.980063+00:00",
+                      "last_changed": "2026-04-04T08:43:07.266485+00:00",
+                      "last_reported": "2026-04-04T08:43:07.266485+00:00",
+                      "last_updated": "2026-04-04T08:43:07.266485+00:00",
                       "context": {
-                        "id": "01KNBRSHPMTKR752Y7R32RV4YY",
+                        "id": "01KNBTJ0M2ZTYFAAN5GMAV66JP",
                         "parent_id": null,
                         "user_id": null
                       }
                     },
                     "to_state": {
-                      "entity_id": "sensor.teplota_pergola_temperature",
-                      "state": "11.17",
+                      "entity_id": "sensor.battery_state_of_capacity",
+                      "state": "100.0",
                       "attributes": {
                         "state_class": "measurement",
-                        "unit_of_measurement": "\u00b0C",
-                        "device_class": "temperature",
-                        "friendly_name": "Teplota_Pergola Temperature"
+                        "unit_of_measurement": "%",
+                        "icon": "mdi:home-battery",
+                        "friendly_name": "Batteries State of capacity"
                       },
-                      "last_changed": "2026-04-04T08:12:24.752709+00:00",
-                      "last_reported": "2026-04-04T08:12:24.752709+00:00",
-                      "last_updated": "2026-04-04T08:12:24.752709+00:00",
+                      "last_changed": "2026-04-04T08:43:23.097325+00:00",
+                      "last_reported": "2026-04-04T08:43:23.097325+00:00",
+                      "last_updated": "2026-04-04T08:43:23.097325+00:00",
                       "context": {
-                        "id": "01KNBRSS9G32JYHP29R3GDEGRG",
+                        "id": "01KNBTJG2SS4AKW04NF6683BF7",
                         "parent_id": null,
                         "user_id": null
                       }
                     },
                     "for": null,
-                    "description": "numeric state of sensor.teplota_pergola_temperature"
+                    "description": "numeric state of sensor.battery_state_of_capacity"
                   }
                 }
               }
@@ -367,105 +482,20 @@
             "action/0": [
               {
                 "path": "action/0",
-                "timestamp": "2026-04-04T08:12:24.762363+00:00",
+                "timestamp": "2026-04-04T08:43:23.098873+00:00",
                 "changed_variables": {
                   "context": {
-                    "id": "01KNBRSS9T8Y02M1E7649H0Q5X",
-                    "parent_id": "01KNBRSS9G32JYHP29R3GDEGRG",
+                    "id": "01KNBTJG2TJ1VP2R85BTHZ53FM",
+                    "parent_id": "01KNBTJG2SS4AKW04NF6683BF7",
                     "user_id": null
                   }
                 },
-                "result": {
-                  "choice": 1
-                }
-              }
-            ],
-            "action/0/choose/0": [
-              {
-                "path": "action/0/choose/0",
-                "timestamp": "2026-04-04T08:12:24.763071+00:00",
-                "result": {
-                  "result": false
-                }
-              }
-            ],
-            "action/0/choose/0/conditions/0": [
-              {
-                "path": "action/0/choose/0/conditions/0",
-                "timestamp": "2026-04-04T08:12:24.763098+00:00",
-                "result": {
-                  "result": false
-                }
-              }
-            ],
-            "action/0/choose/0/conditions/0/entity_id/0": [
-              {
-                "path": "action/0/choose/0/conditions/0/entity_id/0",
-                "timestamp": "2026-04-04T08:12:24.763112+00:00",
-                "result": {
-                  "result": false,
-                  "state": 11.17,
-                  "wanted_state_below": 2.0
-                }
-              }
-            ],
-            "action/0/choose/1": [
-              {
-                "path": "action/0/choose/1",
-                "timestamp": "2026-04-04T08:12:24.763147+00:00",
-                "result": {
-                  "result": true
-                }
-              }
-            ],
-            "action/0/choose/1/conditions/0": [
-              {
-                "path": "action/0/choose/1/conditions/0",
-                "timestamp": "2026-04-04T08:12:24.763159+00:00",
-                "result": {
-                  "result": true
-                }
-              }
-            ],
-            "action/0/choose/1/conditions/0/entity_id/0": [
-              {
-                "path": "action/0/choose/1/conditions/0/entity_id/0",
-                "timestamp": "2026-04-04T08:12:24.763168+00:00",
-                "result": {
-                  "result": true,
-                  "state": 11.17
-                }
-              }
-            ],
-            "action/0/choose/1/sequence/0": [
-              {
-                "path": "action/0/choose/1/sequence/0",
-                "timestamp": "2026-04-04T08:12:24.763243+00:00",
-                "result": {
-                  "params": {
-                    "domain": "switch",
-                    "service": "turn_off",
-                    "service_data": {},
-                    "target": {
-                      "entity_id": [
-                        "switch.zasuvka_pergola"
-                      ]
-                    }
-                  },
-                  "running_script": false
-                }
-              }
-            ],
-            "action/0/choose/1/sequence/1": [
-              {
-                "path": "action/0/choose/1/sequence/1",
-                "timestamp": "2026-04-04T08:12:35.131866+00:00",
                 "result": {
                   "params": {
                     "domain": "notify",
                     "service": "mobile_app_iphone_17",
                     "service_data": {
-                      "message": "\ud83d\udd0c \u017d\u00e1rovka pro oleandry byla *vypnuta* (teplota: 11.17 \u00b0C)"
+                      "message": "Baterie sol\u00e1rn\u00ed elektr\u00e1rny dos\u00e1hla 100% nabit\u00ed."
                     },
                     "target": {}
                   },
@@ -475,237 +505,43 @@
             ]
           },
           "config": {
-            "alias": "Oleandry - ovl\u00e1d\u00e1n\u00ed \u017e\u00e1rovky podle teploty",
-            "description": "Zapnut\u00ed nebo vypnut\u00ed \u017e\u00e1rovky podle teploty",
-            "trigger": [
-              {
-                "platform": "numeric_state",
-                "entity_id": "sensor.teplota_pergola_temperature",
-                "below": 2
+            "alias": "Battery Capacity Full Notification",
+            "trigger": {
+              "platform": "numeric_state",
+              "entity_id": "sensor.battery_state_of_capacity",
+              "above": 99
+            },
+            "action": {
+              "data": {
+                "message": "Baterie sol\u00e1rn\u00ed elektr\u00e1rny dos\u00e1hla 100% nabit\u00ed."
               },
-              {
-                "platform": "numeric_state",
-                "entity_id": "sensor.teplota_pergola_temperature",
-                "above": 5
-              }
-            ],
-            "condition": [],
-            "action": [
-              {
-                "choose": [
-                  {
-                    "conditions": [
-                      {
-                        "condition": "numeric_state",
-                        "entity_id": "sensor.teplota_pergola_temperature",
-                        "below": 2
-                      }
-                    ],
-                    "sequence": [
-                      {
-                        "target": {
-                          "entity_id": "switch.zasuvka_pergola"
-                        },
-                        "action": "switch.turn_on"
-                      },
-                      {
-                        "data": {
-                          "message": "\ud83d\udca1 \u017d\u00e1rovka pro oleandry byla *zapnuta* (teplota: {{ states('sensor.teplota_pergola_temperature') }} \u00b0C)\n"
-                        },
-                        "action": "notify.mobile_app_iphone_17"
-                      }
-                    ]
-                  },
-                  {
-                    "conditions": [
-                      {
-                        "condition": "numeric_state",
-                        "entity_id": "sensor.teplota_pergola_temperature",
-                        "above": 5
-                      }
-                    ],
-                    "sequence": [
-                      {
-                        "target": {
-                          "entity_id": "switch.zasuvka_pergola"
-                        },
-                        "action": "switch.turn_off"
-                      },
-                      {
-                        "data": {
-                          "message": "\ud83d\udd0c \u017d\u00e1rovka pro oleandry byla *vypnuta* (teplota: {{ states('sensor.teplota_pergola_temperature') }} \u00b0C)\n"
-                        },
-                        "action": "notify.mobile_app_iphone_17"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "mode": "single"
+              "action": "notify.mobile_app_iphone_17"
+            },
+            "id": "d7a01a28dd0b4f149c09104e44ba2615"
           },
           "blueprint_inputs": null,
           "context": {
-            "id": "01KNBRSS9T8Y02M1E7649H0Q5X",
-            "parent_id": "01KNBRSS9G32JYHP29R3GDEGRG",
-            "user_id": null
-          }
-        },
-        "short_dict": {
-          "last_step": "action/0/choose/1/sequence/1",
-          "run_id": "c573d2b3f5a459298a7423107d33dd1f",
-          "state": "running",
-          "script_execution": null,
-          "timestamp": {
-            "start": "2026-04-04T08:12:24.762166+00:00",
-            "finish": null
-          },
-          "domain": "automation",
-          "item_id": "None",
-          "trigger": "numeric state of sensor.teplota_pergola_temperature"
-        }
-      },
-      {
-        "extended_dict": {
-          "last_step": "action/0",
-          "run_id": "4bf1cb5399bd7f3f5e12448e315a2d9d",
-          "state": "running",
-          "script_execution": null,
-          "timestamp": {
-            "start": "2026-04-04T08:15:00.490341+00:00",
-            "finish": null
-          },
-          "domain": "automation",
-          "item_id": "None",
-          "trigger": "time pattern",
-          "trace": {
-            "trigger/0": [
-              {
-                "path": "trigger/0",
-                "timestamp": "2026-04-04T08:15:00.490370+00:00",
-                "changed_variables": {
-                  "this": {
-                    "entity_id": "automation.vibrace_kazdych_10_minut",
-                    "state": "on",
-                    "attributes": {
-                      "last_triggered": "2026-04-04T08:00:00.232247+00:00",
-                      "mode": "single",
-                      "current": 0,
-                      "friendly_name": "Vibrace ka\u017ed\u00fdch 10 minut"
-                    },
-                    "last_changed": "2026-04-04T08:11:57.185101+00:00",
-                    "last_reported": "2026-04-04T08:11:57.185101+00:00",
-                    "last_updated": "2026-04-04T08:11:57.185101+00:00",
-                    "context": {
-                      "id": "01KNBRRYC11BC0KCQV4PRF86GW",
-                      "parent_id": null,
-                      "user_id": null
-                    }
-                  },
-                  "trigger": {
-                    "id": "0",
-                    "idx": "0",
-                    "alias": null,
-                    "platform": "time_pattern",
-                    "now": "2026-04-04T10:15:00.490171+02:00",
-                    "description": "time pattern"
-                  }
-                }
-              }
-            ],
-            "condition/0": [
-              {
-                "path": "condition/0",
-                "timestamp": "2026-04-04T08:15:00.490395+00:00",
-                "result": {
-                  "result": true
-                }
-              }
-            ],
-            "condition/0/entity_id/0": [
-              {
-                "path": "condition/0/entity_id/0",
-                "timestamp": "2026-04-04T08:15:00.490409+00:00",
-                "result": {
-                  "result": true,
-                  "state": "on",
-                  "wanted_state": "on"
-                }
-              }
-            ],
-            "action/0": [
-              {
-                "path": "action/0",
-                "timestamp": "2026-04-04T08:15:00.491298+00:00",
-                "changed_variables": {
-                  "context": {
-                    "id": "01KNBRYHCADFW42ZS8W5W0CE3E",
-                    "parent_id": null,
-                    "user_id": null
-                  }
-                },
-                "result": {
-                  "params": {
-                    "domain": "switch",
-                    "service": "turn_on",
-                    "service_data": {},
-                    "target": {
-                      "entity_id": [
-                        "switch.udirna_vibrace"
-                      ]
-                    }
-                  },
-                  "running_script": false
-                }
-              }
-            ]
-          },
-          "config": {
-            "alias": "Vibrace ka\u017ed\u00fdch 10 minut",
-            "description": "Spou\u0161t\u00ed switch.udirna_vibrace ka\u017ed\u00fdch 15 minut, pokud je povolen\u00fd p\u0159ep\u00edna\u010d",
-            "trigger": [
-              {
-                "platform": "time_pattern",
-                "minutes": "/15"
-              }
-            ],
-            "condition": [
-              {
-                "condition": "state",
-                "entity_id": "input_boolean.udirna_vibrace_control",
-                "state": "on"
-              }
-            ],
-            "action": [
-              {
-                "target": {
-                  "entity_id": "switch.udirna_vibrace"
-                },
-                "action": "switch.turn_on"
-              }
-            ]
-          },
-          "blueprint_inputs": null,
-          "context": {
-            "id": "01KNBRYHCADFW42ZS8W5W0CE3E",
-            "parent_id": null,
+            "id": "01KNBTJG2TJ1VP2R85BTHZ53FM",
+            "parent_id": "01KNBTJG2SS4AKW04NF6683BF7",
             "user_id": null
           }
         },
         "short_dict": {
           "last_step": "action/0",
-          "run_id": "4bf1cb5399bd7f3f5e12448e315a2d9d",
-          "state": "running",
-          "script_execution": null,
+          "run_id": "02bf3c6f2de9264ddf992cf2573840b0",
+          "state": "stopped",
+          "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-04T08:15:00.490341+00:00",
-            "finish": null
+            "start": "2026-04-04T08:43:23.098602+00:00",
+            "finish": "2026-04-04T08:43:23.397403+00:00"
           },
           "domain": "automation",
-          "item_id": "None",
-          "trigger": "time pattern"
+          "item_id": "d7a01a28dd0b4f149c09104e44ba2615",
+          "trigger": "numeric state of sensor.battery_state_of_capacity"
         }
-      },
+      }
+    ],
+    "automation.None": [
       {
         "extended_dict": {
           "last_step": "action/0",
@@ -846,69 +682,94 @@
           "item_id": "None",
           "trigger": "time pattern"
         }
-      }
-    ],
-    "script.say_on_soundbar": [
+      },
       {
         "extended_dict": {
-          "last_step": "sequence/0",
-          "run_id": "6910beeee4dad9cd518893080413e7b9",
-          "state": "stopped",
-          "script_execution": "finished",
+          "last_step": "action/0",
+          "run_id": "02dff7caa8b876451dafd46c444bc1a1",
+          "state": "running",
+          "script_execution": null,
           "timestamp": {
-            "start": "2026-04-04T08:19:39.993001+00:00",
-            "finish": "2026-04-04T08:19:40.015345+00:00"
+            "start": "2026-04-04T08:45:00.499365+00:00",
+            "finish": null
           },
-          "domain": "script",
-          "item_id": "say_on_soundbar",
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern",
           "trace": {
-            "sequence/0": [
+            "trigger/0": [
               {
-                "path": "sequence/0",
-                "timestamp": "2026-04-04T08:19:39.993236+00:00",
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:45:00.499402+00:00",
                 "changed_variables": {
                   "this": {
-                    "entity_id": "script.say_on_soundbar",
-                    "state": "off",
+                    "entity_id": "automation.vibrace_kazdych_10_minut",
+                    "state": "on",
                     "attributes": {
-                      "last_triggered": "2026-04-04T08:17:57.841279+00:00",
+                      "last_triggered": "2026-04-04T08:30:00.491258+00:00",
                       "mode": "single",
                       "current": 0,
-                      "friendly_name": "Rekni na soundbar"
+                      "friendly_name": "Vibrace ka\u017ed\u00fdch 10 minut"
                     },
-                    "last_changed": "2026-04-04T08:17:57.862267+00:00",
-                    "last_reported": "2026-04-04T08:17:57.862267+00:00",
-                    "last_updated": "2026-04-04T08:17:57.862267+00:00",
+                    "last_changed": "2026-04-04T08:42:56.758462+00:00",
+                    "last_reported": "2026-04-04T08:42:56.758462+00:00",
+                    "last_updated": "2026-04-04T08:42:56.758462+00:00",
                     "context": {
-                      "id": "01KNBS3JAKXP6PPJF1HTE5K0NS",
+                      "id": "01KNBTHPBPCH666YF7SKXZHDS5",
                       "parent_id": null,
                       "user_id": null
                     }
                   },
-                  "message": "V pracovn\u011b je aktu\u00e1ln\u011b \u010dty\u0159iadvacet stup\u0148\u016f.",
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T10:45:00.499203+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T08:45:00.499432+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "condition/0/entity_id/0": [
+              {
+                "path": "condition/0/entity_id/0",
+                "timestamp": "2026-04-04T08:45:00.499446+00:00",
+                "result": {
+                  "result": true,
+                  "state": "on",
+                  "wanted_state": "on"
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T08:45:00.499802+00:00",
+                "changed_variables": {
                   "context": {
-                    "id": "01KNBS6MP2X12X2KCKDHHAEKGT",
+                    "id": "01KNBTNF6KRNDN7DM12SVA6HKE",
                     "parent_id": null,
                     "user_id": null
                   }
                 },
                 "result": {
                   "params": {
-                    "domain": "tts",
-                    "service": "speak",
-                    "service_data": {
-                      "media_player_entity_id": "media_player.q_series_soundbar_2",
-                      "message": "V pracovn\u011b je aktu\u00e1ln\u011b \u010dty\u0159iadvacet stup\u0148\u016f.",
-                      "options": {
-                        "voice": "cs-CZ-Chirp3-HD-Aoede"
-                      },
-                      "entity_id": [
-                        "tts.google_cloud"
-                      ]
-                    },
+                    "domain": "switch",
+                    "service": "turn_on",
+                    "service_data": {},
                     "target": {
                       "entity_id": [
-                        "tts.google_cloud"
+                        "switch.udirna_vibrace"
                       ]
                     }
                   },
@@ -918,50 +779,1516 @@
             ]
           },
           "config": {
-            "alias": "Rekni na soundbar",
-            "description": "Precte text nahlas na soundbar",
-            "fields": {
-              "message": {
-                "description": "Text k precteni",
-                "required": true
-              }
-            },
-            "sequence": [
+            "alias": "Vibrace ka\u017ed\u00fdch 10 minut",
+            "description": "Spou\u0161t\u00ed switch.udirna_vibrace ka\u017ed\u00fdch 15 minut, pokud je povolen\u00fd p\u0159ep\u00edna\u010d",
+            "trigger": [
               {
-                "action": "tts.speak",
+                "platform": "time_pattern",
+                "minutes": "/15"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "state",
+                "entity_id": "input_boolean.udirna_vibrace_control",
+                "state": "on"
+              }
+            ],
+            "action": [
+              {
                 "target": {
-                  "entity_id": "tts.google_cloud"
+                  "entity_id": "switch.udirna_vibrace"
                 },
-                "data": {
-                  "media_player_entity_id": "media_player.q_series_soundbar_2",
-                  "message": "{{ message }}",
-                  "options": {
-                    "voice": "cs-CZ-Chirp3-HD-Aoede"
-                  }
-                }
+                "action": "switch.turn_on"
               }
             ]
           },
           "blueprint_inputs": null,
           "context": {
-            "id": "01KNBS6MP2X12X2KCKDHHAEKGT",
+            "id": "01KNBTNF6KRNDN7DM12SVA6HKE",
             "parent_id": null,
             "user_id": null
           }
         },
         "short_dict": {
-          "last_step": "sequence/0",
-          "run_id": "6910beeee4dad9cd518893080413e7b9",
+          "last_step": "action/0",
+          "run_id": "02dff7caa8b876451dafd46c444bc1a1",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T08:45:00.499365+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/0",
+          "run_id": "011b17626d6d5824992fc391780d8539",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T09:00:00.499069+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T09:00:00.499106+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.vibrace_kazdych_10_minut",
+                    "state": "on",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T08:45:00.499592+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Vibrace ka\u017ed\u00fdch 10 minut"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.758462+00:00",
+                    "last_reported": "2026-04-04T08:45:00.500091+00:00",
+                    "last_updated": "2026-04-04T08:45:00.500091+00:00",
+                    "context": {
+                      "id": "01KNBTNF6KRNDN7DM12SVA6HKE",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T11:00:00.498953+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T09:00:00.499126+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "condition/0/entity_id/0": [
+              {
+                "path": "condition/0/entity_id/0",
+                "timestamp": "2026-04-04T09:00:00.499142+00:00",
+                "result": {
+                  "result": true,
+                  "state": "on",
+                  "wanted_state": "on"
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T09:00:00.499420+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBVGY3KM95F6KJFDNBP37FX",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "switch",
+                    "service": "turn_on",
+                    "service_data": {},
+                    "target": {
+                      "entity_id": [
+                        "switch.udirna_vibrace"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Vibrace ka\u017ed\u00fdch 10 minut",
+            "description": "Spou\u0161t\u00ed switch.udirna_vibrace ka\u017ed\u00fdch 15 minut, pokud je povolen\u00fd p\u0159ep\u00edna\u010d",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/15"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "state",
+                "entity_id": "input_boolean.udirna_vibrace_control",
+                "state": "on"
+              }
+            ],
+            "action": [
+              {
+                "target": {
+                  "entity_id": "switch.udirna_vibrace"
+                },
+                "action": "switch.turn_on"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBVGY3KM95F6KJFDNBP37FX",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/0",
+          "run_id": "011b17626d6d5824992fc391780d8539",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T09:00:00.499069+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/0",
+          "run_id": "1ebe811f7f39b0c4376c7b7b28ed29a1",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T09:15:00.499218+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T09:15:00.499266+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.vibrace_kazdych_10_minut",
+                    "state": "on",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T09:00:00.499265+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Vibrace ka\u017ed\u00fdch 10 minut"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.758462+00:00",
+                    "last_reported": "2026-04-04T09:00:00.499728+00:00",
+                    "last_updated": "2026-04-04T09:00:00.499728+00:00",
+                    "context": {
+                      "id": "01KNBVGY3KM95F6KJFDNBP37FX",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T11:15:00.499055+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T09:15:00.499292+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "condition/0/entity_id/0": [
+              {
+                "path": "condition/0/entity_id/0",
+                "timestamp": "2026-04-04T09:15:00.499303+00:00",
+                "result": {
+                  "result": true,
+                  "state": "on",
+                  "wanted_state": "on"
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T09:15:00.499644+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBWCD0KNAYN1HFX47Z004DK",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "switch",
+                    "service": "turn_on",
+                    "service_data": {},
+                    "target": {
+                      "entity_id": [
+                        "switch.udirna_vibrace"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Vibrace ka\u017ed\u00fdch 10 minut",
+            "description": "Spou\u0161t\u00ed switch.udirna_vibrace ka\u017ed\u00fdch 15 minut, pokud je povolen\u00fd p\u0159ep\u00edna\u010d",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/15"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "state",
+                "entity_id": "input_boolean.udirna_vibrace_control",
+                "state": "on"
+              }
+            ],
+            "action": [
+              {
+                "target": {
+                  "entity_id": "switch.udirna_vibrace"
+                },
+                "action": "switch.turn_on"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBWCD0KNAYN1HFX47Z004DK",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/0",
+          "run_id": "1ebe811f7f39b0c4376c7b7b28ed29a1",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T09:15:00.499218+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "action/0",
+          "run_id": "b6ef96385f5710ddca6fb96dcfaab109",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T09:30:00.498806+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T09:30:00.498865+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.vibrace_kazdych_10_minut",
+                    "state": "on",
+                    "attributes": {
+                      "last_triggered": "2026-04-04T09:15:00.499452+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Vibrace ka\u017ed\u00fdch 10 minut"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.758462+00:00",
+                    "last_reported": "2026-04-04T09:15:00.499952+00:00",
+                    "last_updated": "2026-04-04T09:15:00.499952+00:00",
+                    "context": {
+                      "id": "01KNBWCD0KNAYN1HFX47Z004DK",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T11:30:00.498686+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T09:30:00.498891+00:00",
+                "result": {
+                  "result": true
+                }
+              }
+            ],
+            "condition/0/entity_id/0": [
+              {
+                "path": "condition/0/entity_id/0",
+                "timestamp": "2026-04-04T09:30:00.498904+00:00",
+                "result": {
+                  "result": true,
+                  "state": "on",
+                  "wanted_state": "on"
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T09:30:00.499341+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBX7VXJYZB764KZ28CB68X1",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "switch",
+                    "service": "turn_on",
+                    "service_data": {},
+                    "target": {
+                      "entity_id": [
+                        "switch.udirna_vibrace"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "Vibrace ka\u017ed\u00fdch 10 minut",
+            "description": "Spou\u0161t\u00ed switch.udirna_vibrace ka\u017ed\u00fdch 15 minut, pokud je povolen\u00fd p\u0159ep\u00edna\u010d",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/15"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "state",
+                "entity_id": "input_boolean.udirna_vibrace_control",
+                "state": "on"
+              }
+            ],
+            "action": [
+              {
+                "target": {
+                  "entity_id": "switch.udirna_vibrace"
+                },
+                "action": "switch.turn_on"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBX7VXJYZB764KZ28CB68X1",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/0",
+          "run_id": "b6ef96385f5710ddca6fb96dcfaab109",
+          "state": "running",
+          "script_execution": null,
+          "timestamp": {
+            "start": "2026-04-04T09:30:00.498806+00:00",
+            "finish": null
+          },
+          "domain": "automation",
+          "item_id": "None",
+          "trigger": "time pattern"
+        }
+      }
+    ],
+    "automation.heating_manager_watchdog": [
+      {
+        "extended_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "227da61bfd29fafe8544a5f1e1eaee06",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T08:50:00.213445+00:00",
+            "finish": "2026-04-04T08:50:00.213619+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T08:50:00.213485+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.heatingmanager_watchdog",
+                    "state": "on",
+                    "attributes": {
+                      "id": "heating_manager_watchdog",
+                      "last_triggered": null,
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "HeatingManager Watchdog"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.759187+00:00",
+                    "last_reported": "2026-04-04T08:42:56.759187+00:00",
+                    "last_updated": "2026-04-04T08:42:56.759187+00:00",
+                    "context": {
+                      "id": "01KNBTHPBQ7RY9Y6E8P24E0PA3",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T10:50:00.213284+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T08:50:00.213521+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0": [
+              {
+                "path": "condition/0/conditions/0",
+                "timestamp": "2026-04-04T08:50:00.213535+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0/entity_id/0": [
+              {
+                "path": "condition/0/conditions/0/entity_id/0",
+                "timestamp": "2026-04-04T08:50:00.213548+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unavailable"
+                }
+              }
+            ],
+            "condition/0/conditions/1": [
+              {
+                "path": "condition/0/conditions/1",
+                "timestamp": "2026-04-04T08:50:00.213580+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/1/entity_id/0": [
+              {
+                "path": "condition/0/conditions/1/entity_id/0",
+                "timestamp": "2026-04-04T08:50:00.213585+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unknown"
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "HeatingManager Watchdog",
+            "id": "heating_manager_watchdog",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/10"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "or",
+                "conditions": [
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unavailable"
+                  },
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unknown"
+                  }
+                ]
+              }
+            ],
+            "action": [
+              {
+                "data": {
+                  "entity_id": "climate.topeni",
+                  "temperature": 20,
+                  "hvac_mode": "heat"
+                },
+                "action": "climate.set_temperature"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.adela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.nela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.pracovna_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
+                },
+                "action": "notify.mobile_app_iphone_17"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBTYKWN9N7PP5SMXW1T99SR",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "227da61bfd29fafe8544a5f1e1eaee06",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T08:50:00.213445+00:00",
+            "finish": "2026-04-04T08:50:00.213619+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "878940c46e36be8dd6aa9cf29ef45a73",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T09:00:00.213557+00:00",
+            "finish": "2026-04-04T09:00:00.213711+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T09:00:00.213600+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.heatingmanager_watchdog",
+                    "state": "on",
+                    "attributes": {
+                      "id": "heating_manager_watchdog",
+                      "last_triggered": null,
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "HeatingManager Watchdog"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.759187+00:00",
+                    "last_reported": "2026-04-04T08:42:56.759187+00:00",
+                    "last_updated": "2026-04-04T08:42:56.759187+00:00",
+                    "context": {
+                      "id": "01KNBTHPBQ7RY9Y6E8P24E0PA3",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T11:00:00.213413+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T09:00:00.213643+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0": [
+              {
+                "path": "condition/0/conditions/0",
+                "timestamp": "2026-04-04T09:00:00.213654+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0/entity_id/0": [
+              {
+                "path": "condition/0/conditions/0/entity_id/0",
+                "timestamp": "2026-04-04T09:00:00.213665+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unavailable"
+                }
+              }
+            ],
+            "condition/0/conditions/1": [
+              {
+                "path": "condition/0/conditions/1",
+                "timestamp": "2026-04-04T09:00:00.213690+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/1/entity_id/0": [
+              {
+                "path": "condition/0/conditions/1/entity_id/0",
+                "timestamp": "2026-04-04T09:00:00.213695+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unknown"
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "HeatingManager Watchdog",
+            "id": "heating_manager_watchdog",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/10"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "or",
+                "conditions": [
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unavailable"
+                  },
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unknown"
+                  }
+                ]
+              }
+            ],
+            "action": [
+              {
+                "data": {
+                  "entity_id": "climate.topeni",
+                  "temperature": 20,
+                  "hvac_mode": "heat"
+                },
+                "action": "climate.set_temperature"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.adela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.nela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.pracovna_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
+                },
+                "action": "notify.mobile_app_iphone_17"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBVGXTNEA0K0R837FWM0PF6",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "878940c46e36be8dd6aa9cf29ef45a73",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T09:00:00.213557+00:00",
+            "finish": "2026-04-04T09:00:00.213711+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "42e4b21f30b8a7ffca9b465515e9c8f8",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T09:10:00.213696+00:00",
+            "finish": "2026-04-04T09:10:00.213835+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T09:10:00.213730+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.heatingmanager_watchdog",
+                    "state": "on",
+                    "attributes": {
+                      "id": "heating_manager_watchdog",
+                      "last_triggered": null,
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "HeatingManager Watchdog"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.759187+00:00",
+                    "last_reported": "2026-04-04T08:42:56.759187+00:00",
+                    "last_updated": "2026-04-04T08:42:56.759187+00:00",
+                    "context": {
+                      "id": "01KNBTHPBQ7RY9Y6E8P24E0PA3",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T11:10:00.213530+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T09:10:00.213755+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0": [
+              {
+                "path": "condition/0/conditions/0",
+                "timestamp": "2026-04-04T09:10:00.213768+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0/entity_id/0": [
+              {
+                "path": "condition/0/conditions/0/entity_id/0",
+                "timestamp": "2026-04-04T09:10:00.213780+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unavailable"
+                }
+              }
+            ],
+            "condition/0/conditions/1": [
+              {
+                "path": "condition/0/conditions/1",
+                "timestamp": "2026-04-04T09:10:00.213810+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/1/entity_id/0": [
+              {
+                "path": "condition/0/conditions/1/entity_id/0",
+                "timestamp": "2026-04-04T09:10:00.213820+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unknown"
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "HeatingManager Watchdog",
+            "id": "heating_manager_watchdog",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/10"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "or",
+                "conditions": [
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unavailable"
+                  },
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unknown"
+                  }
+                ]
+              }
+            ],
+            "action": [
+              {
+                "data": {
+                  "entity_id": "climate.topeni",
+                  "temperature": 20,
+                  "hvac_mode": "heat"
+                },
+                "action": "climate.set_temperature"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.adela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.nela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.pracovna_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
+                },
+                "action": "notify.mobile_app_iphone_17"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBW37RNMC2AMXTY7TGRF3S0",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "42e4b21f30b8a7ffca9b465515e9c8f8",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T09:10:00.213696+00:00",
+            "finish": "2026-04-04T09:10:00.213835+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "4d9a6c2f819f31b22e80b7036a5e43b4",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T09:20:00.213408+00:00",
+            "finish": "2026-04-04T09:20:00.213696+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T09:20:00.213444+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.heatingmanager_watchdog",
+                    "state": "on",
+                    "attributes": {
+                      "id": "heating_manager_watchdog",
+                      "last_triggered": null,
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "HeatingManager Watchdog"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.759187+00:00",
+                    "last_reported": "2026-04-04T08:42:56.759187+00:00",
+                    "last_updated": "2026-04-04T08:42:56.759187+00:00",
+                    "context": {
+                      "id": "01KNBTHPBQ7RY9Y6E8P24E0PA3",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T11:20:00.213261+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T09:20:00.213535+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0": [
+              {
+                "path": "condition/0/conditions/0",
+                "timestamp": "2026-04-04T09:20:00.213548+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0/entity_id/0": [
+              {
+                "path": "condition/0/conditions/0/entity_id/0",
+                "timestamp": "2026-04-04T09:20:00.213557+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unavailable"
+                }
+              }
+            ],
+            "condition/0/conditions/1": [
+              {
+                "path": "condition/0/conditions/1",
+                "timestamp": "2026-04-04T09:20:00.213587+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/1/entity_id/0": [
+              {
+                "path": "condition/0/conditions/1/entity_id/0",
+                "timestamp": "2026-04-04T09:20:00.213597+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unknown"
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "HeatingManager Watchdog",
+            "id": "heating_manager_watchdog",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/10"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "or",
+                "conditions": [
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unavailable"
+                  },
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unknown"
+                  }
+                ]
+              }
+            ],
+            "action": [
+              {
+                "data": {
+                  "entity_id": "climate.topeni",
+                  "temperature": 20,
+                  "hvac_mode": "heat"
+                },
+                "action": "climate.set_temperature"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.adela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.nela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.pracovna_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
+                },
+                "action": "notify.mobile_app_iphone_17"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBWNHPNPMZZ5PK00RE1ZX54",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "4d9a6c2f819f31b22e80b7036a5e43b4",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T09:20:00.213408+00:00",
+            "finish": "2026-04-04T09:20:00.213696+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern"
+        }
+      },
+      {
+        "extended_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "562f1b9a4612b83ece3eba2b3fca51b5",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T09:30:00.213455+00:00",
+            "finish": "2026-04-04T09:30:00.213600+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T09:30:00.213513+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.heatingmanager_watchdog",
+                    "state": "on",
+                    "attributes": {
+                      "id": "heating_manager_watchdog",
+                      "last_triggered": null,
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "HeatingManager Watchdog"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.759187+00:00",
+                    "last_reported": "2026-04-04T08:42:56.759187+00:00",
+                    "last_updated": "2026-04-04T08:42:56.759187+00:00",
+                    "context": {
+                      "id": "01KNBTHPBQ7RY9Y6E8P24E0PA3",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T11:30:00.213340+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2026-04-04T09:30:00.213535+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0": [
+              {
+                "path": "condition/0/conditions/0",
+                "timestamp": "2026-04-04T09:30:00.213546+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/0/entity_id/0": [
+              {
+                "path": "condition/0/conditions/0/entity_id/0",
+                "timestamp": "2026-04-04T09:30:00.213554+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unavailable"
+                }
+              }
+            ],
+            "condition/0/conditions/1": [
+              {
+                "path": "condition/0/conditions/1",
+                "timestamp": "2026-04-04T09:30:00.213578+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "condition/0/conditions/1/entity_id/0": [
+              {
+                "path": "condition/0/conditions/1/entity_id/0",
+                "timestamp": "2026-04-04T09:30:00.213584+00:00",
+                "result": {
+                  "result": false,
+                  "state": "Doma (idle)",
+                  "wanted_state": "unknown"
+                }
+              }
+            ]
+          },
+          "config": {
+            "alias": "HeatingManager Watchdog",
+            "id": "heating_manager_watchdog",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "minutes": "/10"
+              }
+            ],
+            "condition": [
+              {
+                "condition": "or",
+                "conditions": [
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unavailable"
+                  },
+                  {
+                    "condition": "state",
+                    "entity_id": "sensor.heating_manager_status",
+                    "state": "unknown"
+                  }
+                ]
+              }
+            ],
+            "action": [
+              {
+                "data": {
+                  "entity_id": "climate.topeni",
+                  "temperature": 20,
+                  "hvac_mode": "heat"
+                },
+                "action": "climate.set_temperature"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.adela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.nela_pokoj_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "entity_id": "climate.pracovna_room_temperature",
+                  "hvac_mode": "off"
+                },
+                "action": "climate.set_hvac_mode"
+              },
+              {
+                "data": {
+                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
+                },
+                "action": "notify.mobile_app_iphone_17"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBX7VMN4YF5QYDKV3XYCYJ2",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "condition/0/conditions/1/entity_id/0",
+          "run_id": "562f1b9a4612b83ece3eba2b3fca51b5",
+          "state": "stopped",
+          "script_execution": "failed_conditions",
+          "timestamp": {
+            "start": "2026-04-04T09:30:00.213455+00:00",
+            "finish": "2026-04-04T09:30:00.213600+00:00"
+          },
+          "domain": "automation",
+          "item_id": "heating_manager_watchdog",
+          "trigger": "time pattern"
+        }
+      }
+    ],
+    "automation.tablet_reload_hourly": [
+      {
+        "extended_dict": {
+          "last_step": "action/0",
+          "run_id": "1d976b6635cd07184dc567e045a33339",
           "state": "stopped",
           "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-04T08:19:39.993001+00:00",
-            "finish": "2026-04-04T08:19:40.015345+00:00"
+            "start": "2026-04-04T09:00:00.421367+00:00",
+            "finish": "2026-04-04T09:00:00.824327+00:00"
           },
-          "domain": "script",
-          "item_id": "say_on_soundbar"
+          "domain": "automation",
+          "item_id": "tablet_reload_hourly",
+          "trigger": "time pattern",
+          "trace": {
+            "trigger/0": [
+              {
+                "path": "trigger/0",
+                "timestamp": "2026-04-04T09:00:00.421395+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.tablet_hodinovy_reload",
+                    "state": "on",
+                    "attributes": {
+                      "id": "tablet_reload_hourly",
+                      "last_triggered": "2026-04-04T08:00:00.170592+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "Tablet - hodinovy reload"
+                    },
+                    "last_changed": "2026-04-04T08:42:56.759848+00:00",
+                    "last_reported": "2026-04-04T08:42:56.759848+00:00",
+                    "last_updated": "2026-04-04T08:42:56.759848+00:00",
+                    "context": {
+                      "id": "01KNBTHPBQTDG9B4MMRM3X0VGH",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "0",
+                    "idx": "0",
+                    "alias": null,
+                    "platform": "time_pattern",
+                    "now": "2026-04-04T11:00:00.421228+02:00",
+                    "description": "time pattern"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T09:00:00.421747+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBVGY15CW0G2CYMAP0B8TX9",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "button",
+                    "service": "press",
+                    "service_data": {},
+                    "target": {
+                      "entity_id": [
+                        "button.lenovo_tab_m10_restart_browser"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "id": "tablet_reload_hourly",
+            "alias": "Tablet - hodinovy reload",
+            "trigger": [
+              {
+                "platform": "time_pattern",
+                "hours": "/1",
+                "minutes": "0"
+              }
+            ],
+            "action": [
+              {
+                "target": {
+                  "entity_id": "button.lenovo_tab_m10_restart_browser"
+                },
+                "action": "button.press"
+              }
+            ]
+          },
+          "blueprint_inputs": null,
+          "context": {
+            "id": "01KNBVGY15CW0G2CYMAP0B8TX9",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/0",
+          "run_id": "1d976b6635cd07184dc567e045a33339",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2026-04-04T09:00:00.421367+00:00",
+            "finish": "2026-04-04T09:00:00.824327+00:00"
+          },
+          "domain": "automation",
+          "item_id": "tablet_reload_hourly",
+          "trigger": "time pattern"
         }
-      },
+      }
+    ],
+    "script.say_on_soundbar": [
       {
         "extended_dict": {
           "last_step": "sequence/0",
@@ -1767,116 +3094,71 @@
           "domain": "script",
           "item_id": "say_on_soundbar"
         }
-      }
-    ],
-    "automation.voicepe_mute_during_response": [
+      },
       {
         "extended_dict": {
-          "last_step": "action/2",
-          "run_id": "20c49489a6c1834e91443d06688f89c6",
+          "last_step": "sequence/2/choose/1/conditions/0",
+          "run_id": "056ec48fe0721646d02d7c1d28fce35e",
           "state": "stopped",
           "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-04T08:18:11.182947+00:00",
-            "finish": "2026-04-04T08:18:26.187326+00:00"
+            "start": "2026-04-04T09:25:21.375260+00:00",
+            "finish": "2026-04-04T09:25:32.090033+00:00"
           },
-          "domain": "automation",
-          "item_id": "voicepe_mute_during_response",
-          "trigger": "state of assist_satellite.viocepe_assist_satellite",
+          "domain": "script",
+          "item_id": "say_on_soundbar",
           "trace": {
-            "trigger/0": [
+            "sequence/0": [
               {
-                "path": "trigger/0",
-                "timestamp": "2026-04-04T08:18:11.182985+00:00",
+                "path": "sequence/0",
+                "timestamp": "2026-04-04T09:25:21.376301+00:00",
                 "changed_variables": {
                   "this": {
-                    "entity_id": "automation.voicepe_ztlum_pri_odpovedi",
-                    "state": "on",
+                    "entity_id": "script.say_on_soundbar",
+                    "state": "off",
                     "attributes": {
-                      "id": "voicepe_mute_during_response",
-                      "last_triggered": null,
+                      "last_triggered": "2026-04-04T08:29:13.088580+00:00",
                       "mode": "single",
                       "current": 0,
-                      "friendly_name": "VoicePE ztlum pri odpovedi"
+                      "friendly_name": "Rekni na soundbar"
                     },
-                    "last_changed": "2026-04-04T08:17:16.721577+00:00",
-                    "last_reported": "2026-04-04T08:17:16.721703+00:00",
-                    "last_updated": "2026-04-04T08:17:16.721577+00:00",
+                    "last_changed": "2026-04-04T08:42:51.002705+00:00",
+                    "last_reported": "2026-04-04T08:42:51.002705+00:00",
+                    "last_updated": "2026-04-04T08:42:51.002705+00:00",
                     "context": {
-                      "id": "01KNBS2PDHYVDZJ44T05AM1SVP",
+                      "id": "01KNBTHGQT3MA918TB5HYVDSZC",
                       "parent_id": null,
                       "user_id": null
                     }
                   },
-                  "trigger": {
-                    "id": "0",
-                    "idx": "0",
-                    "alias": null,
-                    "platform": "state",
-                    "entity_id": "assist_satellite.viocepe_assist_satellite",
-                    "from_state": {
-                      "entity_id": "assist_satellite.viocepe_assist_satellite",
-                      "state": "processing",
-                      "attributes": {
-                        "friendly_name": "ViocePE Assist satellite",
-                        "supported_features": 3
-                      },
-                      "last_changed": "2026-04-04T08:17:54.783246+00:00",
-                      "last_reported": "2026-04-04T08:17:54.783246+00:00",
-                      "last_updated": "2026-04-04T08:17:54.783246+00:00",
-                      "context": {
-                        "id": "01KNBS3VJZJZM5B2SERB8FDDT5",
-                        "parent_id": null,
-                        "user_id": null
-                      }
-                    },
-                    "to_state": {
-                      "entity_id": "assist_satellite.viocepe_assist_satellite",
-                      "state": "responding",
-                      "attributes": {
-                        "friendly_name": "ViocePE Assist satellite",
-                        "supported_features": 3
-                      },
-                      "last_changed": "2026-04-04T08:18:11.182064+00:00",
-                      "last_reported": "2026-04-04T08:18:11.182064+00:00",
-                      "last_updated": "2026-04-04T08:18:11.182064+00:00",
-                      "context": {
-                        "id": "01KNBS4BKE5GS829P08PCEYJXF",
-                        "parent_id": null,
-                        "user_id": null
-                      }
-                    },
-                    "for": null,
-                    "attribute": null,
-                    "description": "state of assist_satellite.viocepe_assist_satellite"
-                  }
-                }
-              }
-            ],
-            "action/0": [
-              {
-                "path": "action/0",
-                "timestamp": "2026-04-04T08:18:11.183191+00:00",
-                "changed_variables": {
+                  "message": "Je 11 hodin a 25 minut",
+                  "prev_cast_state": "off",
+                  "prev_content": null,
+                  "prev_content_type": "music",
+                  "prev_source": null,
                   "context": {
-                    "id": "01KNBS4BKERTH7RTXD0ZSS99HD",
-                    "parent_id": "01KNBS4BKE5GS829P08PCEYJXF",
+                    "id": "01KNBWYX56K0MHFRR4JMGR3XR0",
+                    "parent_id": null,
                     "user_id": null
                   }
                 },
                 "result": {
                   "params": {
-                    "domain": "media_player",
-                    "service": "volume_set",
+                    "domain": "tts",
+                    "service": "speak",
                     "service_data": {
-                      "volume_level": 0,
+                      "media_player_entity_id": "media_player.q_series_soundbar_2",
+                      "message": "Je 11 hodin a 25 minut",
+                      "options": {
+                        "voice": "cs-CZ-Chirp3-HD-Aoede"
+                      },
                       "entity_id": [
-                        "media_player.viocepe_media_player"
+                        "tts.google_cloud"
                       ]
                     },
                     "target": {
                       "entity_id": [
-                        "media_player.viocepe_media_player"
+                        "tts.google_cloud"
                       ]
                     }
                   },
@@ -1884,99 +3166,162 @@
                 }
               }
             ],
-            "action/1": [
+            "sequence/1": [
               {
-                "path": "action/1",
-                "timestamp": "2026-04-04T08:18:11.183574+00:00",
+                "path": "sequence/1",
+                "timestamp": "2026-04-04T09:25:24.087822+00:00",
                 "result": {
-                  "delay": 15.0,
+                  "delay": 8.0,
                   "done": true
                 }
               }
             ],
-            "action/2": [
+            "sequence/2": [
               {
-                "path": "action/2",
-                "timestamp": "2026-04-04T08:18:26.184941+00:00",
+                "path": "sequence/2",
+                "timestamp": "2026-04-04T09:25:32.088909+00:00"
+              }
+            ],
+            "sequence/2/choose/0": [
+              {
+                "path": "sequence/2/choose/0",
+                "timestamp": "2026-04-04T09:25:32.089054+00:00",
                 "result": {
-                  "params": {
-                    "domain": "media_player",
-                    "service": "volume_set",
-                    "service_data": {
-                      "volume_level": 0.16,
-                      "entity_id": [
-                        "media_player.viocepe_media_player"
-                      ]
-                    },
-                    "target": {
-                      "entity_id": [
-                        "media_player.viocepe_media_player"
-                      ]
-                    }
-                  },
-                  "running_script": false
+                  "result": false
+                }
+              }
+            ],
+            "sequence/2/choose/0/conditions/0": [
+              {
+                "path": "sequence/2/choose/0/conditions/0",
+                "timestamp": "2026-04-04T09:25:32.089085+00:00",
+                "result": {
+                  "result": false,
+                  "entities": []
+                }
+              }
+            ],
+            "sequence/2/choose/1": [
+              {
+                "path": "sequence/2/choose/1",
+                "timestamp": "2026-04-04T09:25:32.089216+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "sequence/2/choose/1/conditions/0": [
+              {
+                "path": "sequence/2/choose/1/conditions/0",
+                "timestamp": "2026-04-04T09:25:32.089244+00:00",
+                "result": {
+                  "result": false,
+                  "entities": []
                 }
               }
             ]
           },
           "config": {
-            "id": "voicepe_mute_during_response",
-            "alias": "VoicePE ztlum pri odpovedi",
-            "description": "Ztlum VoicePE na 0 pri odpovedi, po 10s vrat zpet",
-            "triggers": [
-              {
-                "trigger": "state",
-                "entity_id": "assist_satellite.viocepe_assist_satellite",
-                "to": "responding"
+            "alias": "Rekni na soundbar",
+            "description": "Precte text nahlas na soundbar a obnovi puvodni stav",
+            "fields": {
+              "message": {
+                "description": "Text k precteni",
+                "required": true
               }
-            ],
-            "actions": [
+            },
+            "variables": {
+              "prev_cast_state": "{{ states('media_player.q_series_soundbar_2') }}",
+              "prev_content": "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_id') }}",
+              "prev_content_type": "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_type') or 'music' }}",
+              "prev_source": "{{ state_attr('media_player.q_series_soundbar', 'source') }}"
+            },
+            "sequence": [
               {
-                "action": "media_player.volume_set",
+                "action": "tts.speak",
                 "target": {
-                  "entity_id": "media_player.viocepe_media_player"
+                  "entity_id": "tts.google_cloud"
                 },
                 "data": {
-                  "volume_level": 0
+                  "media_player_entity_id": "media_player.q_series_soundbar_2",
+                  "message": "{{ message }}",
+                  "options": {
+                    "voice": "cs-CZ-Chirp3-HD-Aoede"
+                  }
                 }
               },
               {
                 "delay": {
-                  "seconds": 15
+                  "seconds": 8
                 }
               },
               {
-                "action": "media_player.volume_set",
-                "target": {
-                  "entity_id": "media_player.viocepe_media_player"
-                },
-                "data": {
-                  "volume_level": 0.16
-                }
+                "choose": [
+                  {
+                    "conditions": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ prev_cast_state == 'playing' and prev_content is not none\n   and 'tts_proxy' not in (prev_content | default('')) }}\n"
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "action": "media_player.play_media",
+                        "target": {
+                          "entity_id": "media_player.q_series_soundbar_2"
+                        },
+                        "data": {
+                          "media_content_id": "{{ prev_content }}",
+                          "media_content_type": "{{ prev_content_type }}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "conditions": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ prev_source is not none and prev_source != ''\n   and prev_cast_state != 'playing' }}\n"
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "action": "media_player.select_source",
+                        "target": {
+                          "entity_id": "media_player.q_series_soundbar"
+                        },
+                        "data": {
+                          "source": "{{ prev_source }}"
+                        }
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
           "blueprint_inputs": null,
           "context": {
-            "id": "01KNBS4BKERTH7RTXD0ZSS99HD",
-            "parent_id": "01KNBS4BKE5GS829P08PCEYJXF",
+            "id": "01KNBWYX56K0MHFRR4JMGR3XR0",
+            "parent_id": null,
             "user_id": null
           }
         },
         "short_dict": {
-          "last_step": "action/2",
-          "run_id": "20c49489a6c1834e91443d06688f89c6",
+          "last_step": "sequence/2/choose/1/conditions/0",
+          "run_id": "056ec48fe0721646d02d7c1d28fce35e",
           "state": "stopped",
           "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-04T08:18:11.182947+00:00",
-            "finish": "2026-04-04T08:18:26.187326+00:00"
+            "start": "2026-04-04T09:25:21.375260+00:00",
+            "finish": "2026-04-04T09:25:32.090033+00:00"
           },
-          "domain": "automation",
-          "item_id": "voicepe_mute_during_response",
-          "trigger": "state of assist_satellite.viocepe_assist_satellite"
+          "domain": "script",
+          "item_id": "say_on_soundbar"
         }
-      },
+      }
+    ],
+    "automation.voicepe_mute_during_response": [
       {
         "extended_dict": {
           "last_step": "action/2",
@@ -2804,227 +4149,41 @@
           "item_id": "voicepe_mute_during_response",
           "trigger": "state of assist_satellite.viocepe_assist_satellite"
         }
-      }
-    ],
-    "automation.heating_manager_watchdog": [
-      {
-        "extended_dict": {
-          "last_step": "condition/0/conditions/1/entity_id/0",
-          "run_id": "5a8650ec18bb1d3b2d65f0a4cedcf16b",
-          "state": "stopped",
-          "script_execution": "failed_conditions",
-          "timestamp": {
-            "start": "2026-04-04T08:20:00.380144+00:00",
-            "finish": "2026-04-04T08:20:00.380270+00:00"
-          },
-          "domain": "automation",
-          "item_id": "heating_manager_watchdog",
-          "trigger": "time pattern",
-          "trace": {
-            "trigger/0": [
-              {
-                "path": "trigger/0",
-                "timestamp": "2026-04-04T08:20:00.380171+00:00",
-                "changed_variables": {
-                  "this": {
-                    "entity_id": "automation.heatingmanager_watchdog",
-                    "state": "on",
-                    "attributes": {
-                      "id": "heating_manager_watchdog",
-                      "last_triggered": null,
-                      "mode": "single",
-                      "current": 0,
-                      "friendly_name": "HeatingManager Watchdog"
-                    },
-                    "last_changed": "2026-04-04T08:11:57.186567+00:00",
-                    "last_reported": "2026-04-04T08:11:57.186567+00:00",
-                    "last_updated": "2026-04-04T08:11:57.186567+00:00",
-                    "context": {
-                      "id": "01KNBRRYC2ST40YT4S48HX5STG",
-                      "parent_id": null,
-                      "user_id": null
-                    }
-                  },
-                  "trigger": {
-                    "id": "0",
-                    "idx": "0",
-                    "alias": null,
-                    "platform": "time_pattern",
-                    "now": "2026-04-04T10:20:00.380013+02:00",
-                    "description": "time pattern"
-                  }
-                }
-              }
-            ],
-            "condition/0": [
-              {
-                "path": "condition/0",
-                "timestamp": "2026-04-04T08:20:00.380189+00:00",
-                "result": {
-                  "result": false
-                }
-              }
-            ],
-            "condition/0/conditions/0": [
-              {
-                "path": "condition/0/conditions/0",
-                "timestamp": "2026-04-04T08:20:00.380200+00:00",
-                "result": {
-                  "result": false
-                }
-              }
-            ],
-            "condition/0/conditions/0/entity_id/0": [
-              {
-                "path": "condition/0/conditions/0/entity_id/0",
-                "timestamp": "2026-04-04T08:20:00.380208+00:00",
-                "result": {
-                  "result": false,
-                  "state": "Doma (idle)",
-                  "wanted_state": "unavailable"
-                }
-              }
-            ],
-            "condition/0/conditions/1": [
-              {
-                "path": "condition/0/conditions/1",
-                "timestamp": "2026-04-04T08:20:00.380247+00:00",
-                "result": {
-                  "result": false
-                }
-              }
-            ],
-            "condition/0/conditions/1/entity_id/0": [
-              {
-                "path": "condition/0/conditions/1/entity_id/0",
-                "timestamp": "2026-04-04T08:20:00.380253+00:00",
-                "result": {
-                  "result": false,
-                  "state": "Doma (idle)",
-                  "wanted_state": "unknown"
-                }
-              }
-            ]
-          },
-          "config": {
-            "alias": "HeatingManager Watchdog",
-            "id": "heating_manager_watchdog",
-            "trigger": [
-              {
-                "platform": "time_pattern",
-                "minutes": "/10"
-              }
-            ],
-            "condition": [
-              {
-                "condition": "or",
-                "conditions": [
-                  {
-                    "condition": "state",
-                    "entity_id": "sensor.heating_manager_status",
-                    "state": "unavailable"
-                  },
-                  {
-                    "condition": "state",
-                    "entity_id": "sensor.heating_manager_status",
-                    "state": "unknown"
-                  }
-                ]
-              }
-            ],
-            "action": [
-              {
-                "data": {
-                  "entity_id": "climate.topeni",
-                  "temperature": 20,
-                  "hvac_mode": "heat"
-                },
-                "action": "climate.set_temperature"
-              },
-              {
-                "data": {
-                  "entity_id": "climate.adela_pokoj_room_temperature",
-                  "hvac_mode": "off"
-                },
-                "action": "climate.set_hvac_mode"
-              },
-              {
-                "data": {
-                  "entity_id": "climate.nela_pokoj_room_temperature",
-                  "hvac_mode": "off"
-                },
-                "action": "climate.set_hvac_mode"
-              },
-              {
-                "data": {
-                  "entity_id": "climate.pracovna_room_temperature",
-                  "hvac_mode": "off"
-                },
-                "action": "climate.set_hvac_mode"
-              },
-              {
-                "data": {
-                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
-                },
-                "action": "notify.mobile_app_iphone_17"
-              }
-            ]
-          },
-          "blueprint_inputs": null,
-          "context": {
-            "id": "01KNBS7P7WZ64KZX5JZQDAMT9J",
-            "parent_id": null,
-            "user_id": null
-          }
-        },
-        "short_dict": {
-          "last_step": "condition/0/conditions/1/entity_id/0",
-          "run_id": "5a8650ec18bb1d3b2d65f0a4cedcf16b",
-          "state": "stopped",
-          "script_execution": "failed_conditions",
-          "timestamp": {
-            "start": "2026-04-04T08:20:00.380144+00:00",
-            "finish": "2026-04-04T08:20:00.380270+00:00"
-          },
-          "domain": "automation",
-          "item_id": "heating_manager_watchdog",
-          "trigger": "time pattern"
-        }
       },
       {
         "extended_dict": {
-          "last_step": "condition/0/conditions/1/entity_id/0",
-          "run_id": "9817d6399f9e9d8ff95aaaa1f4540b16",
+          "last_step": "action/2",
+          "run_id": "46db8587252a7ee87dd3614888c75d5a",
           "state": "stopped",
-          "script_execution": "failed_conditions",
+          "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-04T08:30:00.379493+00:00",
-            "finish": "2026-04-04T08:30:00.379689+00:00"
+            "start": "2026-04-04T09:25:38.548090+00:00",
+            "finish": "2026-04-04T09:25:53.552162+00:00"
           },
           "domain": "automation",
-          "item_id": "heating_manager_watchdog",
-          "trigger": "time pattern",
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite",
           "trace": {
             "trigger/0": [
               {
                 "path": "trigger/0",
-                "timestamp": "2026-04-04T08:30:00.379541+00:00",
+                "timestamp": "2026-04-04T09:25:38.548113+00:00",
                 "changed_variables": {
                   "this": {
-                    "entity_id": "automation.heatingmanager_watchdog",
+                    "entity_id": "automation.voicepe_ztlum_pri_odpovedi",
                     "state": "on",
                     "attributes": {
-                      "id": "heating_manager_watchdog",
-                      "last_triggered": null,
+                      "id": "voicepe_mute_during_response",
+                      "last_triggered": "2026-04-04T08:29:31.186768+00:00",
                       "mode": "single",
                       "current": 0,
-                      "friendly_name": "HeatingManager Watchdog"
+                      "friendly_name": "VoicePE ztlum pri odpovedi"
                     },
-                    "last_changed": "2026-04-04T08:11:57.186567+00:00",
-                    "last_reported": "2026-04-04T08:11:57.186567+00:00",
-                    "last_updated": "2026-04-04T08:11:57.186567+00:00",
+                    "last_changed": "2026-04-04T08:42:56.760021+00:00",
+                    "last_reported": "2026-04-04T08:42:56.760021+00:00",
+                    "last_updated": "2026-04-04T08:42:56.760021+00:00",
                     "context": {
-                      "id": "01KNBRRYC2ST40YT4S48HX5STG",
+                      "id": "01KNBTHPBRHENFTRXXHX4MK684",
                       "parent_id": null,
                       "user_id": null
                     }
@@ -3033,330 +4192,169 @@
                     "id": "0",
                     "idx": "0",
                     "alias": null,
-                    "platform": "time_pattern",
-                    "now": "2026-04-04T10:30:00.379361+02:00",
-                    "description": "time pattern"
-                  }
-                }
-              }
-            ],
-            "condition/0": [
-              {
-                "path": "condition/0",
-                "timestamp": "2026-04-04T08:30:00.379582+00:00",
-                "result": {
-                  "result": false
-                }
-              }
-            ],
-            "condition/0/conditions/0": [
-              {
-                "path": "condition/0/conditions/0",
-                "timestamp": "2026-04-04T08:30:00.379594+00:00",
-                "result": {
-                  "result": false
-                }
-              }
-            ],
-            "condition/0/conditions/0/entity_id/0": [
-              {
-                "path": "condition/0/conditions/0/entity_id/0",
-                "timestamp": "2026-04-04T08:30:00.379620+00:00",
-                "result": {
-                  "result": false,
-                  "state": "Doma (idle)",
-                  "wanted_state": "unavailable"
-                }
-              }
-            ],
-            "condition/0/conditions/1": [
-              {
-                "path": "condition/0/conditions/1",
-                "timestamp": "2026-04-04T08:30:00.379658+00:00",
-                "result": {
-                  "result": false
-                }
-              }
-            ],
-            "condition/0/conditions/1/entity_id/0": [
-              {
-                "path": "condition/0/conditions/1/entity_id/0",
-                "timestamp": "2026-04-04T08:30:00.379664+00:00",
-                "result": {
-                  "result": false,
-                  "state": "Doma (idle)",
-                  "wanted_state": "unknown"
-                }
-              }
-            ]
-          },
-          "config": {
-            "alias": "HeatingManager Watchdog",
-            "id": "heating_manager_watchdog",
-            "trigger": [
-              {
-                "platform": "time_pattern",
-                "minutes": "/10"
-              }
-            ],
-            "condition": [
-              {
-                "condition": "or",
-                "conditions": [
-                  {
-                    "condition": "state",
-                    "entity_id": "sensor.heating_manager_status",
-                    "state": "unavailable"
-                  },
-                  {
-                    "condition": "state",
-                    "entity_id": "sensor.heating_manager_status",
-                    "state": "unknown"
-                  }
-                ]
-              }
-            ],
-            "action": [
-              {
-                "data": {
-                  "entity_id": "climate.topeni",
-                  "temperature": 20,
-                  "hvac_mode": "heat"
-                },
-                "action": "climate.set_temperature"
-              },
-              {
-                "data": {
-                  "entity_id": "climate.adela_pokoj_room_temperature",
-                  "hvac_mode": "off"
-                },
-                "action": "climate.set_hvac_mode"
-              },
-              {
-                "data": {
-                  "entity_id": "climate.nela_pokoj_room_temperature",
-                  "hvac_mode": "off"
-                },
-                "action": "climate.set_hvac_mode"
-              },
-              {
-                "data": {
-                  "entity_id": "climate.pracovna_room_temperature",
-                  "hvac_mode": "off"
-                },
-                "action": "climate.set_hvac_mode"
-              },
-              {
-                "data": {
-                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
-                },
-                "action": "notify.mobile_app_iphone_17"
-              }
-            ]
-          },
-          "blueprint_inputs": null,
-          "context": {
-            "id": "01KNBST05VJWY03ABWT1ADQ5J7",
-            "parent_id": null,
-            "user_id": null
-          }
-        },
-        "short_dict": {
-          "last_step": "condition/0/conditions/1/entity_id/0",
-          "run_id": "9817d6399f9e9d8ff95aaaa1f4540b16",
-          "state": "stopped",
-          "script_execution": "failed_conditions",
-          "timestamp": {
-            "start": "2026-04-04T08:30:00.379493+00:00",
-            "finish": "2026-04-04T08:30:00.379689+00:00"
-          },
-          "domain": "automation",
-          "item_id": "heating_manager_watchdog",
-          "trigger": "time pattern"
-        }
-      },
-      {
-        "extended_dict": {
-          "last_step": "condition/0/conditions/1/entity_id/0",
-          "run_id": "53c74553ed59bbb31528661f2a7015ae",
-          "state": "stopped",
-          "script_execution": "failed_conditions",
-          "timestamp": {
-            "start": "2026-04-04T08:40:00.379512+00:00",
-            "finish": "2026-04-04T08:40:00.379683+00:00"
-          },
-          "domain": "automation",
-          "item_id": "heating_manager_watchdog",
-          "trigger": "time pattern",
-          "trace": {
-            "trigger/0": [
-              {
-                "path": "trigger/0",
-                "timestamp": "2026-04-04T08:40:00.379556+00:00",
-                "changed_variables": {
-                  "this": {
-                    "entity_id": "automation.heatingmanager_watchdog",
-                    "state": "on",
-                    "attributes": {
-                      "id": "heating_manager_watchdog",
-                      "last_triggered": null,
-                      "mode": "single",
-                      "current": 0,
-                      "friendly_name": "HeatingManager Watchdog"
+                    "platform": "state",
+                    "entity_id": "assist_satellite.viocepe_assist_satellite",
+                    "from_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "processing",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T09:25:16.741737+00:00",
+                      "last_reported": "2026-04-04T09:25:16.741737+00:00",
+                      "last_updated": "2026-04-04T09:25:16.741737+00:00",
+                      "context": {
+                        "id": "01KNBWZ6T5W5RQ6KFW3055D284",
+                        "parent_id": null,
+                        "user_id": null
+                      }
                     },
-                    "last_changed": "2026-04-04T08:11:57.186567+00:00",
-                    "last_reported": "2026-04-04T08:11:57.186567+00:00",
-                    "last_updated": "2026-04-04T08:11:57.186567+00:00",
-                    "context": {
-                      "id": "01KNBRRYC2ST40YT4S48HX5STG",
-                      "parent_id": null,
-                      "user_id": null
+                    "to_state": {
+                      "entity_id": "assist_satellite.viocepe_assist_satellite",
+                      "state": "responding",
+                      "attributes": {
+                        "friendly_name": "ViocePE Assist satellite",
+                        "supported_features": 3
+                      },
+                      "last_changed": "2026-04-04T09:25:38.546986+00:00",
+                      "last_reported": "2026-04-04T09:25:38.546986+00:00",
+                      "last_updated": "2026-04-04T09:25:38.546986+00:00",
+                      "context": {
+                        "id": "01KNBWZW3JJMTDV0MNF0AQD3Q9",
+                        "parent_id": null,
+                        "user_id": null
+                      }
+                    },
+                    "for": null,
+                    "attribute": null,
+                    "description": "state of assist_satellite.viocepe_assist_satellite"
+                  }
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2026-04-04T09:25:38.548352+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01KNBWZW3M9G97Y33M03BZA9KG",
+                    "parent_id": "01KNBWZW3JJMTDV0MNF0AQD3Q9",
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
                     }
                   },
-                  "trigger": {
-                    "id": "0",
-                    "idx": "0",
-                    "alias": null,
-                    "platform": "time_pattern",
-                    "now": "2026-04-04T10:40:00.379352+02:00",
-                    "description": "time pattern"
-                  }
+                  "running_script": false
                 }
               }
             ],
-            "condition/0": [
+            "action/1": [
               {
-                "path": "condition/0",
-                "timestamp": "2026-04-04T08:40:00.379578+00:00",
+                "path": "action/1",
+                "timestamp": "2026-04-04T09:25:38.548825+00:00",
                 "result": {
-                  "result": false
+                  "delay": 15.0,
+                  "done": true
                 }
               }
             ],
-            "condition/0/conditions/0": [
+            "action/2": [
               {
-                "path": "condition/0/conditions/0",
-                "timestamp": "2026-04-04T08:40:00.379590+00:00",
+                "path": "action/2",
+                "timestamp": "2026-04-04T09:25:53.549759+00:00",
                 "result": {
-                  "result": false
-                }
-              }
-            ],
-            "condition/0/conditions/0/entity_id/0": [
-              {
-                "path": "condition/0/conditions/0/entity_id/0",
-                "timestamp": "2026-04-04T08:40:00.379598+00:00",
-                "result": {
-                  "result": false,
-                  "state": "Doma (idle)",
-                  "wanted_state": "unavailable"
-                }
-              }
-            ],
-            "condition/0/conditions/1": [
-              {
-                "path": "condition/0/conditions/1",
-                "timestamp": "2026-04-04T08:40:00.379656+00:00",
-                "result": {
-                  "result": false
-                }
-              }
-            ],
-            "condition/0/conditions/1/entity_id/0": [
-              {
-                "path": "condition/0/conditions/1/entity_id/0",
-                "timestamp": "2026-04-04T08:40:00.379662+00:00",
-                "result": {
-                  "result": false,
-                  "state": "Doma (idle)",
-                  "wanted_state": "unknown"
+                  "params": {
+                    "domain": "media_player",
+                    "service": "volume_set",
+                    "service_data": {
+                      "volume_level": 0.16,
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    },
+                    "target": {
+                      "entity_id": [
+                        "media_player.viocepe_media_player"
+                      ]
+                    }
+                  },
+                  "running_script": false
                 }
               }
             ]
           },
           "config": {
-            "alias": "HeatingManager Watchdog",
-            "id": "heating_manager_watchdog",
-            "trigger": [
+            "id": "voicepe_mute_during_response",
+            "alias": "VoicePE ztlum pri odpovedi",
+            "description": "Ztlum VoicePE na 0 pri odpovedi, po 10s vrat zpet",
+            "triggers": [
               {
-                "platform": "time_pattern",
-                "minutes": "/10"
+                "trigger": "state",
+                "entity_id": "assist_satellite.viocepe_assist_satellite",
+                "to": "responding"
               }
             ],
-            "condition": [
+            "actions": [
               {
-                "condition": "or",
-                "conditions": [
-                  {
-                    "condition": "state",
-                    "entity_id": "sensor.heating_manager_status",
-                    "state": "unavailable"
-                  },
-                  {
-                    "condition": "state",
-                    "entity_id": "sensor.heating_manager_status",
-                    "state": "unknown"
-                  }
-                ]
-              }
-            ],
-            "action": [
-              {
-                "data": {
-                  "entity_id": "climate.topeni",
-                  "temperature": 20,
-                  "hvac_mode": "heat"
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
                 },
-                "action": "climate.set_temperature"
+                "data": {
+                  "volume_level": 0
+                }
               },
               {
-                "data": {
-                  "entity_id": "climate.adela_pokoj_room_temperature",
-                  "hvac_mode": "off"
-                },
-                "action": "climate.set_hvac_mode"
+                "delay": {
+                  "seconds": 15
+                }
               },
               {
-                "data": {
-                  "entity_id": "climate.nela_pokoj_room_temperature",
-                  "hvac_mode": "off"
+                "action": "media_player.volume_set",
+                "target": {
+                  "entity_id": "media_player.viocepe_media_player"
                 },
-                "action": "climate.set_hvac_mode"
-              },
-              {
                 "data": {
-                  "entity_id": "climate.pracovna_room_temperature",
-                  "hvac_mode": "off"
-                },
-                "action": "climate.set_hvac_mode"
-              },
-              {
-                "data": {
-                  "message": "HeatingManager offline \u2014 aktivovana zaloha (TC=20C, Daikin off)"
-                },
-                "action": "notify.mobile_app_iphone_17"
+                  "volume_level": 0.16
+                }
               }
             ]
           },
           "blueprint_inputs": null,
           "context": {
-            "id": "01KNBTCA3VBRZGSN0MJ7TCVXKK",
-            "parent_id": null,
+            "id": "01KNBWZW3M9G97Y33M03BZA9KG",
+            "parent_id": "01KNBWZW3JJMTDV0MNF0AQD3Q9",
             "user_id": null
           }
         },
         "short_dict": {
-          "last_step": "condition/0/conditions/1/entity_id/0",
-          "run_id": "53c74553ed59bbb31528661f2a7015ae",
+          "last_step": "action/2",
+          "run_id": "46db8587252a7ee87dd3614888c75d5a",
           "state": "stopped",
-          "script_execution": "failed_conditions",
+          "script_execution": "finished",
           "timestamp": {
-            "start": "2026-04-04T08:40:00.379512+00:00",
-            "finish": "2026-04-04T08:40:00.379683+00:00"
+            "start": "2026-04-04T09:25:38.548090+00:00",
+            "finish": "2026-04-04T09:25:53.552162+00:00"
           },
           "domain": "automation",
-          "item_id": "heating_manager_watchdog",
-          "trigger": "time pattern"
+          "item_id": "voicepe_mute_during_response",
+          "trigger": "state of assist_satellite.viocepe_assist_satellite"
         }
       }
     ],
