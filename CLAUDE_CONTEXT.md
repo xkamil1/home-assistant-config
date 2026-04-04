@@ -3,8 +3,8 @@
 # Na zacatku session: "Precti CLAUDE_CODE_RULES.md a CLAUDE_CONTEXT.md"
 
 ## Posledni aktualizace
-Datum: 2026-04-03
-Session: Voice assistant, solar_confidence fix, Ford/Elroq detekce, VT surplus
+Datum: 2026-04-04
+Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, radio presence
 
 ## Pristi kroky (TODO)
 - [ ] Loznice Daikin - ceka na teplotni cidlo
@@ -256,6 +256,33 @@ Session: Voice assistant, solar_confidence fix, Ford/Elroq detekce, VT surplus
 - Deduplikace pres hash
 - Loki job=homeassistant, host=ha-server
 - POZOR: Promtail HA addon nefunguje na HAOS 17+ (journal access broken)
+
+
+### Voice PE (NOVY 4.4.2026)
+- Hardware: Home Assistant Voice Preview Edition (ESP32-S3)
+- IP: 10.0.0.148, ESPHome firmware 25.12.4
+- Wake word: Hey Mycroft (openWakeWord)
+- Pipeline: Cesky asistent (Whisper -> Claude Haiku -> Google TTS)
+- TTS vystup: soundbar (ne Voice PE reproduktor)
+- Automatizace: voicepe_mute.yaml (volume 0 behem responding, 15s)
+- Automatizace: voicepe_radio_duck.yaml (mute soundbar pri voice input, restore po idle + 12s)
+- Entity: assist_satellite.viocepe_assist_satellite, media_player.viocepe_media_player
+
+### Radio automatizace (NOVY 4.4.2026)
+- radio_presence.yaml: auto off kdyz Kamil+Romana pryc, auto on pri prichodu (8% volume)
+- input_text.last_radio_station: posledni pustena stanice (default Radiozurnal)
+- Kazdy radio script uklada URL do last_radio_station
+
+### Home Connect (NOVY 4.4.2026)
+- Siemens mycka nadobi: sensor.mycka_nadobi_operation_state (ready/run/finished)
+- Program, progress, door, remote control
+- Tablet dashboard: karta Mycka s live stavem
+
+### Zasuvky mereni spotreby (NOVY 4.4.2026)
+- Zasuvka pracka: sensor.tz3000_hdopuwv6_ts011f_power (Zigbee)
+- Zasuvka susicka: sensor.zasuvka_pracovna_u_dveri_power (Zigbee)
+- Zasuvka mycka: sensor.zasuvka_mycka_power (Zigbee)
+- consumption_monitor.py aktualizovan na Zigbee zasuvky (misto SmartThings)
 
 ## Zname problemy / Gotchas
 
