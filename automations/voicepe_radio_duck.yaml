@@ -1,0 +1,25 @@
+- id: voicepe_duck_on_wake
+  alias: VoicePE ztlum radio pri poslechu
+  description: Po wake wordu ztlum soundbar, pred odpovedi vrat zpet
+  triggers:
+    - trigger: state
+      entity_id: assist_satellite.viocepe_assist_satellite
+      from: idle
+  actions:
+    - variables:
+        prev_volume: "{{ state_attr('media_player.q_series_soundbar_2', 'volume_level') | float(0.16) }}"
+    - action: media_player.volume_set
+      target:
+        entity_id: media_player.q_series_soundbar_2
+      data:
+        volume_level: 0.02
+    - wait_for_trigger:
+        - trigger: state
+          entity_id: assist_satellite.viocepe_assist_satellite
+          to: responding
+      timeout: "00:00:20"
+    - action: media_player.volume_set
+      target:
+        entity_id: media_player.q_series_soundbar_2
+      data:
+        volume_level: "{{ prev_volume }}"
