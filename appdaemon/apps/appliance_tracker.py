@@ -5,6 +5,7 @@ import os
 from datetime import datetime
 
 TRACKING_FILE = '/homeassistant/appdaemon/apps/.appliance_tracking.json'
+LAST_CYCLE_FILE = '/homeassistant/appdaemon/apps/.appliance_last_cycle.json'
 
 
 class ApplianceTracker(hass.Hass):
@@ -64,6 +65,9 @@ class ApplianceTracker(hass.Hass):
                 self._save_tracking()
                 self.log("{}: recovered running cycle (energy={:.1f})".format(name, energy_start))
 
+        # Restore last_cycle sensors from persistent storage
+        self._restore_last_cycles()
+
         self.log("ApplianceTracker initialized (influxdb={}, el={} CZK/kWh, water={} CZK/m3)".format(
             "OK" if self._influx_ok else "OFF", self._kwh_price, self._water_price_m3))
 
@@ -82,6 +86,32 @@ class ApplianceTracker(hass.Hass):
                 self.log("Loaded tracking: {}".format(list(self._tracking.keys())))
         except Exception as e:
             self.log("Load tracking error: {}".format(e), level="WARNING")
+
+    def _save_last_cycle(self, name, state, attrs):
+        try:
+            data = {}
+            if os.path.exists(LAST_CYCLE_FILE):
+                with open(LAST_CYCLE_FILE) as f:
+                    data = json.load(f)
+            data[name] = {"state": state, "attributes": attrs}
+            with open(LAST_CYCLE_FILE, "w") as f:
+                json.dump(data, f)
+        except Exception as e:
+            self.log("Save last_cycle error: {}".format(e), level="WARNING")
+
+    def _restore_last_cycles(self):
+        try:
+            if os.path.exists(LAST_CYCLE_FILE):
+                with open(LAST_CYCLE_FILE) as f:
+                    data = json.load(f)
+                for name, info in data.items():
+                    cfg = self._appliances.get(name)
+                    if cfg:
+                        self.set_state(cfg["sensor"], state=info["state"],
+                                       attributes=info["attributes"])
+                        self.log("{}: restored last_cycle from disk".format(name))
+        except Exception as e:
+            self.log("Restore last_cycle error: {}".format(e), level="WARNING")
 
     def _f(self, entity_id, default=0.0):
         try:
