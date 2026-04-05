@@ -17,6 +17,7 @@ http:
     - 104.24.0.0/14
     - 172.64.0.0/13
     - 131.0.72.0/22
+    - 10.0.0.55/32
   ip_ban_enabled: true
   login_attempts_threshold: 5
   cors_allowed_origins:
@@ -523,7 +524,7 @@ climate:
 
 # Faktury - REST senzory z invoice app (10.0.0.55)
 rest:
-  - resource: http://10.0.0.55/api/invoices/ha/unpaid
+  - resource: http://10.0.0.55:8000/api/invoices/ha/unpaid
     scan_interval: 3600
     timeout: 30
     sensor:
@@ -546,7 +547,7 @@ rest:
         json_attributes:
           - invoices
           - total_amount
-  - resource: http://10.0.0.55/api/invoices/ha/due-soon?days=2
+  - resource: http://10.0.0.55:8000/api/invoices/ha/due-soon?days=2
     scan_interval: 3600
     timeout: 30
     sensor:

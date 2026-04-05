@@ -4,37 +4,54 @@
 
 ## Posledni aktualizace
 Datum: 2026-04-04
-Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, radio presence
+Session: Infrastrukturni opravy po VM vypadu, SSL proxy setup, voice stack diagnostika
 
 ## Pristi kroky (TODO)
-- [ ] Loznice Daikin - ceka na teplotni cidlo
-- [x] Ford PHEV integrace do ev_charging_manager (3.4.2026)
-- [x] solar_confidence: OWM cloud_coverage + bias correction + kalibrace (3.4.2026)
-- [ ] Koupelna/kuchyne - pridat teplotni cidla
-- [ ] Recorder retence snizit na 5 dni
+- [ ] Krok 5 — EnergyAI 8hodinovy horizont (solar_confidence jako vstup)
+- [ ] Loznice Daikin — ceka na teplotni cidlo
+- [ ] Ford PHEV integrace do EnergyPlanner
+- [ ] Scheduler deaktivace — overit po tydnu provozu heating_manager
+- [x] Udrzba — zalohy, disk, databaze (hotovo 24.3.2026)
+- [x] OWM integrace — obnovena 24.3.2026
+- [ ] solar_confidence: vyuzit OWM cloud_coverage % primo misto condition mapping
+- [ ] Prediktivni nabijeni baterie ze site pred slabymi dny
+- [ ] Koupelna/kuchyne — pridat teplotni cidla
+- [x] Audit systemu proveden 24.3.2026
+- [ ] Recorder retence snizit na 5 dni (za tyden az se state_log naplni)
 - [ ] Historii vyloucit ze zalohy (po snizeni retence)
-- [ ] Redesign AI Agent dashboard (vysoka priorita - pro prezentaci)
-- [ ] Cidlo 1 obyvak (teplota_obyvak_temperature) - offset +3-4C, diagnostikovat/zkalibrovat
-- [x] Prumerovy senzor obyvaku upraven na cidla 2+3 (29.3.2026)
-- [x] ApexCharts graf 4 teplot obyvaku pridan do Ovladani topeni (29.3.2026)
-- [x] Tablet dashboard +/- tlacitka opravena (29.3.2026)
-- [x] history_stats senzor TC cas v provozu opraven (29.3.2026)
-- [x] Heating teploty: noc 21C, den 22C, predehrev 04:30 (29.3.2026)
-- [x] input_number.topeni_night_temp pridan (29.3.2026)
-- [x] weekly_heating_report.py nasazen s Haiku AI analyzou (29.3.2026)
-- [x] Analyza tepelne ztraty domu: 96 W/C, kapacita 4.2 kWh/C (29.3.2026)
-- [x] HDO binary sensor 26.3.2026
-- [x] ev_monthly_report.py nasazen 26.3.2026
-- [x] ev_charging_manager.py nasazen 27.3.2026
-- [x] Scheduler deaktivace - ohrev vody prenes do heating_manager 27.3.2026
-- [x] Udrzba - zalohy, disk, databaze 24.3.2026
-- [x] OWM integrace - obnovena 24.3.2026
-- [x] card-mod nainstalovano 26.3.2026
-- [x] AI Agent dvouvrstva architektura nasazeno 25.3.2026
+- [x] AI Agent dvouvrstva architektura (Sonnet->Haiku) nasazeno 25.3.2026
+  - [x] Layout: panel:true + stack-in-card + button-card
+  - [ ] API statistiky se resetuji po restartu (pridat persistence do InfluxDB)
+  - [ ] Redesign AI Agent dashboard (vysoka priorita - pro prezentaci)
+  - Dark theme: #1a1a2e, #00b4d8, #06d6a0, #ef476f, #ffd166
+  - Vstupni pole pres celou sirku - tlacitka pod polem nebo vpravo jako ikony
+  - Live vystup: monospace font, zalamovani radku, scrollovatelny
+  - Responsivni pro mobil i desktop
+  - card-mod nainstalovano, button-card, layout-card, stack-in-card
+  - Aktualni stav: card-mod styling nasazen, gradient tlacitka fungují
+  - [ ] Pridat historii instrukci z InfluxDB na dashboard
 - [x] energy_planner interaktivni rezim opraven
-- [x] Notifikace - push (mobile_app_iphone_17) 26.3.2026
-- [x] Vzdaleny pristup - Cloudflare Tunnel 26.3.2026
-- [x] PND - login opraven 24.3.2026
+- [x] Notifikace - Telegram nahrazen push (mobile_app_iphone_17) 26.3.2026
+- [x] AI Agent end-to-end overeno 26.3.2026
+  - Sonnet cte CLAUDE_CONTEXT.md (/homeassistant/ path)
+  - Mapovani entit funguje (TC prikon, teploty, baterie)
+  - Credit tracking s per-model pricing
+- [x] Vzdaleny pristup - Cloudflare Tunnel (26.3.2026)
+  - ha.hanusek.net -> Cloudflare -> tunel -> http://10.0.0.67:8123
+  - trusted_proxies pridany do configuration.yaml (helpers fix) 25.3.2026
+- [x] SSL proxy pro lokalni pristup pres NPM (4.4.2026)
+  - ha.hanusek.net -> NPM (10.0.0.55) -> http://10.0.0.67:8123 (lokalne)
+  - esxi.hanusek.net -> NPM -> https://10.0.0.66:443 (proxy_ssl_verify off)
+  - zabbix.hanusek.net -> NPM -> http://10.0.0.150:80
+  - Vsechny sdili wildcard cert *.hanusek.net (Let's Encrypt, auto-renew)
+  - DNS zaznamy na Windows DNS (10.0.0.70) smeruji na 10.0.0.55
+  - 10.0.0.55 pridan do HA trusted_proxies
+- [x] Invoice tracker REST URL opravena na port 8000 (primo backend, bypass NPM)
+- [x] Appliance tracker: _save_last_cycle() doplneno volani (persistence nefungovala)
+- [x] Whisper STT restartovan po DNS vypadu
+- [x] Cloudflare tunel restartovan po DNS vypadu
+- [ ] Health monitoring pro kriticke komponenty (Zabbix + HA watchdog s push notifikaci)
+- [x] PND — login opraven 24.3.2026 (nove credentials)
 
 ## Architektura systemu
 
@@ -44,7 +61,7 @@ Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, r
 - TC: tepelne cerpadlo — podlaha + radiatory, ovladano pres Tasmota
 - Wallbox: Tuya, 3-fazovy, 4-16A
 - Elroq: 77 kWh, ~85 km/den prumer, SOC/km ~0.20 (dynamicky)
-- Ford PHEV: 11.8 kWh, integrace FordPass, session tracking v ev_charging_manager
+- Ford PHEV: zatim mimo system
 - Bojler: 200l, TC ohrev + spirala 1.5 kW na fazi B
 - Daikin: 4x split (Adela, Nela, Pracovna, Loznice — loznice bez cidla)
 - Shelly EM3: meri TC spotrebu po fazich
@@ -66,29 +83,12 @@ Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, r
 # NIKDY nesmi byt ON soucasne!
 # Bojler ohrev ma PREDNOST pred topenim
 
-# Manualni ohrev vody TC: VZDY pres input_boolean.ohrev_vody_switch (turn_on)
-# NIKDY primo prepinat switch.tepelnecerpadlo_3w_teplavoda!
-# heating_manager provede kompletni sekvenci (TC target, ventil, flagy, stop pri 43C)
-
 ## AppDaemon Apps — aktualni stav
 
-### ev_charging_manager.py (aktualizovano 3.4.2026)
-- Deterministicke rizeni nabijeni EV s Ford/Elroq detekcii
-- Detekce vozidla: Ford plug CONNECTED -> Ford, jinak -> Elroq (Skoda API nespolehlivy)
-- Ford: pasivni tracking (bez battery lock, bez DLM)
-- Elroq: plne rizeni (battery lock, DLM, proud)
-- VT surplus override: kazdych 5 min kontrola prebytku >= 1.5 kW, pokud ano nabiji 6A
-- Ford plug listener jako primarni trigger (30s detekce)
-- Startup recovery: 30s + 60s retry, detekce pres Ford plug
-- Triggery: pripojeni auta, VT/NT prechod (HDO), den/noc, dokonceni, odpojeni
-- Den (05-21): 6A 3f = 4.1 kW (solar/sit)
-- Noc (21-05): 16A 3f = 11 kW (sit NT)
-- VT okna: pauza nabijeni, baterie FVE odemcena (maximise_self_consumption)
-- NT okna: nabijeni obnoveno, baterie FVE zamcena (fixed_charge_discharge, discharge=0)
-- Fallback 07:30: odemkne baterii pokud auto neni pripojeno
-- InfluxDB: ev_charging_sessions (auto, kwh, soc_start, soc_end, duration)
-- Push notifikace pri kazde zmene stavu
-- SMAZANO: energy_ai.py (Claude Haiku 15min cyklus)
+### energy_ai.py
+- Reaktivni rizeni EV nabijeni kazdych 15 min (Claude Haiku)
+- Respektuje: ev_nocharge_tonight, ev_target_soc_tomorrow, manual_override
+- Bug opraveny: konvence znamenka grid_power_w (22.3.2026)
 
 ### ev_charger.py
 - Tuya cloud API komunikace s wallboxem
@@ -99,11 +99,8 @@ Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, r
 - Spirala bojleru z prebytku FVE na fazi B
 - Podminky: phase_b > 1800W AND teplota < 58C AND 7:00-17:00
 
-### solar_confidence.py (aktualizovano 3.4.2026)
-- Met.no + OWM -> confidence 0-100% s bias correction
-- OWM cloud_coverage % primo misto condition mapping
-- Confidence correction factor: rolling 7-day EMA z prediction accuracy
-- CONDITION_CONFIDENCE kalibrovano z realnych dat (sunny 75, cloudy 10, rainy 5)
+### solar_confidence.py
+- Met.no + OWM -> confidence 0-100%
 - Feedback loop: predikce, verifikace, kalibrace vah (denne 23:30)
 - InfluxDB: solar_prediction, solar_prediction_accuracy
 - OWM vyreseno 25.3.2026:
@@ -123,19 +120,14 @@ Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, r
 - Fazova nerovnovaha alert >2000W
 - InfluxDB: consumption_breakdown, consumption_daily
 
-### heating_manager.py (aktualizovano 29.3.2026)
+### heating_manager.py
 - TC + Daikin rizeni podle pritomnosti
 - Priority: bojler > leto > noc > doma > pryc
 - Daikin hystereze: heat ON <19C, OFF >20.5C; cool ON >25C, OFF <23.5C
-- Ranni predehrev: Po-Pa, start 04:30, 60 min pred odchodem
-- Teploty: den 22C (input_number.topeni_target_temp), noc 21C (input_number.topeni_night_temp)
+- Ranni predehrev: Po-Pa, 60 min pred odchodem
 - InfluxDB: heating_log
 - Status rozlisuje: Topi / Doma (idle) / Away / Noc / Leto / Bojler prednost
-- Teplotu meni JEN pri prechodu stavu (zachovava uzivatelske nastaveni pres Siri/dashboard)
-- Ohrev vody TC: trigger 13:00 nebo SOC>90%, podminka bojler<40C, stop pri 43C
-  - Smart stop: pokud obyvak < target, TC prejde na topeni bez vypnuti kompresoru
-  - Preneseno z heating.yaml automaci 27.3.2026
-- Scheduler automace ohrevu vody deaktivovany (presunuto sem)
+- POZOR: 4 scheduler pravidla stale aktivni — deaktivovat po overeni
 
 ### presence_patterns.py
 - Vzorce pritomnosti z device_tracker + InfluxDB (presence_transitions)
@@ -157,32 +149,6 @@ Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, r
 - Sensory: sensor.ai_agent_log, sensor.ai_agent_pending, sensor.ai_agent_stats
 - Tlacitka: listen_state na input_button (listen_event nefungovalo)
 - Overeno: read-only (auto-execute), write (confirm->execute), reject
-
-### weekly_heating_report.py (NOVY 29.3.2026)
-- Tydenni AI analyza vytapeni generovana Haiku
-- Spousteni: kazde pondeli 07:00 + manualne input_button.heating_report_generate
-- Data z InfluxDB: TC spotreba, teploty, 3W ventil (separace topeni/bojler), detekce krbu
-- Historicke srovnani s predchozimi 4 tydny
-- Referencni hodnoty: tepelna ztrata 96 W/C, kapacita 4.2 kWh/C
-- Persistentni JSON reporty v /homeassistant/heating_reports/
-- input_select.heating_report_week pro vyber historickeho tydne
-- InfluxDB: heating_weekly_report (total_kwh, total_cost, avg_outdoor, avg_indoor)
-- Push notifikace na iPhone pri generovani
-- Dashboard: view 10 Heating Report (panel mode, scrollovatelny markdown)
-
-### ev_monthly_report.py (NOVY 2026-03-26)
-- Sleduje nabijeci sessions Elroq (charger_connected) a Ford PHEV (elvehplug)
-- Loguje do InfluxDB: ev_charging_sessions (kwh, soc_start, soc_end, duration, auto tag)
-- Mesicni report 1. den mesice v 08:00 (push notifikace + email pokud SMTP nakonfigurovan)
-- Manualni spusteni: input_button.ev_report_generate
-- SMTP zatim nefunguje (smtp.t-mobile.cz neni resolvatelny z HAOS)
-- Ford entity prefix: fordpass_wf0fxxwpmhsc70607_
-### Faktury (REST integrace 27.3.2026)
-- API: http://10.0.0.55/api/invoices/ha/unpaid + due-soon
-- Sensory: neuhrazene_faktury, faktury_k_uhrade_celkem, faktury_po_splatnosti, faktury_pred_splatnosti
-- Automatizace: denne 08:00 push notifikace pri splatnosti do 2 dnu nebo po splatnosti
-- Dashboard: view Faktury (button-card summary + markdown tabulka)
-
 ## InfluxDB measurements
 
 | Measurement | App | Interval |
@@ -199,8 +165,6 @@ Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, r
 | presence_transitions | presence_patterns | realtime |
 | ai_agent_stats | ai_agent | pri volani |
 | ai_agent_history | ai_agent | pri akci |
-| heating_weekly_report | weekly_heating_report | tydne (pondeli) |
-| appliance_cycles | appliance_tracker | pri dokonceni cyklu |
 
 ## Dashboardy (lovelace.lovelace — storage mode)
 
@@ -214,75 +178,7 @@ Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, r
 | 5 | Spotreba elektriny | 1 |
 | 6 | Energy Planer | 2 (solar + planner s 5d vyhledem) |
 | 7 | Spotreba | 1 (consumption monitor) |
-| 8 | AI Agent | 4 (vstup+tlacitka, prompt, live vystup, stav+API) |
-| 9 | Faktury | 3 (summary, detail tabulka, link) |
-| 10 | Heating Report | 3 (markdown report, statistiky, week selector) |
-
-
-### Voice Assistant (NOVY 3.4.2026)
-- Pipeline: Cesky asistent (Whisper STT -> Claude Haiku -> Google Cloud TTS)
-- STT: Whisper medium-int8, jazyk cs
-- LLM: Claude Haiku (nativni Anthropic integrace) s Assist + Search Services + Weather Forecast tools
-- TTS: Google Cloud cs-CZ-Chirp3-HD-Aoede na soundbar (media_player.q_series_soundbar_2)
-- Web search: Anthropic native web_search tool
-- Wake word: openWakeWord "alexa" (ceka na Voice PE hardware)
-- Radio: 6 stanic pres dedikacne scripty (script.radio_radiozurnal, _evropa2, _frekvence1, _helax, _fresh, _orion)
-- TTS relay: Claude vola script.say_on_soundbar -> tts.google_cloud -> soundbar
-- Prompt: custom cesky prompt s entity mappingem, ulozeny v core.config_entries (edit jen pri zastavenem HA)
-- radio_stations.json: centralni seznam stanic (name, aliases, url)
-- 408 entit exposed pro conversation
-- Konfigurace: Nastaveni -> Zarizeni a sluzby -> Claude -> Claude conversation -> Nastavit
-- POZOR: prompt v core.config_entries se MUSI editovat pri zastavenem HA (ha core stop -> edit -> ha core start)
-
-### Voice Assistant - zname problemy
-- Whisper obcas komoli ceska jmena
-- iPhone app: TTS odpoved nehraje primo, nutno pres script say_on_soundbar
-- IDOS jizdni rady: scraping nefunguje (SPA), web search da jen obecne info
-- Google Nest: nepodporuje cestinu pro hlasove ovladani
-
-
-### Monitoring Stack (NOVY 4.4.2026)
-- Server: 10.0.0.55 (kamil@, SSH key ~/.ssh/docker-srv)
-- Disk: /dev/sdb1 -> /data/loki (100GB ext4)
-- Docker Compose: /opt/monitoring/
-- Loki 2.9.8: port 3100, retence 30d
-- Grafana 10.4.3: port 3000 (admin/admin), datasource http://loki:3100
-- Promtail 2.9.8: local syslog z docker-srv
-- syslog-ng 4.1.1: port 514 UDP/TCP pro sitova zarizeni
-
-### ha_log_forwarder.py (NOVY 4.4.2026)
-- Cte HA core logy pres supervisor API (http://supervisor/core/logs)
-- Posila do Loki kazdych 60s
-- Deduplikace pres hash
-- Loki job=homeassistant, host=ha-server
-- POZOR: Promtail HA addon nefunguje na HAOS 17+ (journal access broken)
-
-
-### Voice PE (NOVY 4.4.2026)
-- Hardware: Home Assistant Voice Preview Edition (ESP32-S3)
-- IP: 10.0.0.148, ESPHome firmware 25.12.4
-- Wake word: Hey Mycroft (openWakeWord)
-- Pipeline: Cesky asistent (Whisper -> Claude Haiku -> Google TTS)
-- TTS vystup: soundbar (ne Voice PE reproduktor)
-- Automatizace: voicepe_mute.yaml (volume 0 behem responding, 15s)
-- Automatizace: voicepe_radio_duck.yaml (mute soundbar pri voice input, restore po idle + 12s)
-- Entity: assist_satellite.viocepe_assist_satellite, media_player.viocepe_media_player
-
-### Radio automatizace (NOVY 4.4.2026)
-- radio_presence.yaml: auto off kdyz Kamil+Romana pryc, auto on pri prichodu (8% volume)
-- input_text.last_radio_station: posledni pustena stanice (default Radiozurnal)
-- Kazdy radio script uklada URL do last_radio_station
-
-### Home Connect (NOVY 4.4.2026)
-- Siemens mycka nadobi: sensor.mycka_nadobi_operation_state (ready/run/finished)
-- Program, progress, door, remote control
-- Tablet dashboard: karta Mycka s live stavem
-
-### Zasuvky mereni spotreby (NOVY 4.4.2026)
-- Zasuvka pracka: sensor.tz3000_hdopuwv6_ts011f_power (Zigbee)
-- Zasuvka susicka: sensor.zasuvka_pracovna_u_dveri_power (Zigbee)
-- Zasuvka mycka: sensor.zasuvka_mycka_power (Zigbee)
-- consumption_monitor.py aktualizovan na Zigbee zasuvky (misto SmartThings)
+| 8 | AI Agent | 2 (vstup+statistiky, live vystup+potvrzeni) |
 
 ## Zname problemy / Gotchas
 
@@ -325,33 +221,6 @@ Session: Voice PE setup, monitoring stack, security audit, mycka Home Connect, r
    -> input_text.set_value, input_button.press na ne NEFUNGUJI
    -> Pro HA service cally nutne definovat v configuration.yaml
    -> listen_state na realne helpers FUNGUJE, listen_event na call_service NE
-12. HDO casy jsou orientacni - distributor se jimi nemusi ridit presne
-   -> Do budoucna nahradit fyzickym spinacem reagujicim na skutecny HDO signal
-   -> Sensor: binary_sensor.hdo_nizky_tarif_nt (on=NT, off=VT)
-
-13. Wallbox je pouze 3f, min 6A x 3f = 4.14 kW
-   -> 1f nabijeni neni mozne, sigle_phase_power je jen read-only senzor
-   -> work_mode: charge_now/charge_pct/charge_energy/charge_schedule (zadne 1f/3f)
-
-14. Pri nabijeni EV je baterie FVE zamcena
-   -> ev_charging_manager nastavi fixed_charge_discharge + max_discharging=0
-   -> Wallbox bere ze site (NT) nebo ze solaru (den)
-   -> Fallback 07:30 odemkne baterii pokud auto neni pripojeno
-
-15. energy_ai.py SMAZANO 27.3.2026
-   -> Nahrazeno ev_charging_manager.py (deterministicka logika)
-   -> Zadne AI volani pro rizeni nabijeni
-
-16. history_stats platform NEFUNGUJE uvnitr template: sekce (29.3.2026)
-   -> Musi byt v top-level sensor: sekci
-   -> Template integrace tichy ignoruje platform: history_stats bloky
-   -> Symptom: senzor se nevytvori, zadna chyba v logu
-
-17. Obyvak cidlo 1 (teplota_obyvak_temperature) ma offset +3-4C
-   -> Pravdepodobne blizko zdroje tepla nebo vadna kalibrace
-   -> Vyrazeno z prumeroveho senzoru (sensor.teplota_obyvak_prumer)
-   -> climate.topeni pouziva prumer z cidel 2+3
-
 ## Zalohy — nastaveni (24.3.2026)
 - InfluxDB vylouceno ze zaloh (bylo 6.3 GB z kazde zalohy)
 - Zaloha bez InfluxDB: ~900 MB (drive 7.2 GB)
@@ -450,19 +319,6 @@ Dotazy na "stav TC", "topi TC", "rezim TC" -> pouzij switch a climate entity.
 | Pracovna | climate.pracovna_room_temperature | sensor.2_temperature |
 | Loznice | climate.loznice_room_temperature | bez cidla |
 
-### EV Wallbox (Tuya 3f)
-| Parametr | Entity | Poznamka |
-|:---------|:-------|:--------|
-| Stav wallboxu | sensor.ev_charger_stav | Volny/Pripojeno/Ceka/Nabiji/Dokonceno/Pauza/Porucha |
-| Vykon | sensor.ev_charger_vykon | kW |
-| Faze vykon | sensor.ev_charger_phase_power | W (read-only) |
-| Proud nastaven | sensor.ev_charger_proud_nastaven | A |
-| Energie session | sensor.ev_charger_energie_seance | kWh |
-| Switch | switch.ev_charger_switch | on/off |
-| Proud slider | input_number.ev_charger_proud | 6-16A |
-| Teplota | sensor.ev_charger_teplota | C |
-| POZOR: jen 3f, min 6A = 4.14 kW | | 1f neni mozne |
-
 ### EV - Skoda Elroq
 | Parametr | Entity |
 |:---------|:-------|
@@ -476,97 +332,16 @@ Dotazy na "stav TC", "topi TC", "rezim TC" -> pouzij switch a climate entity.
 | Mistnost/Zarizeni | Entity |
 |:------------------|:-------|
 | Venkovni teplota | sensor.venkovni_teplota_temperature |
-| Obyvak cidlo 1 | sensor.teplota_obyvak_temperature | OFFSET +3-4C, vyrazeno z prumeru |
-| Obyvak cidlo 2 | sensor.obyvak2_temperature |
-| Obyvak cidlo 3 | sensor.teplota_obyvak3_temperature |
-| Obyvak prumer (ridici) | sensor.teplota_obyvak_prumer | prumer cidel 2+3, target pro climate.topeni |
+| Obyvak | sensor.teplota_obyvak_temperature |
 | Adela pokoj | sensor.adela_pokoj_temperature |
 | Nela pokoj | sensor.nela_pokoj_temperature |
 | Pracovna | sensor.2_temperature |
-
-
-### Ford PHEV
-| Parametr | Entity |
-|:---------|:-------|
-| SOC (EV baterie) | sensor.fordpass_wf0fxxwpmhsc70607_soc |
-| EV dojezd | sensor.fordpass_wf0fxxwpmhsc70607_elveh |
-| Palivo | sensor.fordpass_wf0fxxwpmhsc70607_fuel |
-| Nabijeni stav | sensor.fordpass_wf0fxxwpmhsc70607_elvehcharging |
-| Konektor | sensor.fordpass_wf0fxxwpmhsc70607_elvehplug |
-| Posledni session kWh | sensor.fordpass_wf0fxxwpmhsc70607_energytransferlogentry |
-| Tachometr | sensor.fordpass_wf0fxxwpmhsc70607_odometer |
-| Poloha | device_tracker.fordpass_wf0fxxwpmhsc70607_tracker |
-| Zamek | lock.fordpass_wf0fxxwpmhsc70607_doorlock |
-| Konektivita | sensor.fordpass_wf0fxxwpmhsc70607_deviceconnectivity |
-### HDO tarif
-| Parametr | Entity | Poznamka |
-|:---------|:-------|:--------|
-| Nizky tarif (NT) | binary_sensor.hdo_nizky_tarif_nt | on=NT, off=VT |
-| Atribut tarif | state_attr(..., "tarif") | NT/VT |
-| HDO kod | PTV3 | CEZ Distribuce |
-| NT casy | 00-08, 09-12, 13-15, 16-19, 20-24 | |
-| VT casy | 08-09, 12-13, 15-16, 19-20 | |
 
 ### Predikce
 | Parametr | Entity |
 |:---------|:-------|
 | Solar confidence zitra | sensor.solar_confidence_tomorrow |
 | Heating manager stav | sensor.heating_manager_status |
-
-
-## Tablet dashboard (28.3.2026)
-
-### Hardware
-- Lenovo Tab M10, 10.1", 1280x800, landscape
-- Fully Kiosk Browser Plus
-- IP: 10.0.0.154
-- URL: http://10.0.0.55/tablet
-- HA integrace: fully_kiosk (lenovo_tab_m10)
-
-### Obsah dashboardu
-- Bojler: gradient bar, teplota, badge OK/HREJE SE/STUDENA, tlacitko Spustit ohrev
-- Vytapeni: cilova teplota +/- tlacitka, teploty mistnosti (5 pokoju)
-- Pritomnost: 4 osoby s barevnymi avatary
-- Ford Kuga PHEV: foto, zamek, EV dojezd, benzin
-- Skoda Elroq: foto, zamek, SOC, dojezd
-- Roborock Saros 10R: foto, stav, tlacitko spustit uklid
-- Pracka + susicka: foto, stav, posledni cyklus (kWh, L, CZK)
-- Radio: 6 stanic (Radiozurnal, Evropa 2, Frekvence 1, Helax, Fresh Radio, Hitradio Orion)
-- Pocasi: aktualni + predpoved 2 dny (Met.no)
-
-### Soubory
-- Server: 10.0.0.55, /opt/projects/tablet-dashboard/
-- index.html, config.json (HA token), fotky (ford/elroq/roborock/pracka/susicka.jpg)
-- Radio loga: radio_radiozurnal.png, radio_evropa2.png, radio_frekvence1.png, radio_helax.svg, radio_fresh.png, radio_orion.svg
-- Nginx proxy: /ha-api/ -> https://ha.hanusek.net/api/ (CORS workaround)
-
-### Fully Kiosk automatizace (automations/tablet_brightness.yaml)
-- 05:00 jas 60, 06:00 jas 180, 20:00 jas 80, 23:00 jas 20
-- Hodinovy reload stranky (button.lenovo_tab_m10_restart_browser)
-
-### AppDaemon: appliance_tracker.py (NOVY 28.3.2026)
-- Sleduje cykly pracky a susicky (machine_state run->stop/end)
-- Delta tracking: energy kWh, water L (jen pracka), cena CZK
-- Cena = energie * 4.53 + voda_litry/1000 * 138
-- Sensory: sensor.pracka_last_cycle, sensor.susicka_last_cycle
-- InfluxDB: appliance_cycles
-
-### DLM: Dynamic Load Management (ev_charging_manager.py, 28.3.2026)
-- Ochrana jistice 3x25A behem nabijeni EV
-- Prahy: WARNING >18A (-2A), CRITICAL >21A (okamzite 6A), EMERGENCY >24A (kill)
-- Nocni default: 13A (bezpecna rezerva pro TC)
-- Obnoveni pri <15A na 6A, postupne zvysovani po 120s
-- 30s check interval behem aktivniho nabijeni
-## Tepelna charakteristika domu (analyza 29.3.2026)
-- Merna tepelna ztrata: 96 W/C (regrese z 86 bodu, R2=0.65)
-- Tepelna kapacita: 4200 Wh/C = 4.2 kWh/C (z 39 epizod ohrevu)
-- Rychlost ohrevu TC: +0.60 C/h (prumer)
-- Rychlost chladnuti bez TC: -0.20 C/h (prumer)
-- Cas 19->21C: ~3.3 hodiny
-- Spotreba TC: den 22C = 7.2 kWh/den, noc 21C = 5.0 kWh/den
-- TC je 3x predimenzovane (10kW vs max ztrata ~3.5kW pri -15C)
-- Bojler = 5% spotreby TC, zbytek topeni
-- Cena: kazdy stupen navic ~2.2 kWh/den = ~10 Kc/den
 
 ## Git
 

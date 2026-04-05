@@ -184,6 +184,7 @@ class ApplianceTracker(hass.Hass):
             self.set_state(cfg["sensor"],
                            state="{:.2f}".format(energy_kwh),
                            attributes=attrs)
+            self._save_last_cycle(name, "{:.2f}".format(energy_kwh), attrs)
 
             # InfluxDB
             fields = "duration_min={},energy_kwh={},cost_czk={}".format(
