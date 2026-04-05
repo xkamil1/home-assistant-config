@@ -27,6 +27,16 @@ http:
 
 # Loads default set of integrations. Do not remove.
 default_config:
+
+logger:
+  default: info
+  logs:
+    homeassistant.components.assist_pipeline: debug
+    homeassistant.components.conversation: debug
+    homeassistant.components.tts: debug
+    homeassistant.components.stt: debug
+    custom_components.anthropic: debug
+    homeassistant.components.anthropic: debug
 conversation:
 influxdb:
   host: a0d7b954-influxdb

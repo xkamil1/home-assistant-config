@@ -13,7 +13,7 @@ class EVChargingManager(hass.Hass):
 
     Vehicle detection: Ford plug CONNECTED → Ford, otherwise → Elroq.
     Elroq: full wallbox control (current, DLM, battery lock).
-    Ford: passive tracking only (no battery lock, no wallbox control).
+    Ford: full wallbox control (current, DLM) but no home battery lock.
     """
 
     def initialize(self):
@@ -99,8 +99,20 @@ class EVChargingManager(hass.Hass):
             self._ford_energy_start = self._get_float(FORD_ENERGY)
             self._session_active = True
             self._session_energy_start = self._get_float("sensor.ev_charger_energie_seance")
-            self.log("Startup: Ford session (stav={}, SOC={:.0f}%)".format(
-                stav, self._ford_soc_start))
+            self._vt_paused = False
+            # Active charging control for Ford
+            if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
+                if not self._has_surplus(min_kw=1.5):
+                    self._vt_paused = True
+                    self.log("Startup: Ford session VT paused (stav={}, SOC={:.0f}%)".format(
+                        stav, self._ford_soc_start))
+                    return
+            amps = self._get_current_amps()
+            self._set_current(amps)
+            self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
+            self._start_dlm()
+            self.log("Startup: Ford session (stav={}, SOC={:.0f}%, {}A)".format(
+                stav, self._ford_soc_start, amps))
         else:
             self._active_vehicle = "elroq"
             soc = self._get_float("sensor.skoda_elroq_battery_percentage")
@@ -171,22 +183,18 @@ class EVChargingManager(hass.Hass):
     def _on_day_start(self, kwargs):
         if not self._session_active or self._vt_paused:
             return
-        if self._active_vehicle == "ford":
-            return
         if self.get_state("sensor.ev_charger_stav") == "Volny":
             return
         self._set_current(self._day_amps)
-        self.log("Day mode: {}A".format(self._day_amps))
+        self.log("Day mode: {}A ({})".format(self._day_amps, self._active_vehicle))
 
     def _on_night_start(self, kwargs):
         if not self._session_active or self._vt_paused:
             return
-        if self._active_vehicle == "ford":
-            return
         if self.get_state("sensor.ev_charger_stav") == "Volny":
             return
         self._set_current(self._night_amps)
-        self.log("Night mode: {}A".format(self._night_amps))
+        self.log("Night mode: {}A ({})".format(self._night_amps, self._active_vehicle))
 
     # ── VEHICLE DETECTION ─────────────────────────────────
 
@@ -275,11 +283,28 @@ class EVChargingManager(hass.Hass):
         self._session_active = True
         self._session_start_time = self.datetime()
         self._session_energy_start = self._get_float("sensor.ev_charger_energie_seance")
+        self._vt_paused = False
 
-        self.log("Ford session started: SOC={:.0f}%".format(self._ford_soc_start))
-        self._notify_push("Ford PHEV pripojen | SOC: {:.0f}%".format(self._ford_soc_start))
+        # VT active -> wait for NT unless surplus
+        if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
+            if not self._has_surplus(min_kw=1.5):
+                self._vt_paused = True
+                self.log("Ford connected during VT — waiting for NT (no surplus)")
+                self._notify_push("Ford PHEV pripojen | SOC: {:.0f}% | Cekam na NT".format(self._ford_soc_start))
+                return
+
+        amps = self._get_current_amps()
+        self._set_current(amps)
+        self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
+        self._start_dlm()
+
+        self.log("Ford session started: SOC={:.0f}%, amps={}A".format(self._ford_soc_start, amps))
+        self._notify_push("Ford PHEV nabijeni | SOC: {:.0f}% | {}A".format(self._ford_soc_start, amps))
 
     def _end_ford_session(self, reason):
+        self._stop_dlm()
+        self.call_service("switch/turn_off", entity_id="switch.ev_charger_switch")
+
         if not self._ford_session_start:
             self._session_active = False
             self._active_vehicle = None
@@ -320,9 +345,9 @@ class EVChargingManager(hass.Hass):
 
     def _pause_for_vt(self):
         self._vt_paused = True
+        self._stop_dlm()
+        self.call_service("switch/turn_off", entity_id="switch.ev_charger_switch")
         if self._active_vehicle != "ford":
-            self._stop_dlm()
-            self.call_service("switch/turn_off", entity_id="switch.ev_charger_switch")
             self._unlock_battery()
         self.log("VT pause: {} charging paused".format(self._active_vehicle or "EV"))
         self._notify_push("Nabijeni {} preruseno — VT tarif".format(
@@ -345,8 +370,6 @@ class EVChargingManager(hass.Hass):
         if not self._vt_paused or not self._session_active:
             self._stop_vt_surplus_check()
             return
-        if self._active_vehicle == "ford":
-            return
         if self._has_surplus(min_kw=1.5):
             grid = self._get_float("sensor.power_meter_active_power")
             self.log("VT surplus detected: {:.1f}kW export — resuming at 6A".format(grid))
@@ -355,7 +378,10 @@ class EVChargingManager(hass.Hass):
             self._set_current(6)
             self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
             self._start_dlm()
-            self._notify_push("Elroq nabijeni obnoveno — prebytek {:.1f}kW".format(grid))
+            if self._active_vehicle != "ford":
+                self._lock_battery()
+            self._notify_push("{} nabijeni obnoveno — prebytek {:.1f}kW".format(
+                self._active_vehicle.capitalize() if self._active_vehicle else "EV", grid))
 
     def _resume_from_vt(self):
         self._vt_paused = False
@@ -368,17 +394,15 @@ class EVChargingManager(hass.Hass):
             self._active_vehicle = None
             return
 
-        if self._active_vehicle == "ford":
-            self.log("NT resume: Ford (passive)")
-            return
-
         amps = self._get_current_amps()
-        self._lock_battery()
+        if self._active_vehicle != "ford":
+            self._lock_battery()
         self._set_current(amps)
         self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
         self._start_dlm()
-        self.log("NT resume: Elroq charging at {}A".format(amps))
-        self._notify_push("Elroq nabijeni obnoveno — NT | {}A".format(amps))
+        self.log("NT resume: {} charging at {}A".format(self._active_vehicle, amps))
+        self._notify_push("{} nabijeni obnoveno — NT | {}A".format(
+            self._active_vehicle.capitalize() if self._active_vehicle else "EV", amps))
 
     # ── BATTERY CONTROL ───────────────────────────────────
 
@@ -428,7 +452,7 @@ class EVChargingManager(hass.Hass):
         self.log("DLM stopped")
 
     def _dlm_check(self, kwargs):
-        if not self._session_active or self._active_vehicle == "ford":
+        if not self._session_active:
             return
 
         phase_a = self._get_float("sensor.power_meter_phase_a_active_power")
