@@ -1,62 +1,149 @@
 import appdaemon.plugins.hass.hassapi as hass
+import re
+import time
+from datetime import datetime
 
 
 class AssistTTSRelay(hass.Hass):
-    """Relay Assist conversation responses to soundbar via TTS."""
+    """Relay voice assistant responses to soundbar.
+
+    At processing->responding: mute VoicePE, poll log for new response,
+    then immediately tts/speak on soundbar.
+    """
 
     def initialize(self):
         self._soundbar = self.args.get(
             "media_player", "media_player.q_series_soundbar_2")
         self._tts = self.args.get("tts_entity", "tts.google_cloud")
         self._voice = self.args.get("voice", "cs-CZ-Chirp3-HD-Aoede")
-        self._last_response = ""
+        self._log_file = "/share/home-assistant.log"
+        self._ansi_re = re.compile(r'\x1b\[[0-9;]*m')
+        self._last_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self._prev_content = None
+        self._prev_volume = None
+        self._was_playing = False
 
-        # Listen for HA events
-        self.listen_event(self._on_conversation, "tool_call")
-        self.listen_event(self._on_assist, "assist_pipeline_run")
-
-        # Listen for conversation entity state changes
-        self.listen_state(self._on_claude_response,
-                          "conversation.claude_conversation")
+        self.listen_state(self._on_satellite,
+                          "assist_satellite.viocepe_assist_satellite")
 
         self.log("AssistTTSRelay initialized (soundbar={})".format(
             self._soundbar))
 
-    def _on_claude_response(self, entity, attribute, old, new, kwargs):
-        """Claude conversation entity changed - new response available."""
-        # The state is just a timestamp, not the response text
-        # We need another approach
-        pass
+    def _on_satellite(self, entity, attribute, old, new, kwargs):
+        if old == "idle" and new == "listening":
+            # Save current soundbar state before anything changes
+            self._was_playing = self.get_state(self._soundbar) == "playing"
+            self._prev_content = self.get_state(
+                self._soundbar, attribute="media_content_id")
+            self._prev_volume = float(
+                self.get_state(self._soundbar, attribute="volume_level") or 0.10)
+            if self._was_playing:
+                self.log("Saved: playing={} vol={} content={}".format(
+                    self._was_playing, self._prev_volume,
+                    str(self._prev_content)[:60]))
 
-    def _on_conversation(self, event_name, data, kwargs):
-        self.log("Tool call event: {}".format(str(data)[:200]))
+        elif old == "processing" and new == "responding":
+            # Mute VoicePE immediately
+            self.call_service("media_player/volume_set",
+                              entity_id="media_player.viocepe_media_player",
+                              volume_level=0)
+            # Poll for new response (up to 2s)
+            text = None
+            for i in range(10):
+                text = self._read_new_response()
+                if text:
+                    break
+                time.sleep(0.2)
 
-    def _on_assist(self, event_name, data, kwargs):
-        self.log("Assist event: {}".format(str(data)[:200]))
-
-        # Try to extract TTS output URL
-        result = data.get("result", {})
-        tts_output = result.get("tts_output", {})
-        url = tts_output.get("url")
-
-        if url:
-            self.log("Playing TTS URL on soundbar: {}".format(url[:100]))
-            self.call_service("media_player/play_media",
-                              entity_id=self._soundbar,
-                              media_content_id=url,
-                              media_content_type="music")
-        else:
-            # Try to get speech text from intent output
-            intent_output = result.get("intent_output", {})
-            response = intent_output.get("response", {})
-            speech = response.get("speech", {}).get("plain", {}).get(
-                "speech", "")
-
-            if speech and speech != self._last_response:
-                self._last_response = speech
-                self.log("Speaking on soundbar: {}".format(speech[:100]))
+            if text:
+                self.log("Speaking: {}".format(text[:80]))
+                vol = float(self.get_state(self._soundbar,
+                                           attribute="volume_level") or 0)
+                if vol < 0.05 and self._prev_volume:
+                    self.call_service("media_player/volume_set",
+                                      entity_id=self._soundbar,
+                                      volume_level=self._prev_volume)
                 self.call_service("tts/speak",
                                   entity_id=self._tts,
                                   media_player_entity_id=self._soundbar,
-                                  message=speech,
+                                  message=text,
                                   options={"voice": self._voice})
+            else:
+                self.log("No new response after 2s", level="WARNING")
+
+        elif old == "responding" and new == "idle":
+            # After TTS finishes on soundbar, restore radio if needed
+            self.listen_state(self._on_soundbar_idle,
+                              self._soundbar, new="idle",
+                              oneshot=True, timeout=30)
+
+    def _on_soundbar_idle(self, entity, attribute, old, new, kwargs):
+        """Soundbar finished TTS - restore stream if applicable."""
+        # Check last_radio_station - this is always up to date
+        # (radio scripts update it, and it persists)
+        radio_url = self.get_state("input_text.last_radio_station")
+        if not radio_url:
+            return
+
+        # Was radio playing before, or did Claude just start it?
+        # Either way, if prev was radio OR last_radio matches prev, restore it
+        should_restore = False
+        if self._was_playing and self._prev_content:
+            if "tts_proxy" not in str(self._prev_content):
+                should_restore = True
+        # Also check if Claude started radio during this interaction
+        # (prev_content would be TTS but last_radio_station was updated)
+        current_content = self.get_state(
+            self._soundbar, attribute="media_content_id") or ""
+        if "tts_proxy" in current_content or self.get_state(self._soundbar) == "idle":
+            # Soundbar is idle or playing TTS remnant - check if radio should play
+            if self._was_playing:
+                should_restore = True
+
+        if should_restore:
+            self.log("Restoring radio: vol={} url={}".format(
+                self._prev_volume, radio_url[:60]))
+            self.call_service("media_player/play_media",
+                              entity_id=self._soundbar,
+                              media_content_id=radio_url,
+                              media_content_type="music")
+            self.call_service("media_player/volume_set",
+                              entity_id=self._soundbar,
+                              volume_level=self._prev_volume)
+        self._was_playing = False
+        # Restore VoicePE volume
+        self.call_service("media_player/volume_set",
+                          entity_id="media_player.viocepe_media_player",
+                          volume_level=0.10)
+
+    def _read_new_response(self):
+        try:
+            with open(self._log_file, "rb") as f:
+                f.seek(0, 2)
+                size = f.tell()
+                f.seek(max(0, size - 100000))
+                tail = f.read().decode("utf-8", errors="replace")
+
+            lines = tail.split("\n")
+            for line in reversed(lines):
+                clean = self._ansi_re.sub("", line)
+                if "AssistantContent" not in clean:
+                    continue
+                if "tool_calls=[ToolInput" in clean:
+                    continue
+                ts_match = re.match(
+                    r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", clean)
+                if not ts_match:
+                    continue
+                ts = ts_match.group(1)
+                if ts <= self._last_ts:
+                    return None  # no new entry
+                m = re.search(
+                    r"AssistantContent\(role='assistant'.*?content='([^']+)'",
+                    clean)
+                if m:
+                    self._last_ts = ts
+                    return m.group(1)
+            return None
+        except Exception:
+            return None

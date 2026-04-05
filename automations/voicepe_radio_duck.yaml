@@ -7,7 +7,7 @@
       from: idle
   actions:
     - variables:
-        prev_volume: "{{ state_attr('media_player.q_series_soundbar_2', 'volume_level') | float(0.16) }}"
+        prev_volume: "{{ state_attr('media_player.q_series_soundbar_2', 'volume_level') | float(0.10) }}"
         was_playing: "{{ states('media_player.q_series_soundbar_2') }}"
         prev_content: "{{ state_attr('media_player.q_series_soundbar_2', 'media_content_id') }}"
     - action: media_player.volume_set

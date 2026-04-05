@@ -1,21 +1,18 @@
 - id: assist_tts_soundbar
   alias: Assist TTS na soundbar
-  description: Přehraje odpověď asistenta na soundbar
+  description: Po odpovedi asistenta prehraj TTS na soundbar
   triggers:
-    - trigger: event
-      event_type: assist_pipeline_done
-  conditions: []
+    - trigger: state
+      entity_id: assist_satellite.viocepe_assist_satellite
+      from: responding
+      to: idle
   actions:
-    - if:
-        - condition: template
-          value_template: >
-            {{ trigger.event.data.result is defined and
-               trigger.event.data.result.tts_output is defined and
-               trigger.event.data.result.tts_output.url is defined }}
-      then:
-        - action: media_player.play_media
-          target:
-            entity_id: media_player.q_series_soundbar_2
-          data:
-            media_content_id: "{{ trigger.event.data.result.tts_output.url }}"
-            media_content_type: music
+    - action: tts.speak
+      target:
+        entity_id: tts.google_cloud
+      data:
+        media_player_entity_id: media_player.q_series_soundbar_2
+        message: "{{ state_attr('conversation.claude_conversation', 'last_response') }}"
+        options:
+          voice: cs-CZ-Chirp3-HD-Aoede
+  mode: single

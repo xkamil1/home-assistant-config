@@ -52,7 +52,7 @@
       target:
         entity_id: media_player.q_series_soundbar_2
       data:
-        volume_level: 0.08
+        volume_level: 0.10
     - action: media_player.play_media
       target:
         entity_id: media_player.q_series_soundbar_2
