@@ -230,7 +230,9 @@ class HeatingManager(hass.Hass):
 
     def _is_night(self):
         h = datetime.now().hour
-        return h >= NIGHT_START or h < NIGHT_END
+        night_start = int(self._f("input_number.topeni_noc_od", NIGHT_START))
+        night_end = int(self._f("input_number.topeni_noc_do", NIGHT_END))
+        return h >= night_start or h < night_end
 
     def _is_summer(self):
         return self.get_state("input_boolean.summer_mode") == "on"
@@ -592,10 +594,10 @@ class HeatingManager(hass.Hass):
             return
         dep = self._get_earliest_departure()
         if dep:
-            pre = dep - timedelta(minutes=PREHEAT_MINUTES)
+            pre = dep - timedelta(minutes=int(self._f("input_number.topeni_predehrev_min", PREHEAT_MINUTES)))
         else:
             h, m = map(int, FALLBACK_DEPARTURE.split(":"))
-            pre = now.replace(hour=h, minute=m) - timedelta(minutes=PREHEAT_MINUTES)
+            pre = now.replace(hour=h, minute=m) - timedelta(minutes=int(self._f("input_number.topeni_predehrev_min", PREHEAT_MINUTES)))
         delay = max(0, int((pre - now).total_seconds()))
         if delay > 7200:
             delay = 0
@@ -660,7 +662,7 @@ class HeatingManager(hass.Hass):
             # Determine state
             if summer:
                 state = ("Leto", 0, "summer")
-            elif h >= NIGHT_START or h < NIGHT_END:
+            elif h >= int(self._f("input_number.topeni_noc_od", NIGHT_START)) or h < int(self._f("input_number.topeni_noc_do", NIGHT_END)):
                 night = self._f("input_number.topeni_night_temp", NIGHT_TEMP)
                 state = ("Noc", night, "night")
             elif not is_wknd and dep_time and ret_time:
@@ -674,8 +676,8 @@ class HeatingManager(hass.Hass):
 
             # Check preheat
             if not is_wknd and not summer and dep_time:
-                pre_min = dep_time - PREHEAT_MINUTES
-                if pre_min <= (h * 60 + t.minute) < dep_time and (h >= NIGHT_END):
+                pre_min = dep_time - int(self._f("input_number.topeni_predehrev_min", PREHEAT_MINUTES))
+                if pre_min <= (h * 60 + t.minute) < dep_time and (h >= int(self._f("input_number.topeni_noc_do", NIGHT_END))):
                     state = ("Predehrev", target_home, "morning_preheat")
 
             if state != prev_state:

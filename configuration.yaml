@@ -468,6 +468,33 @@ input_number:
     unit_of_measurement: "C"
     initial: 21
     mode: box
+  topeni_noc_od:
+    name: "Topeni noc od"
+    min: 18
+    max: 23
+    step: 1
+    unit_of_measurement: "h"
+    initial: 22
+    icon: mdi:weather-night
+    mode: box
+  topeni_noc_do:
+    name: "Topeni noc do"
+    min: 4
+    max: 8
+    step: 1
+    unit_of_measurement: "h"
+    initial: 5
+    icon: mdi:weather-sunset-up
+    mode: box
+  topeni_predehrev_min:
+    name: "Predehrev pred odchodem"
+    min: 0
+    max: 120
+    step: 15
+    unit_of_measurement: "min"
+    initial: 60
+    icon: mdi:radiator
+    mode: box
 input_text:
   last_radio_station:
     name: "Posledni radio stanice"
