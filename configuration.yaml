@@ -48,43 +48,6 @@ frontend:
   themes: !include_dir_merge_named themes
 
 
-# Google Assistant integration
-google_assistant:
-  project_id: ha-smarthome-2026-v1
-  service_account: !include google_service_account.json
-  report_state: true
-  exposed_domains:
-    - switch
-    - light
-    - climate
-    - input_boolean
-    - media_player
-  entity_config:
-    switch.brana:
-      name: Brána
-      room: Zahrada
-    climate.topeni:
-      name: Topení
-      room: Obývací pokoj
-    media_player.q_series_soundbar_2:
-      name: Soundbar
-      room: Obývací pokoj
-    input_boolean.ohrev_vody_switch:
-      name: Ohřev vody
-      room: Kuchyně
-    switch.tepelnecerpadlo_topeni:
-      name: Tepelné čerpadlo
-      expose: false
-    switch.tepelnecerpadlo_3w_topeni:
-      expose: false
-    switch.tepelnecerpadlo_3w_teplavoda:
-      expose: false
-    switch.tepelnecerpadlo_bojler:
-      expose: false
-    switch.ev_charger_switch:
-      name: Nabíječka auta
-      room: Garáž
-
 automation: !include_dir_merge_list automations/
 script: !include scripts.yaml
 scene: !include scenes.yaml
@@ -259,50 +222,9 @@ template:
         device_class: power
         unit_of_measurement: ""
 #zjištění, zda je přetok nebo spotřeba
-  - sensor:
-      - name: power_flow_state_numeric
-        unique_id: sensor_power_flow_state_numeric
-        state: >
-          {% set a = states('sensor.power_meter_phase_a_active_power') | float(0) %}
-          {% set b = states('sensor.power_meter_phase_b_active_power') | float(0) %}
-          {% set c = states('sensor.power_meter_phase_c_active_power') | float(0) %}
-          {% if a > 0 and b > 0 and c > 0 %}
-            1
-          {% else %}
-            0
-          {% endif %}
-        unit_of_measurement: "Stav"
 
-        state: >
-          {% if state_attr('sensor.sunsynk_settings', 'energyMode:') == 1 %}
-            on
-          {% else %}
-            off
-          {% endif %}
-  - sensor:
-      - name: "Sunsynk Output Voltage 154"
-        state: >
-          {{state_attr('sensor.sunsynk_output', 'vip_0_volt')|float(0)|round(1)}}
-  - sensor:
-      - name: "Sunsynk Output current 164"
-        state: >
-          {{state_attr('sensor.sunsynk_output', 'vip_0_current')|float(0)|round(1)}}
-  - sensor:
-      - name: "Sunsynk Output Frequency 192"
-        state: >
-          {{state_attr('sensor.sunsynk_output', 'fac')|float(0)|round(1)}}
-  - sensor:
-      - name: "Sunsynk Output Total Power 175"
-        state: >
-          {{state_attr('sensor.sunsynk_output', 'totalpower')|float(0)|round(0)}}
-  - sensor:
-      - name: "SunSynk Inverter Status 59"
-        state: >
-          {{ state_attr("sensor.sunsynk_invertor_list", "infos_0_gatewayVO_status") }}
-  - sensor:
-      - name: "Sunsynk Grid Online 194"
-        state: >
-          {{state_attr('sensor.sunsynk_grid', 'gridonline')|float|round(0)}}
+
+
   ####Sensors pro zobrazeni v tabulce
   - sensor:
       - name: "Adam pokoj teplota a vlhkost"
@@ -452,21 +374,18 @@ input_number:
     min: 10
     max: 25
     step: 0.1
-    initial: 22
     mode: box
   topeni_away_temp:
     name: Odchozí teplota topení
     min: 10
     max: 25
     step: 0.1
-    initial: 19
   topeni_night_temp:
     name: "Nocni teplota topeni"
     min: 16
     max: 23
     step: 0.5
     unit_of_measurement: "C"
-    initial: 21
     mode: box
   topeni_noc_od:
     name: "Topeni noc od"
@@ -474,7 +393,6 @@ input_number:
     max: 23
     step: 1
     unit_of_measurement: "h"
-    initial: 22
     icon: mdi:weather-night
     mode: box
   topeni_noc_do:
@@ -483,7 +401,6 @@ input_number:
     max: 8
     step: 1
     unit_of_measurement: "h"
-    initial: 5
     icon: mdi:weather-sunset-up
     mode: box
   topeni_predehrev_min:
@@ -492,7 +409,6 @@ input_number:
     max: 120
     step: 15
     unit_of_measurement: "min"
-    initial: 60
     icon: mdi:radiator
     mode: box
 input_text:
@@ -594,6 +510,7 @@ rest:
         icon: mdi:clock-alert
         json_attributes:
           - invoices
+
 utility_meter:
   tepelne_cerpadlo_daily_usage:
     source: sensor.tepelne_cerpadlo_cas_v_provozu
