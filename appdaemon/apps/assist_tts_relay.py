@@ -22,6 +22,7 @@ class AssistTTSRelay(hass.Hass):
         self._prev_content = None
         self._prev_volume = None
         self._was_playing = False
+        self._radio_started = False
 
         self.listen_state(self._on_satellite,
                           "assist_satellite.viocepe_assist_satellite")
@@ -43,16 +44,29 @@ class AssistTTSRelay(hass.Hass):
                     str(self._prev_content)[:60]))
 
         elif old == "processing" and new == "responding":
+            # Check if radio was started by voice command before TTS overwrites it
+            self._radio_started = (
+                not self._was_playing
+                and self.get_state(self._soundbar) == "playing")
             # Mute VoicePE immediately
             self.call_service("media_player/volume_set",
                               entity_id="media_player.viocepe_media_player",
                               volume_level=0)
-            # Poll for new response (up to 2s)
+            # Poll for new response (up to 4s)
+            # Wait for final response - Claude may emit intermediate
+            # AssistantContent (e.g. "Zjistím stav") before the real answer.
+            # Strategy: keep polling and always take the latest response.
             text = None
-            for i in range(10):
-                text = self._read_new_response()
-                if text:
-                    break
+            stable_count = 0
+            for i in range(20):
+                latest = self._read_new_response()
+                if latest:
+                    text = latest
+                    stable_count = 0
+                elif text:
+                    stable_count += 1
+                    if stable_count >= 3:
+                        break  # no new response for 0.6s, use what we have
                 time.sleep(0.2)
 
             if text:
@@ -100,6 +114,12 @@ class AssistTTSRelay(hass.Hass):
             if self._was_playing:
                 should_restore = True
 
+        # Radio started by voice command during this interaction
+        if not should_restore and radio_url and self._radio_started:
+            should_restore = True
+            self.log("Radio started by voice command: {}".format(
+                radio_url[:60]))
+
         if should_restore:
             self.log("Restoring radio: vol={} url={}".format(
                 self._prev_volume, radio_url[:60]))
@@ -117,6 +137,7 @@ class AssistTTSRelay(hass.Hass):
                           volume_level=0.10)
 
     def _read_new_response(self):
+        """Read the newest AssistantContent from the log that is newer than _last_ts."""
         try:
             with open(self._log_file, "rb") as f:
                 f.seek(0, 2)
@@ -125,11 +146,15 @@ class AssistTTSRelay(hass.Hass):
                 tail = f.read().decode("utf-8", errors="replace")
 
             lines = tail.split("\n")
+            # Search from newest to oldest, return the latest new response
             for line in reversed(lines):
                 clean = self._ansi_re.sub("", line)
                 if "AssistantContent" not in clean:
                     continue
                 if "tool_calls=[ToolInput" in clean:
+                    continue
+                # Skip entries with content=None (tool-call-only responses)
+                if "content=None" in clean or "content='None'" in clean:
                     continue
                 ts_match = re.match(
                     r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", clean)
