@@ -257,6 +257,8 @@ template:
 
 
 
+
+sensor:
   - platform: time_date
     display_options:
       - "time"
@@ -274,8 +276,6 @@ template:
     unit_prefix: k
     round: 2
 
-
-sensor:
   - platform: history_stats
     name: Tepelne cerpadlo cas v provozu
     entity_id: switch.tepelnecerpadlo_topeni
