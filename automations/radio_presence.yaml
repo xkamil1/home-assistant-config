@@ -40,6 +40,13 @@
     - condition: time
       after: "07:00:00"
       before: "19:00:00"
+    - condition: template
+      value_template: >
+        {% if trigger.entity_id == 'person.kamil' %}
+          {{ states('person.romana') in ['not_home', 'unknown'] }}
+        {% else %}
+          {{ states('person.kamil') in ['not_home', 'unknown'] }}
+        {% endif %}
     - condition: not
       conditions:
         - condition: state
