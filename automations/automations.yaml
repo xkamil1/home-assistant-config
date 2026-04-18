@@ -1,11 +1,25 @@
-- alias: Notifikace o stavu bazénu na Telegram
+- alias: Notifikace - prekroceni feed-in limitu
+  id: feed_in_limit_alert
   trigger:
-    platform: state
-    entity_id: switch.spinac_bazen2
+    platform: numeric_state
+    entity_id: sensor.power_meter_active_power
+    above: 7000
+    for: "00:01:00"
   action:
     service: notify.mobile_app_iphone_17
     data:
-      message: 'Stav bazénu: {{ states(''switch.spinac_bazen2'') }}'
+      title: "Prekrocen feed-in limit!"
+      message: "Pretok do site: {{ states('sensor.power_meter_active_power') }} W (limit 7000 W)"
+  mode: single
+
+- alias: Notifikace o stavu HDO
+  trigger:
+    platform: state
+    entity_id: switch.hdo_signalizace
+  action:
+    service: notify.mobile_app_iphone_17
+    data:
+      message: "HDO: {% if is_state('switch.hdo_signalizace', 'on') %}Nízký tarif{% else %}Vysoký tarif{% endif %}"
   id: 88b12df89d7144889d1285846c0530ed
 - alias: Zapnutí LED vecer
   trigger:

@@ -207,14 +207,6 @@ template:
           {% endif %}
         device_class: power
         unit_of_measurement: ""
-  #Sběr dat o stavu switche switch.spinac_bazen2
-  - sensor:
-      - name: "bazen_aktivni"
-        unique_id: bazen_aktivni
-        state: >
-          {{ 1 if is_state('switch.spinac_bazen2', 'on') else 0 }}
-        device_class: power
-        unit_of_measurement: ""
 #Sběr dat o stavu switch.tepelnecerpadlo_bojler
   - sensor:
       - name: "bojler_aktivni"

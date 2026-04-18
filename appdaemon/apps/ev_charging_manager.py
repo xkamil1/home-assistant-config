@@ -36,6 +36,10 @@ class EVChargingManager(hass.Hass):
         self._last_current_change = None
         self._dlm_suspended = False
 
+        # Battery mode switch cooldown (min 10 min between switches)
+        self._last_battery_mode_change = None
+        self._battery_cooldown_sec = 600
+
         # VT surplus check timer
         self._vt_surplus_handle = None
 
@@ -102,7 +106,7 @@ class EVChargingManager(hass.Hass):
             self._vt_paused = False
             # Active charging control for Ford
             if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
-                if not self._has_surplus(min_kw=1.5):
+                if not self._has_surplus():
                     self._vt_paused = True
                     self.log("Startup: Ford session VT paused (stav={}, SOC={:.0f}%)".format(
                         stav, self._ford_soc_start))
@@ -172,8 +176,9 @@ class EVChargingManager(hass.Hass):
         if not self._session_active:
             return
         if new == "off" and old == "on":
-            if self._has_surplus(min_kw=1.5):
-                self.log("VT started but surplus present — continuing at 6A")
+            if self._has_surplus():
+                grid = self._get_float("sensor.power_meter_active_power")
+                self.log("VT started but surplus {:.0f}W — continuing at 6A".format(grid))
                 self._set_current(6)
             else:
                 self._pause_for_vt()
@@ -233,13 +238,13 @@ class EVChargingManager(hass.Hass):
 
         # VT active → wait for NT, unless we have solar surplus
         if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
-            if not self._has_surplus(min_kw=1.5):
+            if not self._has_surplus():
                 self._vt_paused = True
                 self.log("Elroq connected during VT — waiting for NT (no surplus)")
                 self._notify_push("Elroq pripojeno | SOC: {}% | Cekam na NT".format(int(soc)))
                 return
             else:
-                self.log("Elroq VT override: surplus {:.1f}kW — charging at 6A".format(
+                self.log("Elroq VT override: surplus {:.0f}W — charging at 6A".format(
                     self._get_float("sensor.power_meter_active_power")))
                 amps = 6
 
@@ -254,7 +259,7 @@ class EVChargingManager(hass.Hass):
     def _end_session(self, reason):
         self._stop_dlm()
         self.call_service("switch/turn_off", entity_id="switch.ev_charger_switch")
-        self._unlock_battery()
+        self._unlock_battery(force=True)
 
         energy_now = self._get_float("sensor.ev_charger_energie_seance")
         kwh = max(0, energy_now - self._session_energy_start)
@@ -287,7 +292,7 @@ class EVChargingManager(hass.Hass):
 
         # VT active -> wait for NT unless surplus
         if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
-            if not self._has_surplus(min_kw=1.5):
+            if not self._has_surplus():
                 self._vt_paused = True
                 self.log("Ford connected during VT — waiting for NT (no surplus)")
                 self._notify_push("Ford PHEV pripojen | SOC: {:.0f}% | Cekam na NT".format(self._ford_soc_start))
@@ -348,7 +353,7 @@ class EVChargingManager(hass.Hass):
         self._stop_dlm()
         self.call_service("switch/turn_off", entity_id="switch.ev_charger_switch")
         if self._active_vehicle != "ford":
-            self._unlock_battery()
+            self._unlock_battery(force=True)
         self.log("VT pause: {} charging paused".format(self._active_vehicle or "EV"))
         self._notify_push("Nabijeni {} preruseno — VT tarif".format(
             self._active_vehicle or "EV"))
@@ -370,9 +375,9 @@ class EVChargingManager(hass.Hass):
         if not self._vt_paused or not self._session_active:
             self._stop_vt_surplus_check()
             return
-        if self._has_surplus(min_kw=1.5):
+        if self._has_surplus():
             grid = self._get_float("sensor.power_meter_active_power")
-            self.log("VT surplus detected: {:.1f}kW export — resuming at 6A".format(grid))
+            self.log("VT surplus detected: {:.0f}W export — resuming at 6A".format(grid))
             self._vt_paused = False
             self._stop_vt_surplus_check()
             self._set_current(6)
@@ -380,7 +385,7 @@ class EVChargingManager(hass.Hass):
             self._start_dlm()
             if self._active_vehicle != "ford":
                 self._lock_battery()
-            self._notify_push("{} nabijeni obnoveno — prebytek {:.1f}kW".format(
+            self._notify_push("{} nabijeni obnoveno — prebytek {:.0f}W".format(
                 self._active_vehicle.capitalize() if self._active_vehicle else "EV", grid))
 
     def _resume_from_vt(self):
@@ -407,20 +412,36 @@ class EVChargingManager(hass.Hass):
     # ── BATTERY CONTROL ───────────────────────────────────
 
     def _lock_battery(self):
+        now = datetime.now()
+        if self._last_battery_mode_change:
+            elapsed = (now - self._last_battery_mode_change).total_seconds()
+            if elapsed < self._battery_cooldown_sec:
+                self.log("Battery lock skipped — cooldown ({:.0f}s remaining)".format(
+                    self._battery_cooldown_sec - elapsed))
+                return
         self.call_service("number/set_value",
                           entity_id="number.battery_maximum_discharging_power", value=0)
         self.call_service("select/select_option",
                           entity_id="select.battery_working_mode",
                           option="fixed_charge_discharge")
+        self._last_battery_mode_change = now
         self.log("Battery locked")
 
-    def _unlock_battery(self):
+    def _unlock_battery(self, force=False):
+        now = datetime.now()
+        if not force and self._last_battery_mode_change:
+            elapsed = (now - self._last_battery_mode_change).total_seconds()
+            if elapsed < self._battery_cooldown_sec:
+                self.log("Battery unlock skipped — cooldown ({:.0f}s remaining)".format(
+                    self._battery_cooldown_sec - elapsed))
+                return
         self.call_service("select/select_option",
                           entity_id="select.battery_working_mode",
                           option="maximise_self_consumption")
         self.call_service("number/set_value",
                           entity_id="number.battery_maximum_discharging_power", value=5000)
-        self.log("Battery unlocked")
+        self._last_battery_mode_change = now
+        self.log("Battery unlocked{}".format(" (forced)" if force else ""))
 
     # ── FALLBACK ──────────────────────────────────────────
 
@@ -428,7 +449,7 @@ class EVChargingManager(hass.Hass):
         mode = self.get_state("select.battery_working_mode")
         stav = self.get_state("sensor.ev_charger_stav")
         if mode == "fixed_charge_discharge" and stav == "Volny":
-            self._unlock_battery()
+            self._unlock_battery(force=True)
             self._session_active = False
             self._vt_paused = False
             self._active_vehicle = None
@@ -517,11 +538,10 @@ class EVChargingManager(hass.Hass):
 
     # ── HELPERS ────────────────────────────────────────────
 
-    def _has_surplus(self, min_kw=1.5):
-        """Vrátí True pokud exportujeme alespoň min_kw do sítě."""
+    def _has_surplus(self, min_w=2000):
+        """Vrátí True pokud exportujeme alespoň min_w wattů do sítě."""
         grid = self._get_float("sensor.power_meter_active_power")
-        # kladné = export dle konvence systému
-        return grid >= min_kw
+        return grid >= min_w
 
     def _get_current_amps(self):
         h = datetime.now().hour
