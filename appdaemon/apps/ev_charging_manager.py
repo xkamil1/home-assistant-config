@@ -176,11 +176,13 @@ class EVChargingManager(hass.Hass):
         if not self._session_active:
             return
         if new == "off" and old == "on":
+            grid = self._get_float("sensor.power_meter_active_power")
+            fve = self._get_float("sensor.inverter_input_power")
             if self._has_surplus():
-                grid = self._get_float("sensor.power_meter_active_power")
-                self.log("VT started but surplus {:.0f}W — continuing at 6A".format(grid))
+                self.log("VT started but FVE {:.0f}W, export {:.0f}W — continuing at 6A".format(fve, grid))
                 self._set_current(6)
             else:
+                self.log("VT started, FVE {:.0f}W, export {:.0f}W — pausing".format(fve, grid))
                 self._pause_for_vt()
         elif new == "on" and old == "off":
             self._resume_from_vt()
@@ -375,9 +377,10 @@ class EVChargingManager(hass.Hass):
         if not self._vt_paused or not self._session_active:
             self._stop_vt_surplus_check()
             return
+        grid = self._get_float("sensor.power_meter_active_power")
+        fve = self._get_float("sensor.inverter_input_power")
         if self._has_surplus():
-            grid = self._get_float("sensor.power_meter_active_power")
-            self.log("VT surplus detected: {:.0f}W export — resuming at 6A".format(grid))
+            self.log("VT surplus: FVE {:.0f}W, export {:.0f}W — resuming at 6A".format(fve, grid))
             self._vt_paused = False
             self._stop_vt_surplus_check()
             self._set_current(6)
@@ -385,8 +388,8 @@ class EVChargingManager(hass.Hass):
             self._start_dlm()
             if self._active_vehicle != "ford":
                 self._lock_battery()
-            self._notify_push("{} nabijeni obnoveno — prebytek {:.0f}W".format(
-                self._active_vehicle.capitalize() if self._active_vehicle else "EV", grid))
+            self._notify_push("{} nabijeni obnoveno — FVE {:.0f}W".format(
+                self._active_vehicle.capitalize() if self._active_vehicle else "EV", fve))
 
     def _resume_from_vt(self):
         self._vt_paused = False
@@ -539,9 +542,18 @@ class EVChargingManager(hass.Hass):
     # ── HELPERS ────────────────────────────────────────────
 
     def _has_surplus(self, min_w=2000):
-        """Vrátí True pokud exportujeme alespoň min_w wattů do sítě."""
+        """Vrátí True pokud je dostatek FVE přebytku.
+
+        Pokud wallbox právě nabíjí, jeho odběr se přičte k exportu,
+        protože testujeme zda FVE dokáže pokrýt nabíjení.
+        """
         grid = self._get_float("sensor.power_meter_active_power")
-        return grid >= min_w
+        available = grid
+        if self.get_state("sensor.ev_charger_stav") == "Nabiji":
+            current = self._get_float("input_number.ev_charger_proud") or 6
+            wallbox_w = current * 3 * 230
+            available += wallbox_w
+        return available >= min_w
 
     def _get_current_amps(self):
         h = datetime.now().hour
