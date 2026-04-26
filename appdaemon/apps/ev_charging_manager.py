@@ -40,9 +40,6 @@ class EVChargingManager(hass.Hass):
         self._last_battery_mode_change = None
         self._battery_cooldown_sec = 600
 
-        # VT surplus check timer
-        self._vt_surplus_handle = None
-
         # Session state
         self._session_active = False
         self._session_start_time = None
@@ -104,11 +101,11 @@ class EVChargingManager(hass.Hass):
             self._session_active = True
             self._session_energy_start = self._get_float("sensor.ev_charger_energie_seance")
             self._vt_paused = False
-            # Active charging control for Ford
+            # Only pause for evening VT (19h)
             if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
-                if not self._has_surplus():
+                if datetime.now().hour >= 19:
                     self._vt_paused = True
-                    self.log("Startup: Ford session VT paused (stav={}, SOC={:.0f}%)".format(
+                    self.log("Startup: Ford session evening VT paused (stav={}, SOC={:.0f}%)".format(
                         stav, self._ford_soc_start))
                     return
             amps = self._get_current_amps()
@@ -149,6 +146,13 @@ class EVChargingManager(hass.Hass):
 
         # Any transition to active charging state → detect vehicle
         if new in ("Pripojeno", "Ceka", "Nabiji"):
+            # Swap detection: active Ford session but Ford unplugged → end & re-detect
+            if self._session_active and self._active_vehicle == "ford":
+                if self.get_state(FORD_PLUG) != "CONNECTED":
+                    self.log("Vehicle swap detected (Ford unplugged, wallbox {}), ending Ford session".format(new))
+                    self._end_ford_session("swap")
+                    self.run_in(self._detect_and_start, 30)
+                    return
             if self._session_active or self._active_vehicle is not None:
                 return
             if self._pending_detection:
@@ -176,16 +180,16 @@ class EVChargingManager(hass.Hass):
         if not self._session_active:
             return
         if new == "off" and old == "on":
-            grid = self._get_float("sensor.power_meter_active_power")
-            fve = self._get_float("sensor.inverter_input_power")
-            if self._has_surplus():
-                self.log("VT started but FVE {:.0f}W, export {:.0f}W — continuing at 6A".format(fve, grid))
-                self._set_current(6)
-            else:
-                self.log("VT started, FVE {:.0f}W, export {:.0f}W — pausing".format(fve, grid))
-                self._pause_for_vt()
+            h = datetime.now().hour
+            # Only pause for evening VT (19h). Daytime VT (08,12,15) — keep charging.
+            if h < 19:
+                self.log("VT started at {}h — daytime, continuing".format(h))
+                return
+            self.log("VT started at {}h — pausing".format(h))
+            self._pause_for_vt()
         elif new == "on" and old == "off":
-            self._resume_from_vt()
+            if self._vt_paused:
+                self._resume_from_vt()
 
     def _on_day_start(self, kwargs):
         if not self._session_active or self._vt_paused:
@@ -238,17 +242,13 @@ class EVChargingManager(hass.Hass):
         self._session_energy_start = energy
         self._vt_paused = False
 
-        # VT active → wait for NT, unless we have solar surplus
+        # Evening VT (19h) → pause. Daytime VT → charge normally.
         if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
-            if not self._has_surplus():
+            if datetime.now().hour >= 19:
                 self._vt_paused = True
-                self.log("Elroq connected during VT — waiting for NT (no surplus)")
+                self.log("Elroq connected during evening VT — waiting for NT")
                 self._notify_push("Elroq pripojeno | SOC: {}% | Cekam na NT".format(int(soc)))
                 return
-            else:
-                self.log("Elroq VT override: surplus {:.0f}W — charging at 6A".format(
-                    self._get_float("sensor.power_meter_active_power")))
-                amps = 6
 
         self._lock_battery()
         self._set_current(amps)
@@ -292,11 +292,11 @@ class EVChargingManager(hass.Hass):
         self._session_energy_start = self._get_float("sensor.ev_charger_energie_seance")
         self._vt_paused = False
 
-        # VT active -> wait for NT unless surplus
+        # Evening VT (19h) → pause. Daytime VT → charge normally.
         if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
-            if not self._has_surplus():
+            if datetime.now().hour >= 19:
                 self._vt_paused = True
-                self.log("Ford connected during VT — waiting for NT (no surplus)")
+                self.log("Ford connected during evening VT — waiting for NT")
                 self._notify_push("Ford PHEV pripojen | SOC: {:.0f}% | Cekam na NT".format(self._ford_soc_start))
                 return
 
@@ -359,41 +359,9 @@ class EVChargingManager(hass.Hass):
         self.log("VT pause: {} charging paused".format(self._active_vehicle or "EV"))
         self._notify_push("Nabijeni {} preruseno — VT tarif".format(
             self._active_vehicle or "EV"))
-        # Start periodic surplus check every 5 min
-        self._start_vt_surplus_check()
-
-    def _stop_vt_surplus_check(self):
-        if self._vt_surplus_handle:
-            self.cancel_timer(self._vt_surplus_handle)
-            self._vt_surplus_handle = None
-
-    def _start_vt_surplus_check(self):
-        self._stop_vt_surplus_check()
-        self._vt_surplus_handle = self.run_every(
-            self._vt_surplus_tick, "now+300", 300)  # every 5 min
-        self.log("VT surplus check started (5 min interval)")
-
-    def _vt_surplus_tick(self, kwargs):
-        if not self._vt_paused or not self._session_active:
-            self._stop_vt_surplus_check()
-            return
-        grid = self._get_float("sensor.power_meter_active_power")
-        fve = self._get_float("sensor.inverter_input_power")
-        if self._has_surplus():
-            self.log("VT surplus: FVE {:.0f}W, export {:.0f}W — resuming at 6A".format(fve, grid))
-            self._vt_paused = False
-            self._stop_vt_surplus_check()
-            self._set_current(6)
-            self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
-            self._start_dlm()
-            if self._active_vehicle != "ford":
-                self._lock_battery()
-            self._notify_push("{} nabijeni obnoveno — FVE {:.0f}W".format(
-                self._active_vehicle.capitalize() if self._active_vehicle else "EV", fve))
 
     def _resume_from_vt(self):
         self._vt_paused = False
-        self._stop_vt_surplus_check()
 
         stav = self.get_state("sensor.ev_charger_stav")
         if stav == "Volny":
@@ -540,20 +508,6 @@ class EVChargingManager(hass.Hass):
         self.log("DLM {}: {}A->{}A ({:.1f}A)".format(reason, int(current), new_current, load))
 
     # ── HELPERS ────────────────────────────────────────────
-
-    def _has_surplus(self, min_w=2000):
-        """Vrátí True pokud je dostatek FVE přebytku.
-
-        Pokud wallbox právě nabíjí, jeho odběr se přičte k exportu,
-        protože testujeme zda FVE dokáže pokrýt nabíjení.
-        """
-        grid = self._get_float("sensor.power_meter_active_power")
-        available = grid
-        if self.get_state("sensor.ev_charger_stav") == "Nabiji":
-            current = self._get_float("input_number.ev_charger_proud") or 6
-            wallbox_w = current * 3 * 230
-            available += wallbox_w
-        return available >= min_w
 
     def _get_current_amps(self):
         h = datetime.now().hour
