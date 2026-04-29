@@ -106,8 +106,15 @@ class EVCharger(hass.Hass):
     # ── Sensors ──────────────────────────────────────────────────────────────
 
     def _init_sensors(self):
-        self.set_state("switch.ev_charger_switch", state="off",
-            attributes={"friendly_name": "EV Charger Switch"})
+        try:
+            resp = self._cloud.getstatus(DEVICE_ID)
+            if resp.get("success"):
+                dps = {item["code"]: item["value"] for item in resp.get("result", [])}
+                self._update_sensors(dps)
+                self.log("Sensors initialized from Tuya cloud")
+                return
+        except Exception as e:
+            self.log("Init poll failed ({}), using defaults".format(e), level="WARNING")
         self.set_state("sensor.ev_charger_stav", state="unknown",
             attributes={"friendly_name": "EV Charger stav"})
         self.set_state("sensor.ev_charger_vykon", state="0",

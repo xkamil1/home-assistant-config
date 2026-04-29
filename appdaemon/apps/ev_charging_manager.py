@@ -6,6 +6,7 @@ from datetime import datetime
 FORD_PLUG = "sensor.fordpass_wf0fxxwpmhsc70607_elvehplug"
 FORD_SOC = "sensor.fordpass_wf0fxxwpmhsc70607_soc"
 FORD_ENERGY = "sensor.fordpass_wf0fxxwpmhsc70607_energytransferlogentry"
+HDO_ENTITY = "switch.hdo_signalizace"
 
 
 class EVChargingManager(hass.Hass):
@@ -60,8 +61,8 @@ class EVChargingManager(hass.Hass):
         # Trigger: Wallbox state changes
         self.listen_state(self._on_charger_state, "sensor.ev_charger_stav")
 
-        # Trigger: HDO tariff changes
-        self.listen_state(self._on_hdo_change, "binary_sensor.hdo_nizky_tarif_nt")
+        # Trigger: HDO tariff changes (HW Tasmota switch, on=NT off=VT)
+        self.listen_state(self._on_hdo_change, HDO_ENTITY)
 
         # Trigger: Day/night current switch
         self.run_daily(self._on_day_start,
@@ -102,7 +103,7 @@ class EVChargingManager(hass.Hass):
             self._session_energy_start = self._get_float("sensor.ev_charger_energie_seance")
             self._vt_paused = False
             # Only pause for evening VT (19h)
-            if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
+            if self._is_vt():
                 if datetime.now().hour >= 19:
                     self._vt_paused = True
                     self.log("Startup: Ford session evening VT paused (stav={}, SOC={:.0f}%)".format(
@@ -110,7 +111,7 @@ class EVChargingManager(hass.Hass):
                     return
             amps = self._get_current_amps()
             self._set_current(amps)
-            self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
+            self._turn_on_switch()
             self._start_dlm()
             self.log("Startup: Ford session (stav={}, SOC={:.0f}%, {}A)".format(
                 stav, self._ford_soc_start, amps))
@@ -177,6 +178,8 @@ class EVChargingManager(hass.Hass):
             self._pending_detection = False
 
     def _on_hdo_change(self, entity, attribute, old, new, kwargs):
+        if new in ("unavailable", "unknown") or old in ("unavailable", "unknown"):
+            return
         if not self._session_active:
             return
         if new == "off" and old == "on":
@@ -243,7 +246,7 @@ class EVChargingManager(hass.Hass):
         self._vt_paused = False
 
         # Evening VT (19h) → pause. Daytime VT → charge normally.
-        if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
+        if self._is_vt():
             if datetime.now().hour >= 19:
                 self._vt_paused = True
                 self.log("Elroq connected during evening VT — waiting for NT")
@@ -252,7 +255,7 @@ class EVChargingManager(hass.Hass):
 
         self._lock_battery()
         self._set_current(amps)
-        self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
+        self._turn_on_switch()
         self._start_dlm()
 
         self.log("Elroq session started: SOC={}%, amps={}A".format(soc, amps))
@@ -293,7 +296,7 @@ class EVChargingManager(hass.Hass):
         self._vt_paused = False
 
         # Evening VT (19h) → pause. Daytime VT → charge normally.
-        if self.get_state("binary_sensor.hdo_nizky_tarif_nt") == "off":
+        if self._is_vt():
             if datetime.now().hour >= 19:
                 self._vt_paused = True
                 self.log("Ford connected during evening VT — waiting for NT")
@@ -302,7 +305,7 @@ class EVChargingManager(hass.Hass):
 
         amps = self._get_current_amps()
         self._set_current(amps)
-        self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
+        self._turn_on_switch()
         self._start_dlm()
 
         self.log("Ford session started: SOC={:.0f}%, amps={}A".format(self._ford_soc_start, amps))
@@ -311,6 +314,7 @@ class EVChargingManager(hass.Hass):
     def _end_ford_session(self, reason):
         self._stop_dlm()
         self.call_service("switch/turn_off", entity_id="switch.ev_charger_switch")
+        self._unlock_battery(force=True)
 
         if not self._ford_session_start:
             self._session_active = False
@@ -371,10 +375,9 @@ class EVChargingManager(hass.Hass):
             return
 
         amps = self._get_current_amps()
-        if self._active_vehicle != "ford":
-            self._lock_battery()
+        self._lock_battery()
         self._set_current(amps)
-        self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
+        self._turn_on_switch()
         self._start_dlm()
         self.log("NT resume: {} charging at {}A".format(self._active_vehicle, amps))
         self._notify_push("{} nabijeni obnoveno — NT | {}A".format(
@@ -483,7 +486,7 @@ class EVChargingManager(hass.Hass):
         if self._dlm_suspended and max_load < 15.0:
             self._dlm_suspended = False
             self._set_current(6)
-            self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
+            self._turn_on_switch()
             self._last_current_change = now
             self.log("DLM: restored at 6A ({:.1f}A)".format(max_load))
             return
@@ -514,6 +517,34 @@ class EVChargingManager(hass.Hass):
         if h >= self._night_start or h < self._day_start:
             return self._night_amps
         return self._day_amps
+
+    def _is_vt(self):
+        state = self.get_state(HDO_ENTITY)
+        if state in ("unavailable", "unknown", None):
+            self.log("HDO switch unavailable, assuming NT", level="WARNING")
+            return False
+        return state == "off"
+
+    def _turn_on_switch(self):
+        self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
+        self.run_in(self._verify_switch_on, 10)
+
+    def _verify_switch_on(self, kwargs):
+        if not self._session_active or self._vt_paused:
+            return
+        state = self.get_state("switch.ev_charger_switch")
+        if state != "on":
+            self.log("Switch verify: state={}, retrying".format(state), level="WARNING")
+            self.call_service("switch/turn_on", entity_id="switch.ev_charger_switch")
+            self.run_in(self._verify_switch_on_final, 10)
+
+    def _verify_switch_on_final(self, kwargs):
+        if not self._session_active or self._vt_paused:
+            return
+        state = self.get_state("switch.ev_charger_switch")
+        if state != "on":
+            self.log("Switch verify FAILED after retry: state={}".format(state), level="ERROR")
+            self._notify_push("CHYBA: Wallbox switch se nezapnul ({})".format(state))
 
     def _set_current(self, amps):
         self.call_service("input_number/set_value",
