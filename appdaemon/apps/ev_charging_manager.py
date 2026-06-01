@@ -162,7 +162,7 @@ class EVChargingManager(hass.Hass):
             self.run_in(self._detect_and_start, 120)
 
         # Charging complete
-        elif new == "Dokonceno" and self._session_active:
+        elif new == "Dokonceno" and self._session_active and not self._vt_paused:
             if self._active_vehicle == "ford":
                 self._end_ford_session("dokonceno")
             else:
