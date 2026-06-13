@@ -156,3 +156,25 @@
                   {% set inv = state_attr('sensor.faktury_pred_splatnosti', 'invoices') %}
                   {% if inv %}{% for i in inv %}{{ i.supplier }}: {{ i.amount }} CZK ({{ i.due_date }})
                   {% endfor %}{% endif %}
+
+- id: bazen_filtrace_zapnuti
+  alias: Bazen filtrace - zapnuti
+  trigger:
+    platform: time
+    at: '10:00:00'
+  action:
+    service: switch.turn_on
+    target:
+      entity_id: switch.tasmota_bazen_cerpadlo
+  mode: single
+
+- id: bazen_filtrace_vypnuti
+  alias: Bazen filtrace - vypnuti
+  trigger:
+    platform: time
+    at: '17:00:00'
+  action:
+    service: switch.turn_off
+    target:
+      entity_id: switch.tasmota_bazen_cerpadlo
+  mode: single
