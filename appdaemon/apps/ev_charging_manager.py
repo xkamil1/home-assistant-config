@@ -104,7 +104,7 @@ class EVChargingManager(hass.Hass):
             self._vt_paused = False
             # Only pause for evening VT (19h)
             if self._is_vt():
-                if datetime.now().hour >= 19:
+                if datetime.now().hour >= 18:
                     self._vt_paused = True
                     self.log("Startup: Ford session evening VT paused (stav={}, SOC={:.0f}%)".format(
                         stav, self._ford_soc_start))
@@ -185,7 +185,7 @@ class EVChargingManager(hass.Hass):
         if new == "off" and old == "on":
             h = datetime.now().hour
             # Only pause for evening VT (19h). Daytime VT (08,12,15) — keep charging.
-            if h < 19:
+            if h <= 17:
                 self.log("VT started at {}h — daytime, continuing".format(h))
                 return
             self.log("VT started at {}h — pausing".format(h))
@@ -247,7 +247,7 @@ class EVChargingManager(hass.Hass):
 
         # Evening VT (19h) → pause. Daytime VT → charge normally.
         if self._is_vt():
-            if datetime.now().hour >= 19:
+            if datetime.now().hour >= 18:
                 self._vt_paused = True
                 self.log("Elroq connected during evening VT — waiting for NT")
                 self._notify_push("Elroq pripojeno | SOC: {}% | Cekam na NT".format(int(soc)))
@@ -297,7 +297,7 @@ class EVChargingManager(hass.Hass):
 
         # Evening VT (19h) → pause. Daytime VT → charge normally.
         if self._is_vt():
-            if datetime.now().hour >= 19:
+            if datetime.now().hour >= 18:
                 self._vt_paused = True
                 self.log("Ford connected during evening VT — waiting for NT")
                 self._notify_push("Ford PHEV pripojen | SOC: {:.0f}% | Cekam na NT".format(self._ford_soc_start))
