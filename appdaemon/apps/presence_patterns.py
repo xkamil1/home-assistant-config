@@ -5,10 +5,10 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 
 PERSONS = {
-    "Kamil": "device_tracker.iphone_19",
-    "Romana": "device_tracker.unifi_default_c2_eb_91_20_3b_6d",
-    "Nela": "device_tracker.unifi_default_de_f6_6b_c7_67_74",
-    "Adela": "device_tracker.unifi_default_0e_c7_df_8a_66_f9",
+    "Kamil": "device_tracker.iphone",
+    "Romana": "device_tracker.iphone_7",
+    "Nela": "device_tracker.iphone_4",
+    "Adela": "device_tracker.unifi_default_e8_78_65_76_57_83",
 }
 
 MIN_AWAY_MINUTES = 30

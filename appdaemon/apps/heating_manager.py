@@ -3,33 +3,33 @@ import requests
 from datetime import datetime, timedelta
 
 TRACKERS = {
-    "Kamil": "device_tracker.iphone_27",
-    "Romana": "device_tracker.unifi_default_c2_eb_91_20_3b_6d",
-    "Nela": "device_tracker.unifi_default_be_c7_81_70_ab_1e",
-    "Adela": "device_tracker.unifi_default_02_d4_03_94_83_b6",
+    "Kamil": "device_tracker.iphone",
+    "Romana": "device_tracker.iphone_7",
+    "Nela": "device_tracker.iphone_4",
+    "Adela": "device_tracker.unifi_default_e8_78_65_76_57_83",
 }
 
 DAIKIN = {
     "Adela": {
         "climate": "climate.adela_pokoj_room_temperature",
         "temp": "sensor.adela_pokoj_temperature",
-        "tracker": "device_tracker.unifi_default_02_d4_03_94_83_b6",
+        "tracker": "device_tracker.unifi_default_e8_78_65_76_57_83",
     },
     "Nela": {
         "climate": "climate.nela_pokoj_room_temperature",
         "temp": "sensor.nela_pokoj_temperature",
-        "tracker": "device_tracker.unifi_default_be_c7_81_70_ab_1e",
+        "tracker": "device_tracker.iphone_4",
     },
     "Pracovna": {
         "climate": "climate.pracovna_room_temperature",
         "temp": "sensor.2_temperature",
-        "tracker": "device_tracker.iphone_27",  # Kamil
+        "tracker": "device_tracker.iphone",  # Kamil
         "presence_only": True,  # only turn off when away, no auto heat/cool
     },
     "Loznice": {
         "climate": "climate.loznice_room_temperature",
         "temp": "sensor.teplota_loznice_temperature",
-        "tracker": ["device_tracker.iphone_27", "device_tracker.unifi_default_c2_eb_91_20_3b_6d"],  # Kamil OR Romana
+        "tracker": ["device_tracker.iphone", "device_tracker.iphone_7"],  # Kamil OR Romana
         "presence_only": True,  # only turn off when away, no auto heat/cool
     },
 }
