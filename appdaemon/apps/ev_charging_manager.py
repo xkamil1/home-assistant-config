@@ -71,8 +71,7 @@ class EVChargingManager(hass.Hass):
                        datetime.now().replace(hour=self._night_start, minute=0, second=0))
 
         # Fallback: 07:30 daily check
-        self.run_daily(self._fallback_check,
-                       datetime.now().replace(hour=7, minute=30, second=0))
+        self.run_every(self._fallback_check, "now+120", 1800)  #
 
         self.log("EVChargingManager initialized (day={}A/{:02d}h, night={}A/{:02d}h)".format(
             self._day_amps, self._day_start, self._night_amps, self._night_start))
@@ -253,7 +252,8 @@ class EVChargingManager(hass.Hass):
                 self._notify_push("Elroq pripojeno | SOC: {}% | Cekam na NT".format(int(soc)))
                 return
 
-        self._lock_battery()
+        if self._active_vehicle != "ford":
+            self._lock_battery()
         self._set_current(amps)
         self._turn_on_switch()
         self._start_dlm()
@@ -370,12 +370,14 @@ class EVChargingManager(hass.Hass):
         stav = self.get_state("sensor.ev_charger_stav")
         if stav == "Volny":
             self.log("NT resume: car not connected, ending session")
+            self._unlock_battery(force=True)
             self._session_active = False
             self._active_vehicle = None
             return
 
         amps = self._get_current_amps()
-        self._lock_battery()
+        if self._active_vehicle != "ford":
+            self._lock_battery()
         self._set_current(amps)
         self._turn_on_switch()
         self._start_dlm()
@@ -454,9 +456,9 @@ class EVChargingManager(hass.Hass):
         phase_b = self._get_float("sensor.power_meter_phase_b_active_power")
         phase_c = self._get_float("sensor.power_meter_phase_c_active_power")
 
-        load_a = max(0, -phase_a) / 230
-        load_b = max(0, -phase_b) / 230
-        load_c = max(0, -phase_c) / 230
+        load_a = max(0, phase_a) / 230
+        load_b = max(0, phase_b) / 230
+        load_c = max(0, phase_c) / 230
         max_load = max(load_a, load_b, load_c)
 
         current = self._get_float("input_number.ev_charger_proud") or 6

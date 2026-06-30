@@ -163,9 +163,9 @@ class ConsumptionMonitor(hass.Hass):
         grid_w = self._f("sensor.power_meter_active_power")
 
         # Home consumption: FVE - grid_export - battery_charge
-        # grid: positive=export, negative=import
-        # battery: positive=charging, negative=discharging
-        home_total_w = fve_w - grid_w - battery_w
+        # grid: positive=import, negative=export
+        # battery: positive=charging, negative=discharging (verified)
+        home_total_w = fve_w + grid_w - battery_w
         home_total_w = max(0, home_total_w)
 
         # Phase power (from grid meter — negative=import, positive=export)
@@ -185,7 +185,7 @@ class ConsumptionMonitor(hass.Hass):
 
         # Pračka + Sušička
         pracka_w = self._f("sensor.tz3000_hdopuwv6_ts011f_power")  # Zigbee zasuvka
-        susicka_w = self._f("sensor.zasuvka_pracovna_u_dveri_power")  # Zigbee zasuvka
+        susicka_w = self._f("sensor.susicka_power")
         mycka_w = self._f("sensor.zasuvka_mycka_power")  # Zigbee zasuvka
 
         # Daikin (estimated from kWh delta)
@@ -206,12 +206,13 @@ class ConsumptionMonitor(hass.Hass):
         tv_w = self._f("sensor.zasuvka_obyvak_tv_active_power_3")
         pracovna_z_w = self._f("sensor.zasuvka_pracovna_u_dveri_power")
         pergola_w = self._f("sensor.zasuvka_pergola_power")
+        bazen_w = self._f("sensor.tasmota_energy_power")
 
         # ── Totals ────────────────────────────────────────────────────────
 
         tracked_total = (tc_total + bojler_w + pracka_w + susicka_w + mycka_w +
                          daikin_total + ev_charger_w +
-                         ups_w + tv_w + pracovna_z_w + pergola_w)
+                         ups_w + tv_w + pracovna_z_w + pergola_w + bazen_w)
         untracked_w = max(0, home_total_w - tracked_total)
 
         # Phase tracked consumption
@@ -293,6 +294,7 @@ class ConsumptionMonitor(hass.Hass):
                            "tv_w": round(tv_w),
                            "pracovna_zasuvka_w": round(pracovna_z_w),
                            "pergola_w": round(pergola_w),
+                           "bazen_w": round(bazen_w),
                            "updated": now_str,
                        })
 
@@ -356,7 +358,7 @@ class ConsumptionMonitor(hass.Hass):
             "daikin_adela_w={da},daikin_nela_w={dn},daikin_pracovna_w={dp},"
             "daikin_loznice_w={dl},daikin_total_w={dt},"
             "bojler_spirala_w={boj},ev_charger_w={evc},"
-            "ups_w={ups},tv_w={tv},pracovna_zasuvka_w={pz},pergola_w={per},"
+            "ups_w={ups},tv_w={tv},pracovna_zasuvka_w={pz},pergola_w={per},bazen_w={baz},"
             "tracked_total_w={trk},untracked_w={unt},"
             "phase_a_grid_w={pa},phase_b_grid_w={pb},phase_c_grid_w={pc},"
             "phase_a_tracked_w={pat},phase_b_tracked_w={pbt},phase_c_tracked_w={pct},"
@@ -371,6 +373,7 @@ class ConsumptionMonitor(hass.Hass):
             boj=bojler_w, evc=ev_charger_w,
             ups=round(ups_w), tv=round(tv_w), pz=round(pracovna_z_w),
             per=round(pergola_w),
+            baz=round(bazen_w),
             trk=round(tracked_total), unt=round(untracked_w),
             pa=round(phase_a_grid), pb=round(phase_b_grid), pc=round(phase_c_grid),
             pat=round(phase_a_tracked), pbt=round(phase_b_tracked),
