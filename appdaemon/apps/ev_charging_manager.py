@@ -145,7 +145,7 @@ class EVChargingManager(hass.Hass):
             return
 
         # Any transition to active charging state → detect vehicle
-        if new in ("Pripojeno", "Ceka", "Nabiji"):
+        if new in ("Pripojeno", "Nabiji"):
             # Swap detection: active Ford session but Ford unplugged → end & re-detect
             if self._session_active and self._active_vehicle == "ford":
                 if self.get_state(FORD_PLUG) != "CONNECTED":
@@ -160,12 +160,12 @@ class EVChargingManager(hass.Hass):
             self.log("Wallbox {} -> {} — detecting in 2 min".format(old, new))
             self.run_in(self._detect_and_start, 120)
 
-        # Charging complete
-        elif new == "Dokonceno" and self._session_active and not self._vt_paused:
+        # Charging complete (Dokonceno) or car full but still plugged (Ceka)
+        elif new in ("Dokonceno", "Ceka") and self._session_active and not self._vt_paused:
             if self._active_vehicle == "ford":
-                self._end_ford_session("dokonceno")
+                self._end_ford_session(new.lower())
             else:
-                self._end_session("dokonceno")
+                self._end_session(new.lower())
 
         # Car disconnected
         elif new == "Volny":
@@ -424,12 +424,12 @@ class EVChargingManager(hass.Hass):
     def _fallback_check(self, kwargs):
         mode = self.get_state("select.battery_working_mode")
         stav = self.get_state("sensor.ev_charger_stav")
-        if mode == "fixed_charge_discharge" and stav == "Volny":
+        if mode == "fixed_charge_discharge" and stav in ("Volny", "Ceka"):
             self._unlock_battery(force=True)
             self._session_active = False
             self._vt_paused = False
             self._active_vehicle = None
-            self.log("FALLBACK: Battery unlocked (car not connected)")
+            self.log("FALLBACK: Battery unlocked (stav={})".format(stav))
 
     # ── DYNAMIC LOAD MANAGEMENT ───────────────────────────
 
