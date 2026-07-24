@@ -99,6 +99,8 @@ class TCCloudPoller(hass.Hass):
                 continue
 
             value = prop.get("value")
+            if value is None:
+                continue
             entity_id = self._dp_map[dp_id]
             attrs = {
                 "source": "tuya_cloud",
@@ -108,4 +110,5 @@ class TCCloudPoller(hass.Hass):
                 "friendly_name": entity_id.replace("sensor.", "").replace("_", " ").title()
             }
             attrs = {k: v for k, v in attrs.items() if v is not None and v != ""}
-            self.set_state(entity_id, state=value, attributes=attrs)
+            # state jako string: AppDaemon zahazuje falsy state (int 0) → HTTP 400
+            self.set_state(entity_id, state=str(value), attributes=attrs)

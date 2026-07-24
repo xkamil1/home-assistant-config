@@ -4,6 +4,9 @@ import json
 from datetime import datetime, timedelta, timezone
 
 BOJLER_SPIRALA_W = 1500
+BAZEN_FILTRACE_W = 396  # cerpadlo + UV lampa, konstantni (zmereno 23.7.2026)
+TC_RUN_COEF = 0.83    # kalibrace U×I vs Shelly 3EM (7/2026, letní cykly) — po topné sezóně ověřit
+TC_STANDBY_W = 15.6   # průměrný standby TC (elektronika + snímací cyklus čerpadla)
 DAIKIN_CYCLE_SEC = 300  # 5 min cycle for delta calculation
 PHASE_IMBALANCE_ALERT_W = 2000
 PHASE_C_OVERLOAD_W = 3000
@@ -163,9 +166,10 @@ class ConsumptionMonitor(hass.Hass):
         grid_w = self._f("sensor.power_meter_active_power")
 
         # Home consumption: FVE - grid_export - battery_charge
-        # grid: positive=import, negative=export
+        # grid (power_meter_active_power): POSITIVE=export, NEGATIVE=import (Huawei)
         # battery: positive=charging, negative=discharging (verified)
-        home_total_w = fve_w + grid_w - battery_w
+        # (do 23.7.2026 bylo chybne fve + grid → v noci home=0, v poledne export pricten)
+        home_total_w = fve_w - grid_w - battery_w
         home_total_w = max(0, home_total_w)
 
         # Phase power (from grid meter — negative=import, positive=export)
@@ -173,11 +177,19 @@ class ConsumptionMonitor(hass.Hass):
         phase_b_grid = self._f("sensor.power_meter_phase_b_active_power")
         phase_c_grid = self._f("sensor.power_meter_phase_c_active_power")
 
-        # TC (Shelly EM3 — direct measurement)
-        tc_a = self._f("sensor.shellyem3_34945475ecce_channel_a_power")
-        tc_b = self._f("sensor.shellyem3_34945475ecce_channel_b_power")
-        tc_c = self._f("sensor.shellyem3_34945475ecce_channel_c_power")
-        tc_total = tc_a + tc_b + tc_c
+        # TC (model z Tuya DP112/DP114 — nahrazuje Shelly EM3, kalibrováno 7/2026)
+        # P = TC_RUN_COEF × U×I při běhu kompresoru, jinak TC_STANDBY_W
+        # (standby = elektronika ~11 W + snímací cyklus čerpadla 3 min/18 min ~46 W)
+        tc_i = self._f("sensor.tc_compressor_current")
+        tc_u = self._f("sensor.tc_dc_bus_voltage")
+        if tc_i > 0.5:
+            if tc_u < 100:  # cloud poller výpadek → poslední známá typická hodnota
+                tc_u = 373.0
+            tc_total = TC_RUN_COEF * tc_i * tc_u
+        else:
+            tc_total = TC_STANDBY_W
+        # fázová atribuce: kompresor je 3f symetrický
+        tc_a = tc_b = tc_c = tc_total / 3.0
 
         # Bojler spirála
         bojler_active = self._f("sensor.bojler_aktivni")
@@ -185,16 +197,30 @@ class ConsumptionMonitor(hass.Hass):
 
         # Pračka + Sušička
         pracka_w = self._f("sensor.tz3000_hdopuwv6_ts011f_power")  # Zigbee zasuvka
-        susicka_w = self._f("sensor.susicka_power")
+        # SmartThings sensor.susicka_power hlasi trvale 0 → merime Zigbee zasuvkou
+        susicka_w = self._f("sensor.zasuvka_susicka_samsung_power")
         mycka_w = self._f("sensor.zasuvka_mycka_power")  # Zigbee zasuvka
 
-        # Daikin (estimated from kWh delta)
+        # Daikin — real-time z lokalnich meraku:
+        # klima_1p (Tasmota) = okruh 1. patra (Adela+Nela+pracovna), loznice ma vlastni zasuvku.
+        # Cloud kWh delta zustava jen pro orientacni rozpad 1. patra per mistnost.
         daikin = self._daikin_estimated_w()
         daikin_adela = daikin.get("adela", 0)
         daikin_nela = daikin.get("nela", 0)
         daikin_pracovna = daikin.get("pracovna", 0)
-        daikin_loznice = daikin.get("loznice", 0)
-        daikin_total = daikin_adela + daikin_nela + daikin_pracovna + daikin_loznice
+        daikin_1p_w = round(self._f("sensor.klima_1p_energy_power"))
+        daikin_loznice = round(self._f("sensor.zasuvka_klima_loznice_power"))
+        daikin_total = daikin_1p_w + daikin_loznice
+
+        # Skutecny zap/vyp stav klim (climate state; cloud kWh delta ma 0.1kWh
+        # kvantizaci → falesne 1200W bliky i kdyz klima nebezi)
+        daikin_on = {}
+        for room, eid in (("adela", "climate.adela_pokoj_room_temperature"),
+                          ("nela", "climate.nela_pokoj_room_temperature"),
+                          ("pracovna", "climate.pracovna_room_temperature"),
+                          ("loznice", "climate.loznice_room_temperature")):
+            st = self.get_state(eid)
+            daikin_on[room] = 0 if st in (None, "off", "unavailable", "unknown") else 1
 
         # EV Charger (3-phase wallbox)
         ev_charger_kw = self._f("sensor.ev_charger_vykon")
@@ -204,15 +230,29 @@ class ConsumptionMonitor(hass.Hass):
         # Zásuvky
         ups_w = self._f("sensor.zasuvka_kotelna_ups_active_power")
         tv_w = self._f("sensor.zasuvka_obyvak_tv_active_power_3")
-        pracovna_z_w = self._f("sensor.zasuvka_pracovna_u_dveri_power")
         pergola_w = self._f("sensor.zasuvka_pergola_power")
+
+        # Bazén: POWR316 meri filtraci + TC dohromady; TC ma vlastni Sonoff.
+        # Filtrace je konstantnich ~396 W → TC = zbytek pri sepnutem TC switchi.
         bazen_w = self._f("sensor.tasmota_energy_power")
+        bazen_tc_on = 1 if self.get_state("switch.bazen_tepelne_cerpadlo") == "on" else 0
+        if bazen_tc_on and bazen_w > BAZEN_FILTRACE_W:
+            bazen_tc_w = bazen_w - BAZEN_FILTRACE_W
+            bazen_filtrace_w = BAZEN_FILTRACE_W
+        else:
+            bazen_tc_w = 0
+            bazen_filtrace_w = bazen_w
+
+        # Vířivka — Shelly 3EM (presunuto z TC na jistic virivky 23.7.2026)
+        virivka_w = (self._f("sensor.shellyem3_34945475ecce_channel_a_power") +
+                     self._f("sensor.shellyem3_34945475ecce_channel_b_power") +
+                     self._f("sensor.shellyem3_34945475ecce_channel_c_power"))
 
         # ── Totals ────────────────────────────────────────────────────────
 
         tracked_total = (tc_total + bojler_w + pracka_w + susicka_w + mycka_w +
                          daikin_total + ev_charger_w +
-                         ups_w + tv_w + pracovna_z_w + pergola_w + bazen_w)
+                         ups_w + tv_w + pergola_w + bazen_w + virivka_w)
         untracked_w = max(0, home_total_w - tracked_total)
 
         # Phase tracked consumption
@@ -221,7 +261,7 @@ class ConsumptionMonitor(hass.Hass):
         phase_a_tracked = tc_a + ev_per_phase
         phase_b_tracked = tc_b + bojler_w + ev_per_phase
         phase_c_tracked = tc_c + pracka_w + susicka_w + mycka_w + daikin_total + ev_per_phase
-        phase_unknown = ups_w + tv_w + pracovna_z_w + pergola_w
+        phase_unknown = ups_w + tv_w + pergola_w + virivka_w
 
         # Phase imbalance (grid import per phase — use absolute import values)
         # More negative = more import
@@ -284,6 +324,7 @@ class ConsumptionMonitor(hass.Hass):
                            "susicka_w": round(susicka_w),
                            "mycka_w": round(mycka_w),
                            "daikin_total_w": round(daikin_total),
+                           "daikin_1p_w": daikin_1p_w,
                            "daikin_adela_w": daikin_adela,
                            "daikin_nela_w": daikin_nela,
                            "daikin_pracovna_w": daikin_pracovna,
@@ -292,9 +333,11 @@ class ConsumptionMonitor(hass.Hass):
                            "ev_charger_phase_w": round(ev_charger_phase_w),
                            "ups_w": round(ups_w),
                            "tv_w": round(tv_w),
-                           "pracovna_zasuvka_w": round(pracovna_z_w),
                            "pergola_w": round(pergola_w),
                            "bazen_w": round(bazen_w),
+                           "bazen_filtrace_w": round(bazen_filtrace_w),
+                           "bazen_tc_w": round(bazen_tc_w),
+                           "virivka_w": round(virivka_w),
                            "updated": now_str,
                        })
 
@@ -356,9 +399,13 @@ class ConsumptionMonitor(hass.Hass):
             "tc_total_w={tct},tc_a_w={tca},tc_b_w={tcb},tc_c_w={tcc},"
             "pracka_w={pr},susicka_w={su},mycka_w={my},"
             "daikin_adela_w={da},daikin_nela_w={dn},daikin_pracovna_w={dp},"
-            "daikin_loznice_w={dl},daikin_total_w={dt},"
+            "daikin_loznice_w={dl},daikin_1p_w={d1p},daikin_total_w={dt},"
+            "daikin_adela_on={dao},daikin_nela_on={dno},daikin_pracovna_on={dpo},"
+            "daikin_loznice_on={dlo},"
             "bojler_spirala_w={boj},ev_charger_w={evc},"
-            "ups_w={ups},tv_w={tv},pracovna_zasuvka_w={pz},pergola_w={per},bazen_w={baz},"
+            "ups_w={ups},tv_w={tv},pergola_w={per},bazen_w={baz},"
+            "bazen_filtrace_w={bazf},bazen_tc_w={bazt},bazen_tc_on={bazo},"
+            "virivka_w={vir},"
             "tracked_total_w={trk},untracked_w={unt},"
             "phase_a_grid_w={pa},phase_b_grid_w={pb},phase_c_grid_w={pc},"
             "phase_a_tracked_w={pat},phase_b_tracked_w={pbt},phase_c_tracked_w={pct},"
@@ -369,11 +416,15 @@ class ConsumptionMonitor(hass.Hass):
             tct=round(tc_total), tca=round(tc_a), tcb=round(tc_b), tcc=round(tc_c),
             pr=round(pracka_w), su=round(susicka_w), my=round(mycka_w),
             da=daikin_adela, dn=daikin_nela, dp=daikin_pracovna, dl=daikin_loznice,
-            dt=round(daikin_total),
+            d1p=daikin_1p_w, dt=round(daikin_total),
+            dao=daikin_on["adela"], dno=daikin_on["nela"],
+            dpo=daikin_on["pracovna"], dlo=daikin_on["loznice"],
             boj=bojler_w, evc=ev_charger_w,
-            ups=round(ups_w), tv=round(tv_w), pz=round(pracovna_z_w),
+            ups=round(ups_w), tv=round(tv_w),
             per=round(pergola_w),
-            baz=round(bazen_w),
+            baz=round(bazen_w), bazf=round(bazen_filtrace_w),
+            bazt=round(bazen_tc_w), bazo=bazen_tc_on,
+            vir=round(virivka_w),
             trk=round(tracked_total), unt=round(untracked_w),
             pa=round(phase_a_grid), pb=round(phase_b_grid), pc=round(phase_c_grid),
             pat=round(phase_a_tracked), pbt=round(phase_b_tracked),
@@ -387,12 +438,12 @@ class ConsumptionMonitor(hass.Hass):
         if self._cycle_count % 6 == 1:
             self.log(
                 "Home={:.0f}W (FVE={:.0f} Grid={:.0f} Bat={:.0f}) | "
-                "TC={:.0f} Boj={} Pr={:.0f} Su={:.0f} Dai={:.0f} EV={:.0f} | "
+                "TC={:.0f} Boj={} Pr={:.0f} Su={:.0f} Dai={:.0f} EV={:.0f} Vir={:.0f} | "
                 "Tracked={:.0f} Untracked={:.0f} ({}%) | "
                 "PhA={:.0f} PhB={:.0f} PhC={:.0f} Imb={:.0f}W".format(
                     home_total_w, fve_w, grid_w, battery_w,
                     tc_total, bojler_w, pracka_w, susicka_w, daikin_total,
-                    ev_charger_w,
+                    ev_charger_w, virivka_w,
                     tracked_total, untracked_w, untracked_pct,
                     phase_a_grid, phase_b_grid, phase_c_grid, imbalance))
 
@@ -414,6 +465,9 @@ class ConsumptionMonitor(hass.Hass):
              'MEAN(susicka_w) AS su, MEAN(daikin_total_w) AS dai, '
              'MEAN(ev_charger_w) AS evc, '
              'MEAN(ups_w) AS ups, MEAN(tv_w) AS tv, '
+             'MEAN(mycka_w) AS my, MEAN(bazen_w) AS baz, '
+             'MEAN(bazen_filtrace_w) AS bazf, MEAN(bazen_tc_w) AS bazt, '
+             'MEAN(virivka_w) AS vir, '
              'MEAN(tracked_total_w) AS trk, MEAN(untracked_w) AS unt, '
              'MEAN(phase_imbalance_w) AS imb, MEAN(fve_w) AS fve, '
              'MEAN(grid_w) AS grid, MEAN(battery_w) AS bat '
@@ -448,6 +502,8 @@ class ConsumptionMonitor(hass.Hass):
             'daikin_kwh={dai},daikin_sensor_kwh={dais},'
             'ev_charger_kwh={evc},'
             'ups_kwh={ups},tv_kwh={tv},'
+            'mycka_kwh={my},bazen_kwh={baz},'
+            'bazen_filtrace_kwh={bazf},bazen_tc_kwh={bazt},virivka_kwh={vir},'
             'tracked_kwh={trk},untracked_kwh={unt},'
             'fve_kwh={fve},grid_kwh={grid},battery_kwh={bat},'
             'avg_imbalance_w={imb},date="{date}"'
@@ -462,6 +518,11 @@ class ConsumptionMonitor(hass.Hass):
             evc=to_kwh(data.get("evc")),
             ups=to_kwh(data.get("ups")),
             tv=to_kwh(data.get("tv")),
+            my=to_kwh(data.get("my")),
+            baz=to_kwh(data.get("baz")),
+            bazf=to_kwh(data.get("bazf")),
+            bazt=to_kwh(data.get("bazt")),
+            vir=to_kwh(data.get("vir")),
             trk=to_kwh(data.get("trk")),
             unt=to_kwh(data.get("unt")),
             fve=to_kwh(data.get("fve")),

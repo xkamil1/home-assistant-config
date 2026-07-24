@@ -40,11 +40,36 @@ logger:
     custom_components.anthropic: debug
     homeassistant.components.anthropic: debug
 conversation:
+recorder:
+  purge_keep_days: 10
+  exclude:
+    domains:
+      - update
+      - button
+      - event
+      - image
+    entity_globs:
+      - sensor.*_rx
+      - sensor.*_tx
+      - sensor.home_gw_*
+      - sensor.lenovo_tab_m10_*
+
 influxdb:
   host: a0d7b954-influxdb
   database: homeassistant
   username: !secret influxdb_username
   password: !secret influxdb_password
+  exclude:
+    domains:
+      - update
+      - button
+      - event
+      - image
+    entity_globs:
+      - sensor.*_rx
+      - sensor.*_tx
+      - sensor.home_gw_*
+      - sensor.lenovo_tab_m10_*
 # Load frontend themes from the themes folder
 frontend:
   themes: !include_dir_merge_named themes
