@@ -44,6 +44,7 @@ class EVChargingManager(hass.Hass):
         # Session state
         self._session_active = False
         self._session_start_time = None
+        self._session_start_utc = None  # pro InfluxDB dotaz na energii z wallboxu
         self._session_start_soc = 0.0
         self._session_energy_start = 0.0
         self._vt_paused = False
@@ -99,6 +100,7 @@ class EVChargingManager(hass.Hass):
             self._ford_soc_start = self._get_float(FORD_SOC)
             self._ford_energy_start = self._get_float(FORD_ENERGY)
             self._session_active = True
+            self._session_start_utc = datetime.utcnow()
             self._session_energy_start = self._get_float("sensor.ev_charger_energie_seance")
             self._vt_paused = False
             # Only pause for evening VT (19h)
@@ -120,6 +122,7 @@ class EVChargingManager(hass.Hass):
             energy = self._get_float("sensor.ev_charger_energie_seance")
             self._session_active = True
             self._session_start_time = datetime.now()
+            self._session_start_utc = datetime.utcnow()
             self._session_start_soc = soc
             self._session_energy_start = energy
             self._vt_paused = False
@@ -240,6 +243,7 @@ class EVChargingManager(hass.Hass):
 
         self._session_active = True
         self._session_start_time = datetime.now()
+        self._session_start_utc = datetime.utcnow()
         self._session_start_soc = soc
         self._session_energy_start = energy
         self._vt_paused = False
@@ -266,14 +270,27 @@ class EVChargingManager(hass.Hass):
         self.call_service("switch/turn_off", entity_id="switch.ev_charger_switch")
         self._unlock_battery(force=True)
 
-        energy_now = self._get_float("sensor.ev_charger_energie_seance")
-        kwh = max(0, energy_now - self._session_energy_start)
+        # Primarni zdroj kWh: integral vykonu wallboxu z InfluxDB (presne AC mereni)
+        kwh_wb, max_w = self._wallbox_session_stats()
+        if kwh_wb is not None:
+            kwh = kwh_wb
+        else:
+            energy_now = self._get_float("sensor.ev_charger_energie_seance")
+            kwh = max(0, energy_now - self._session_energy_start)
         soc_now = self._get_float("sensor.skoda_elroq_battery_percentage")
         duration = 0.0
         if self._session_start_time:
             duration = (datetime.now() - self._session_start_time).total_seconds() / 60.0
 
-        self._save_session_influx("elroq", kwh, self._session_start_soc, soc_now, duration)
+        # Korekce vozidla podle vykonoveho otisku: Elroq nabiji 3f (>=4.1 kW),
+        # Ford 1f (max ~4.8 kW pri 16 A). Pod 3.5 kW to Elroq byt nemohl.
+        vehicle = "elroq"
+        if max_w is not None and 0 < max_w < 3500:
+            vehicle = "ford"
+            self.log("Vykonovy otisk (max {:.0f} W) neodpovida Elroqu — "
+                     "ukladam jako ford".format(max_w), level="WARNING")
+
+        self._save_session_influx(vehicle, kwh, self._session_start_soc, soc_now, duration)
 
         self.log("Elroq {}: {:.1f} kWh, {}% -> {}%".format(
             reason, kwh, self._session_start_soc, soc_now))
@@ -281,6 +298,7 @@ class EVChargingManager(hass.Hass):
             reason, kwh, int(soc_now)))
 
         self._session_active = False
+        self._session_start_utc = None
         self._vt_paused = False
         self._active_vehicle = None
 
@@ -292,6 +310,7 @@ class EVChargingManager(hass.Hass):
         self._ford_energy_start = self._get_float(FORD_ENERGY)
         self._session_active = True
         self._session_start_time = self.datetime()
+        self._session_start_utc = datetime.utcnow()
         self._session_energy_start = self._get_float("sensor.ev_charger_energie_seance")
         self._vt_paused = False
 
@@ -324,23 +343,33 @@ class EVChargingManager(hass.Hass):
         duration_min = (self.datetime() - self._ford_session_start).total_seconds() / 60.0
         soc_end = self._get_float(FORD_SOC)
 
-        # Primary: wallbox energy, fallback: Ford energy entity
-        wb_energy = self._get_float("sensor.ev_charger_energie_seance")
-        if wb_energy > self._session_energy_start > 0:
-            kwh = wb_energy - self._session_energy_start
-        else:
-            energy_end = self._get_float(FORD_ENERGY)
-            if energy_end > self._ford_energy_start > 0:
-                kwh = energy_end - self._ford_energy_start
-            elif soc_end > self._ford_soc_start:
-                kwh = (soc_end - self._ford_soc_start) / 100.0 * 11.8
+        # Primarni zdroj kWh: integral vykonu wallboxu z InfluxDB
+        kwh, max_w = self._wallbox_session_stats()
+        if kwh is None:
+            wb_energy = self._get_float("sensor.ev_charger_energie_seance")
+            if wb_energy > self._session_energy_start > 0:
+                kwh = wb_energy - self._session_energy_start
             else:
-                kwh = 0.0
+                energy_end = self._get_float(FORD_ENERGY)
+                if energy_end > self._ford_energy_start > 0:
+                    kwh = energy_end - self._ford_energy_start
+                elif soc_end > self._ford_soc_start:
+                    kwh = (soc_end - self._ford_soc_start) / 100.0 * 11.8
+                else:
+                    kwh = 0.0
+
+        # Korekce vozidla: Ford (1f) nikdy nepresahne ~4.8 kW, Elroq pri 8 A
+        # nabiji 5.5 kW. Nad 5.2 kW to musel byt Elroq.
+        vehicle = "ford"
+        if max_w is not None and max_w > 5200:
+            vehicle = "elroq"
+            self.log("Vykonovy otisk (max {:.0f} W) neodpovida Fordu — "
+                     "ukladam jako elroq".format(max_w), level="WARNING")
 
         cost = kwh * self.args.get("kwh_price", 4.53)
 
         self._save_session_influx(
-            "ford", kwh, self._ford_soc_start, soc_end, duration_min)
+            vehicle, kwh, self._ford_soc_start, soc_end, duration_min)
 
         self.log("Ford {}: {:.1f} kWh, {:.0f}% -> {:.0f}%, {:.0f} min".format(
             reason, kwh, self._ford_soc_start, soc_end, duration_min))
@@ -349,6 +378,7 @@ class EVChargingManager(hass.Hass):
 
         self._ford_session_start = None
         self._session_active = False
+        self._session_start_utc = None
         self._active_vehicle = None
         self._vt_paused = False
 
@@ -567,6 +597,30 @@ class EVChargingManager(hass.Hass):
             self.call_service(svc, title="EV Charging", message=message)
         except Exception as e:
             self.log("Push error: {}".format(e))
+
+    def _wallbox_session_stats(self):
+        """(kWh, max_W) z merenych dat wallboxu (ev_charger_data) za aktualni session.
+
+        Integral vykonu = presna AC energie vcetne pauz (nulovy vykon nic neprida).
+        Vraci (None, None) pokud dotaz selze — volajici pouzije fallback.
+        """
+        if not self._session_start_utc:
+            return None, None
+        try:
+            start = self._session_start_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+            q = ("SELECT INTEGRAL(power_total_w, 1h) / 1000, MAX(power_total_w) "
+                 "FROM ev_charger_data WHERE time >= '{}' AND time <= now()").format(start)
+            resp = requests.get(
+                "http://{}:{}/query".format(self._influx_host, self._influx_port),
+                params={"db": self._influx_db, "q": q},
+                auth=self._influx_auth,
+                timeout=10
+            )
+            vals = resp.json()["results"][0]["series"][0]["values"][0]
+            return float(vals[1] or 0), float(vals[2] or 0)
+        except Exception as e:
+            self.log("Wallbox stats query failed: {}".format(e), level="WARNING")
+            return None, None
 
     def _save_session_influx(self, vehicle, kwh, soc_start, soc_end, duration_min):
         try:

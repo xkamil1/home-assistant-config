@@ -21,21 +21,10 @@ class EVMonthlyReport(hass.Hass):
         self._smtp_host = self.args.get("smtp_host", "")
         self._smtp_port = self.args.get("smtp_port", 25)
         self._kwh_price = float(self.args.get("kwh_price_czk", 4.50))
-        self._elroq_kwh = float(self.args.get("elroq_battery_kwh", 77.0))
-        self._ford_kwh = float(self.args.get("ford_battery_kwh", 11.8))
 
-        # Session tracking state
-        self._elroq_session = None  # {"soc_start": float, "time_start": datetime}
-        self._ford_last_energy = None  # last energytransferlogentry value
-        self._ford_session = None  # {"soc_start": float, "time_start": datetime}
-
-        # Listen for Elroq charger connection
-        self.listen_state(self._on_elroq_charger,
-                          "binary_sensor.skoda_elroq_charger_connected")
-
-        # Listen for Ford plug state
-        self.listen_state(self._on_ford_plug,
-                          "sensor.fordpass_wf0fxxwpmhsc70607_elvehplug")
+        # Sessions do InfluxDB zapisuje POUZE ev_charging_manager.
+        # Tato app pouze cte a generuje report (duplicitni zapisy
+        # zpusobovaly dvojite pocitani v mesicnim souhrnu).
 
         # Monthly report: 1st day of month at 08:00
         self.run_daily(self._check_monthly_report,
@@ -45,126 +34,10 @@ class EVMonthlyReport(hass.Hass):
         self.listen_state(self._on_manual_report,
                           "input_button.ev_report_generate")
 
-        # Store initial Ford energy value
-        try:
-            val = self.get_state("sensor.fordpass_wf0fxxwpmhsc70607_energytransferlogentry")
-            if val and val != "unavailable":
-                self._ford_last_energy = float(val)
-        except Exception:
-            pass
-
-        self.log("EVMonthlyReport initialized (elroq={}kWh, ford={}kWh, price={} CZK/kWh)".format(
-            self._elroq_kwh, self._ford_kwh, self._kwh_price))
-
-    # ── ELROQ SESSION TRACKING ─────────────────────────────
-
-    def _on_elroq_charger(self, entity, attribute, old, new, kwargs):
-        if new == "on" and old != "on":
-            # Charger connected — start session
-            soc = self._get_float("sensor.skoda_elroq_battery_percentage")
-            self._elroq_session = {
-                "soc_start": soc,
-                "time_start": datetime.now()
-            }
-            self.log("Elroq charging started: SOC={}%".format(soc))
-
-        elif new == "off" and old == "on" and self._elroq_session:
-            # Charger disconnected — end session
-            soc_end = self._get_float("sensor.skoda_elroq_battery_percentage")
-            soc_start = self._elroq_session["soc_start"]
-            time_start = self._elroq_session["time_start"]
-            duration_min = (datetime.now() - time_start).total_seconds() / 60.0
-
-            if soc_end > soc_start:
-                kwh = (soc_end - soc_start) / 100.0 * self._elroq_kwh
-            else:
-                kwh = 0.0
-
-            self._save_session("elroq", kwh, soc_start, soc_end, duration_min)
-            self.log("Elroq session: {}% -> {}% = {:.1f} kWh ({:.0f} min)".format(
-                soc_start, soc_end, kwh, duration_min))
-
-            self._elroq_session = None
-
-    # ── FORD SESSION TRACKING ──────────────────────────────
-
-    def _on_ford_plug(self, entity, attribute, old, new, kwargs):
-        if new == "CONNECTED" and old != "CONNECTED":
-            # Skip if wallbox is active — ev_charging_manager handles it
-            wallbox = self.get_state("sensor.ev_charger_stav") or ""
-            if wallbox in ("Pripojeno", "Ceka", "Nabiji"):
-                self.log("Ford plug connected but wallbox active — "
-                         "ev_charging_manager handles this session")
-                return
-
-            # Plug connected — start session
-            soc = self._get_float("sensor.fordpass_wf0fxxwpmhsc70607_soc")
-            self._ford_session = {
-                "soc_start": soc,
-                "time_start": datetime.now()
-            }
-            self.log("Ford charging started: SOC={}%".format(soc))
-
-        elif new == "DISCONNECTED" and old == "CONNECTED" and self._ford_session:
-            # Skip if wallbox just went Volny (ev_charging_manager already logged it)
-            wallbox = self.get_state("sensor.ev_charger_stav") or ""
-            if wallbox == "Volny" and self._ford_session.get("wallbox_skip"):
-                self._ford_session = None
-                return
-            # Plug disconnected — end session
-            soc_end = self._get_float("sensor.fordpass_wf0fxxwpmhsc70607_soc")
-            soc_start = self._ford_session["soc_start"]
-            time_start = self._ford_session["time_start"]
-            duration_min = (datetime.now() - time_start).total_seconds() / 60.0
-
-            # Try energytransferlogentry for actual kWh
-            energy_now = self._get_float(
-                "sensor.fordpass_wf0fxxwpmhsc70607_energytransferlogentry")
-            if self._ford_last_energy is not None and energy_now > self._ford_last_energy:
-                kwh = energy_now - self._ford_last_energy
-            elif soc_end > soc_start:
-                kwh = (soc_end - soc_start) / 100.0 * self._ford_kwh
-            else:
-                kwh = 0.0
-
-            self._ford_last_energy = energy_now
-            self._save_session("ford", kwh, soc_start, soc_end, duration_min)
-            self.log("Ford session: {}% -> {}% = {:.1f} kWh ({:.0f} min)".format(
-                soc_start, soc_end, kwh, duration_min))
-
-            self._ford_session = None
-
-        # Track energy value changes even without session
-        if new == "DISCONNECTED":
-            try:
-                val = self._get_float(
-                    "sensor.fordpass_wf0fxxwpmhsc70607_energytransferlogentry")
-                if val is not None:
-                    self._ford_last_energy = val
-            except Exception:
-                pass
+        self.log("EVMonthlyReport initialized (read-only, price={} CZK/kWh)".format(
+            self._kwh_price))
 
     # ── INFLUXDB ───────────────────────────────────────────
-
-    def _save_session(self, auto, kwh, soc_start, soc_end, duration_min):
-        try:
-            line = ('ev_charging_sessions,'
-                    'auto={} '
-                    'kwh={:.2f},'
-                    'soc_start={:.1f},'
-                    'soc_end={:.1f},'
-                    'duration_min={:.1f}').format(
-                auto, kwh, soc_start, soc_end, duration_min)
-            requests.post(
-                "http://{}:{}/write".format(self._influx_host, self._influx_port),
-                params={"db": self._influx_db},
-                data=line.encode(),
-                auth=self._influx_auth,
-                timeout=5
-            )
-            self.log("Saved session to InfluxDB: {} {:.1f} kWh".format(auto, kwh))
-        except Exception as e:
-            self.log("InfluxDB write error: {}".format(e), level="ERROR")
 
     def _query_influx(self, query):
         try:
@@ -321,14 +194,3 @@ Home Assistant - ha.hanusek.net
         now = datetime.now()
         self._generate_monthly_report(
             target_month="{}-{:02d}".format(now.year, now.month))
-
-    # ── HELPERS ────────────────────────────────────────────
-
-    def _get_float(self, entity_id):
-        try:
-            val = self.get_state(entity_id)
-            if val is None or val == "unavailable" or val == "unknown":
-                return 0.0
-            return float(val)
-        except (ValueError, TypeError):
-            return 0.0
