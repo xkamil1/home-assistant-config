@@ -1,18 +1,41 @@
 import appdaemon.plugins.hass.hassapi as hass
 import tinytuya
 import requests
-from datetime import datetime
+import threading
+import yaml
 
-CLIENT_ID = "etmsgcxsy55u44hwuv87"
-CLIENT_SECRET = "d9c4e5e4fea6403bb11ba0de4cc704e8"
-DEVICE_ID = "bf48bed640e8dcec8b7k2k"
+# ── Wallbox AC3-11k-22K, lokalni Tuya protokol 3.5 (bez cloudu) ─────────────
+# Local key je v /homeassistant/secrets.yaml (tuya_wallbox_local_key).
+# IP a device_id lze prepsat v apps.yaml (args: ip, device_id).
+DEFAULT_DEVICE_ID = "bf48bed640e8dcec8b7k2k"
+DEFAULT_IP = "10.0.30.115"
+PROTOCOL_VERSION = 3.5
+SECRETS_FILE = "/homeassistant/secrets.yaml"
+SECRET_KEY_NAME = "tuya_wallbox_local_key"
+
 POLL_SECS = 30
+SOCKET_TIMEOUT = 6
 MIN_AMPS = 6
 MAX_AMPS = 16
+FAILS_BEFORE_UNAVAILABLE = 6   # 6 x 30 s = 3 min bez odpovedi
 
 INFLUX_URL = "http://a0d7b954-influxdb:8086"
 INFLUX_DB = "homeassistant"
 INFLUX_AUTH = ("db_write", "db_write_pass")
+
+# DP id -> kod (z Tuya thing modelu, 2026-10-12)
+DP_CODES = {
+    "3":  "work_state",
+    "4":  "charge_cur_set",
+    "5":  "sigle_phase_power",
+    "9":  "power_total",
+    "14": "work_mode",
+    "18": "switch",
+    "24": "temp_current",
+    "25": "charge_energy_once",
+}
+DP_SWITCH = 18
+DP_CURRENT = 4
 
 WORK_STATE_MAP = {
     "charger_free":       "Volny",
@@ -29,18 +52,53 @@ WORK_STATE_MAP = {
 class EVCharger(hass.Hass):
 
     def initialize(self):
-        self._cloud = tinytuya.Cloud(
-            apiRegion="eu",
-            apiKey=CLIENT_ID,
-            apiSecret=CLIENT_SECRET,
-            apiDeviceID=DEVICE_ID
-        )
+        self._device_id = self.args.get("device_id", DEFAULT_DEVICE_ID)
+        self._ip = self.args.get("ip", DEFAULT_IP)
+        self._lock = threading.Lock()
+        self._fail_count = 0
+        self._last_dps = {}
+
+        key = self._load_local_key()
+        if not key:
+            self.log("Local key '{}' nenalezen v {} - app nebezi".format(
+                SECRET_KEY_NAME, SECRETS_FILE), level="ERROR")
+            return
+
+        self._dev = tinytuya.Device(self._device_id, self._ip, key, version=PROTOCOL_VERSION)
+        self._dev.set_socketTimeout(SOCKET_TIMEOUT)
+
         self._init_sensors()
-        # Catch HA service calls for the switch entity
+        # Catch HA service calls for the (virtual) switch entity
         self.listen_event(self.on_switch_service, "call_service")
         self.listen_state(self.on_current_change, "input_number.ev_charger_proud")
         self.run_every(self.poll, "now", POLL_SECS)
-        self.log("EV Charger (cloud) started")
+        self.log("EV Charger (local tinytuya {} / v{}) started, {}".format(
+            tinytuya.__version__, PROTOCOL_VERSION, self._ip))
+
+    def _load_local_key(self):
+        try:
+            with open(SECRETS_FILE) as f:
+                return yaml.safe_load(f).get(SECRET_KEY_NAME)
+        except Exception as e:
+            self.log("secrets.yaml read error: {}".format(e), level="ERROR")
+            return None
+
+    # ── Device I/O ───────────────────────────────────────────────────────────
+
+    def _status(self):
+        """Vrati dict code->value nebo None pri chybe."""
+        with self._lock:
+            st = self._dev.status()
+        if not isinstance(st, dict) or "dps" not in st:
+            raise RuntimeError(st.get("Error", st) if isinstance(st, dict) else st)
+        return {DP_CODES[k]: v for k, v in st["dps"].items() if k in DP_CODES}
+
+    def _set_dp(self, dp, value):
+        with self._lock:
+            res = self._dev.set_value(dp, value)
+        if isinstance(res, dict) and res.get("Error"):
+            return False, res
+        return True, res
 
     # ── Controls ─────────────────────────────────────────────────────────────
 
@@ -56,14 +114,14 @@ class EVCharger(hass.Hass):
             return
         desired = (service == "turn_on")
         try:
-            result = self._sendcmd([{"code": "switch", "value": desired}])
-            if result.get("success"):
+            ok, res = self._set_dp(DP_SWITCH, desired)
+            if ok:
                 self.set_state("switch.ev_charger_switch",
                                state="on" if desired else "off",
                                attributes={"friendly_name": "EV Charger Switch"})
-                self.log("SET switch {} via cloud OK".format("ON" if desired else "OFF"))
+                self.log("SET switch {} local OK".format("ON" if desired else "OFF"))
             else:
-                self.log("SET switch {} FAILED: {}".format("ON" if desired else "OFF", result), level="WARNING")
+                self.log("SET switch {} FAILED: {}".format("ON" if desired else "OFF", res), level="WARNING")
             self.run_in(self.poll, 3)
         except Exception as e:
             self.log("on_switch_service error: {}".format(e), level="ERROR")
@@ -73,11 +131,11 @@ class EVCharger(hass.Hass):
             return
         try:
             amps = max(MIN_AMPS, min(MAX_AMPS, int(float(new))))
-            result = self._sendcmd([{"code": "charge_cur_set", "value": amps}])
-            if result.get("success"):
-                self.log("SET current {}A via cloud OK".format(amps))
+            ok, res = self._set_dp(DP_CURRENT, amps)
+            if ok:
+                self.log("SET current {}A local OK".format(amps))
             else:
-                self.log("SET current {}A FAILED: {}".format(amps, result), level="WARNING")
+                self.log("SET current {}A FAILED: {}".format(amps, res), level="WARNING")
             self.run_in(self.poll, 2)
         except Exception as e:
             self.log("on_current_change error: {}".format(e), level="ERROR")
@@ -86,33 +144,33 @@ class EVCharger(hass.Hass):
 
     def poll(self, kwargs):
         try:
-            resp = self._cloud.getstatus(DEVICE_ID)
-            if not resp.get("success"):
-                self.log("Cloud error: {}".format(resp), level="WARNING")
-                return
-            dps = {item["code"]: item["value"] for item in resp.get("result", [])}
-            self._update_sensors(dps)
+            dps = self._status()
         except Exception as e:
-            self.log("Poll exception: {}".format(e), level="WARNING")
-
-    def _sendcmd(self, commands):
-        """Send commands using correct Tuya API format: {\"commands\": [...]}."""
-        return self._cloud._tuyaplatform(
-            "iot-03/devices/{}/commands".format(DEVICE_ID),
-            action="POST",
-            post={"commands": commands},
-        )
+            self._fail_count += 1
+            if self._fail_count in (1, FAILS_BEFORE_UNAVAILABLE) or self._fail_count % 20 == 0:
+                self.log("Poll failed ({}x): {}".format(self._fail_count, e), level="WARNING")
+            if self._fail_count == FAILS_BEFORE_UNAVAILABLE:
+                self.set_state("sensor.ev_charger_stav", state="Nedostupny",
+                               attributes={"friendly_name": "EV Charger stav", "raw": "unreachable"})
+            return
+        if self._fail_count >= FAILS_BEFORE_UNAVAILABLE:
+            self.log("Wallbox znovu dostupny po {} neuspesnych pokusech".format(self._fail_count))
+        self._fail_count = 0
+        # DP5 (vykon faze) wallbox v klidu neposila -> doplnime z posledni hodnoty / 0
+        merged = dict(self._last_dps)
+        merged.update(dps)
+        self._last_dps = merged
+        self._update_sensors(merged)
 
     # ── Sensors ──────────────────────────────────────────────────────────────
 
     def _init_sensors(self):
         try:
-            resp = self._cloud.getstatus(DEVICE_ID)
-            if resp.get("success"):
-                dps = {item["code"]: item["value"] for item in resp.get("result", [])}
-                self._update_sensors(dps)
-                self.log("Sensors initialized from Tuya cloud")
-                return
+            dps = self._status()
+            self._last_dps = dps
+            self._update_sensors(dps)
+            self.log("Sensors initialized from wallbox (local)")
+            return
         except Exception as e:
             self.log("Init poll failed ({}), using defaults".format(e), level="WARNING")
         self.set_state("sensor.ev_charger_stav", state="unknown",
